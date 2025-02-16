@@ -5,6 +5,7 @@ import { Carousel } from '../components/carousel'
 import { useEffect } from 'react'
 import Swiper from 'swiper'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
+import { CompanyInfo } from './components/company-info'
 
 export default function Home() {
   useEffect(() => {
@@ -30,39 +31,25 @@ export default function Home() {
 
   const home_preview = [1, 2, 3, 4, 5, 6].map((item, index) => {
     return (
-      <div key={index} className="swiper-slide color-white">
+      <div key={index} className="swiper-slide color-white flex max-h-[350px] overflow-hidden py-2">
         <Image
           src={`/home_preview/home_preview_0${item}.jpg`}
           alt={`home_preview_0${item}`}
-          width={500}
-          height={500}
+          height={400}
+          width={600}
           className="m-auto"
         />
       </div>
     )
   })
 
-  const site_preview = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => (
-    <div key={index} className="swiper-slide color-white">
-      <Image
-        src={`/site_preview/site_preview_0${item}.jpg`}
-        alt={`site_preview_0${item}`}
-        width={500}
-        height={500}
-        className="m-auto"
-      />
-    </div>
-  ))
-
   return (
     <>
-      <div className="bg-gray-400">
+      <div className="flex h-96 items-center bg-gray-200">
         <Carousel>{home_preview}</Carousel>
       </div>
-      <div className="bg-gray-600">
-        <Carousel>{site_preview}</Carousel>
-      </div>
-      <div>Home</div>
+
+      <CompanyInfo />
     </>
   )
 }
