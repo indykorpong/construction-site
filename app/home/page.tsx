@@ -12,7 +12,6 @@ export default function Home() {
     const swiper = new Swiper('.swiper', {
       loop: true,
       modules: [Pagination, Navigation, Autoplay],
-      slidesPerView: 2,
       autoplay: {
         delay: 2500,
         disableOnInteraction: false,
@@ -25,6 +24,7 @@ export default function Home() {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
+      speed: 800,
     })
   }, [])
 
@@ -37,12 +37,11 @@ export default function Home() {
   })
 
   return (
-    <>
-      <div className="flex h-96 items-center bg-gray-200">
+    <div className="bg-background">
+      <div className="mx-auto flex h-[600px] items-center">
         <Carousel>{home_preview}</Carousel>
       </div>
-
       <CompanyInfo />
-    </>
+    </div>
   )
 }
