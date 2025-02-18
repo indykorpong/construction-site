@@ -16,7 +16,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-[Mitr]">
         <Header />
         <Navbar />
         {children}
@@ -28,7 +36,7 @@ export default function RootLayout({
 
 function Header() {
   return (
-    <header className="bg-primary flex h-12 items-center gap-8 px-4">
+    <header className="flex h-12 items-center gap-8 bg-primary px-4">
       <div className="flex items-center gap-4">
         <FaRegEnvelope />
         <SmallText>test@email.com</SmallText>
@@ -49,7 +57,7 @@ function Navbar() {
   return (
     <div className="flex h-20 w-full items-center shadow-md">
       <img src={DoubleASPLogo.src} alt="Double-A-SP Logo" className="ml-12 h-full w-auto py-2" />
-      <div className="ml-[300px] flex h-full w-full max-w-[800px] items-center justify-between px-4">
+      <div className="mx-auto flex h-full w-full max-w-[800px] items-center justify-between text-xl">
         <Link href="/">HOME</Link>
         <Link href="/products">PRODUCTS</Link>
         <Link href="/projects">PROJECTS</Link>
@@ -62,9 +70,9 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="bg-bluegray flex h-96 items-center justify-center gap-32">
+    <footer className="flex h-96 items-center justify-center gap-32 bg-bluegray">
       <div>
-        <h1 className="text-primary text-2xl font-bold">Contact Information</h1>
+        <h1 className="text-3xl text-primary">Contact Information</h1>
         <br />
         <p>Phone: 081-234-5678</p>
         <p>Email: test@email.com</p>
