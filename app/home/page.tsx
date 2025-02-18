@@ -3,7 +3,8 @@
 import { Carousel } from '../components/carousel'
 import { useEffect } from 'react'
 import Swiper from 'swiper'
-import { Pagination, Navigation, Autoplay, Grid } from 'swiper/modules'
+import { Pagination, Navigation, Autoplay } from 'swiper/modules'
+import { CompanyInfo } from './components/company-info'
 
 export default function Home() {
   useEffect(() => {
@@ -37,10 +38,11 @@ export default function Home() {
 
   return (
     <>
-      <div className="bg-white">
+      <div className="flex h-96 items-center bg-gray-200">
         <Carousel>{home_preview}</Carousel>
       </div>
-      <div>Home</div>
+
+      <CompanyInfo />
     </>
   )
 }
