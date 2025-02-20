@@ -26,16 +26,3 @@
   overflow: hidden;
   object-fit: cover;
 }
-
-.card {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 10 10 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-block: 20px;
-  max-height: 500px;
-}
-
-.card .card-image {
-  width: 100%;
-}

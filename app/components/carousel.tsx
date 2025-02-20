@@ -12,7 +12,7 @@ type CarouselProps = {
   children: ReactNode
 }
 
-export const Carousel: FC<CarouselProps> = ({ children }) => {
+export const CarouselComponent: FC<CarouselProps> = ({ children }) => {
   return (
     <>
       <div className="swiper">
