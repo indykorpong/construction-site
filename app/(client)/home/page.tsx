@@ -1,19 +1,20 @@
 'use client'
 
-import { Carousel } from '../components/carousel'
-import { useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Swiper from 'swiper'
-import { Pagination, Navigation, Autoplay } from 'swiper/modules'
+import * as sw from 'swiper/modules'
 import Image from 'next/image'
+import { Pagination } from '@mui/material'
 
-import { Card } from '../components/card'
+import { CarouselComponent } from '../components/carousel'
+import { CardComponent } from '../components/card'
 
 export default function Home() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const swiper = new Swiper('.swiper', {
       loop: true,
-      modules: [Pagination, Navigation, Autoplay],
+      modules: [sw.Pagination, sw.Navigation, sw.Autoplay],
       autoplay: {
         delay: 2500,
         disableOnInteraction: false,
@@ -41,7 +42,7 @@ export default function Home() {
   return (
     <div className="bg-background">
       <div className="mx-auto flex h-[600px] items-center">
-        <Carousel>{home_preview}</Carousel>
+        <CarouselComponent>{home_preview}</CarouselComponent>
       </div>
       <CompanyInfo />
       <Projects />
@@ -80,18 +81,50 @@ function CompanyInfo() {
 }
 
 function Projects() {
+  type ProjectProps = {
+    title: string
+    description: string
+    imageUrl?: string
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [projects, setProjects] = useState<ProjectProps[]>([
+    { title: 'project 1', description: 'description 1', imageUrl: '' },
+    { title: 'project 2', description: 'description 2', imageUrl: '' },
+    { title: 'project 3', description: 'description 3', imageUrl: '' },
+    { title: 'project 4', description: 'description 4', imageUrl: '' },
+    { title: 'project 4', description: 'description 4', imageUrl: '' },
+  ])
+
+  const [page, setPage] = useState(1)
+  const itemsPerPage = 4
+  const handleChange = (e: ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
+
+  const paginatedProjects = projects.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+
+  // TODO: fetch projects from API
+
   return (
-    <div className="grid w-full bg-gray-200 p-5">
-      {[
-        { title: 'project 1', description: 'description 1' },
-        { title: 'project 1', description: 'description 1' },
-      ].map((item, index) => {
-        return (
-          <div key={index} className="">
-            <Card key={index} title={item.title} description={item.description} />
-          </div>
-        )
-      })}
+    <div className="flex h-[800px] w-full flex-col justify-between bg-gray-200 p-10">
+      <div className="mb-4 text-4xl text-gray-800">Our Project</div>
+      <div className="flex w-full flex-wrap">
+        {paginatedProjects.map((item, index) => {
+          return (
+            <div key={index} className="flex w-1/2 items-center justify-center p-5">
+              <CardComponent title={item.title} description={item.description} imageUrl={item.imageUrl} />
+            </div>
+          )
+        })}
+      </div>
+      <Pagination
+        count={Math.ceil(projects.length / itemsPerPage)}
+        page={page}
+        onChange={handleChange}
+        color="primary"
+        autoFocus={false}
+      />
     </div>
   )
 }
