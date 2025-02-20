@@ -6,8 +6,8 @@ import * as sw from 'swiper/modules'
 import Image from 'next/image'
 import { Pagination } from '@mui/material'
 
-import { CarouselComponent } from '../components/carousel'
-import { CardComponent } from '../components/card'
+import { CarouselComponent } from '../../components/carousel'
+import { CardComponent } from '../../components/card'
 
 export default function Home() {
   useEffect(() => {

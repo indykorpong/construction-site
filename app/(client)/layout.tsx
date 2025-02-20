@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { FaRegClock, FaPhoneAlt, FaRegEnvelope } from 'react-icons/fa'
 import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
-import './globals.css'
+import '../globals.css'
 
 export const metadata: Metadata = {
   title: 'Root',
