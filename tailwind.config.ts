@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        Noto: ['Noto Sans Thai', 'sans-serif'],
+      },
       colors: {
         background: 'rgba(50,173,230,0.2)',
         foreground: 'var(--foreground)',
