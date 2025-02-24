@@ -1,24 +1,22 @@
-import React from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
+import { FC } from 'react'
 
-interface CardProps {
-  title: string
-  description: string
-  imageUrl?: string
-}
+import { CardProps } from '../types/components'
 
-export const CardComponent: React.FC<CardProps> = ({ title, description, imageUrl }) => {
+export const CardComponent: FC<CardProps> = ({ title, description, imageUrl }) => {
+  const imgDim = 50
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       {imageUrl ? (
-        <CardMedia component="img" height="140" image={imageUrl} alt={title} />
+        <CardMedia component="img" height={50} image={imageUrl} alt={title} />
       ) : (
         <div className="flex justify-center">
-          <Image src={'/file.svg'} alt={title} width={100} height={100} />
+          <Image src={'/file.svg'} alt={title} width={imgDim} height={imgDim} />
         </div>
       )}
 

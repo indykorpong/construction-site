@@ -50,7 +50,7 @@ export default function Home() {
   )
 }
 
-function CompanyInfo() {
+const CompanyInfo = () => {
   return (
     <div className="flex w-full items-center justify-center bg-white px-10 py-10">
       <div className="mr-2 flex w-2/5 items-center justify-center">
@@ -80,7 +80,7 @@ function CompanyInfo() {
   )
 }
 
-function Projects() {
+const Projects = () => {
   type ProjectProps = {
     title: string
     description: string
@@ -88,38 +88,39 @@ function Projects() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [projects, setProjects] = useState<ProjectProps[]>([
-    { title: 'project 1', description: 'description 1', imageUrl: '' },
-    { title: 'project 2', description: 'description 2', imageUrl: '' },
-    { title: 'project 3', description: 'description 3', imageUrl: '' },
-    { title: 'project 4', description: 'description 4', imageUrl: '' },
-    { title: 'project 4', description: 'description 4', imageUrl: '' },
+  const [listProjects, setListProjects] = useState<ProjectProps[]>([
+    { title: 'project 1', description: 'description of project 1', imageUrl: '' },
+    { title: 'project 2', description: 'description of project 2', imageUrl: '' },
+    { title: 'project 3', description: 'description of project 3', imageUrl: '' },
+    { title: 'project 4', description: 'description of project 4', imageUrl: '' },
+    { title: 'project 5', description: 'description of project 5', imageUrl: '' },
   ])
-
   const [page, setPage] = useState(1)
+
   const itemsPerPage = 4
   const handleChange = (e: ChangeEvent<unknown>, value: number) => {
     setPage(value)
   }
 
-  const paginatedProjects = projects.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+  const paginatedProjects = listProjects.slice((page - 1) * itemsPerPage, page * itemsPerPage)
 
   // TODO: fetch projects from API
 
   return (
-    <div className="flex h-[800px] w-full flex-col justify-between bg-gray-200 p-10">
-      <div className="mb-4 text-4xl text-gray-800">Our Project</div>
-      <div className="flex w-full flex-wrap">
+    <div className="flex h-[500px] w-full flex-col justify-between bg-gray-200 p-5">
+      <div className="mb-4 text-4xl text-blue-800">Our Project</div>
+      <div className="flex w-full flex-wrap items-center justify-start">
         {paginatedProjects.map((item, index) => {
           return (
-            <div key={index} className="flex w-1/2 items-center justify-center p-5">
+            <div key={index} className="flex h-1/2 w-1/2 items-center justify-center p-3">
               <CardComponent title={item.title} description={item.description} imageUrl={item.imageUrl} />
             </div>
           )
         })}
       </div>
+
       <Pagination
-        count={Math.ceil(projects.length / itemsPerPage)}
+        count={Math.ceil(listProjects.length / itemsPerPage)}
         page={page}
         onChange={handleChange}
         color="primary"
