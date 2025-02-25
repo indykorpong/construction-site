@@ -16,19 +16,20 @@ export default function Projects() {
   // TODO: Add a useEffect to fetch the list of products from the server
 
   return (
-    <div className="m-4 ml-11 h-auto">
-      <h1 className="text-4xl text-blue-700">Projects</h1>
-      <div className="mt-6 h-2/5 w-full">
+    <div className="m-4 ml-11">
+      <h1 className="mb-6 text-4xl text-blue-700">Projects</h1>
+      <div className="mb-6 w-full">
         <ProjectInfo />
       </div>
 
-      <h2 className="mt-8 text-2xl text-blue-700">Product in project</h2>
-      <div className="mt-6 flex h-2/5">
-        {listProducts.map((product, index) => (
-          <div key={index} className="p-8">
-            <CardComponent title={product.title} description={product.description} imageUrl={product.imageUrl} />
-          </div>
-        ))}
+      <h2 className="mb-8 text-2xl text-blue-700">Product in project</h2>
+      <div className="mb-6 flex w-full items-center justify-start">
+        {listProducts &&
+          listProducts.map((product, index) => (
+            <div key={index} className="max-w-1/4 mr-12 flex items-center justify-start">
+              <CardComponent title={product.title} description={product.description} imageUrl={product.imageUrl} />
+            </div>
+          ))}
       </div>
     </div>
   )
