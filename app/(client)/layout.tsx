@@ -61,8 +61,8 @@ function Navbar() {
         <Link href="/">HOME</Link>
         <Link href="/products">PRODUCTS</Link>
         <Link href="/projects">PROJECTS</Link>
-        <Link href="/about">ABOUT US</Link>
-        <Link href="/contact">CONTACT US</Link>
+        <Link href="/about-us">ABOUT US</Link>
+        <Link href="/contact-us">CONTACT US</Link>
       </div>
     </div>
   )
