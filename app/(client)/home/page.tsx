@@ -44,13 +44,13 @@ export default function Home() {
       <div className="mx-auto flex h-[600px] items-center">
         <CarouselComponent>{home_preview}</CarouselComponent>
       </div>
-      <CompanyInfo />
-      <Projects />
+      <HomeCompanyInfo />
+      <HomeProjects />
     </div>
   )
 }
 
-const CompanyInfo = () => {
+const HomeCompanyInfo = () => {
   return (
     <div className="flex w-full items-center justify-center bg-white px-10 py-10">
       <div className="mr-2 flex w-2/5 items-center justify-center">
@@ -80,7 +80,7 @@ const CompanyInfo = () => {
   )
 }
 
-const Projects = () => {
+const HomeProjects = () => {
   type ProjectProps = {
     title: string
     description: string
@@ -107,13 +107,15 @@ const Projects = () => {
   // TODO: fetch projects from API
 
   return (
-    <div className="flex h-[500px] w-full flex-col justify-between bg-gray-200 p-5">
+    <div className="flex flex-col justify-between bg-gray-200 p-5">
       <div className="mb-4 text-4xl text-blue-800">Our Project</div>
-      <div className="flex w-full flex-wrap items-center justify-start">
+      <div className="flex flex-wrap items-center justify-start">
         {paginatedProjects.map((item, index) => {
           return (
-            <div key={index} className="flex h-1/2 w-1/2 items-center justify-center p-3">
-              <CardComponent title={item.title} description={item.description} imageUrl={item.imageUrl} />
+            <div key={index} className="my-3 flex w-1/2 justify-center px-3">
+              <div className="w-1/2">
+                <CardComponent title={item.title} description={item.description} imageUrl={item.imageUrl} />
+              </div>
             </div>
           )
         })}
