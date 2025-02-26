@@ -8,6 +8,8 @@ import Image from 'next/image'
 import { CarouselComponent } from '../../components/carousel'
 import { CardComponent } from '../../components/card'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { ProjectProps } from '../../types/components'
 
 export default function Home() {
   useEffect(() => {
@@ -81,18 +83,14 @@ const HomeCompanyInfo = () => {
 }
 
 const HomeProjects = () => {
-  type ProjectProps = {
-    title: string
-    description: string
-    imageUrl?: string
-  }
+  const router = useRouter()
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [listProjects, setListProjects] = useState<ProjectProps[]>([
-    { title: 'project 1', description: 'description of project 1', imageUrl: '' },
-    { title: 'project 2', description: 'description of project 2', imageUrl: '' },
-    { title: 'project 3', description: 'description of project 3', imageUrl: '' },
-    { title: 'project 4', description: 'description of project 4', imageUrl: '' },
+    { id: 1, name: 'Project One', description: 'Description for project one' },
+    { id: 2, name: 'Project Two', description: 'Description for project two' },
+    { id: 3, name: 'Project Three', description: 'Description for project three' },
+    { id: 4, name: 'Project four', description: 'Description for project four' },
   ])
 
   // TODO: fetch projects from API (only first 4 projects)
@@ -101,11 +99,18 @@ const HomeProjects = () => {
     <div className="flex flex-col justify-between bg-gray-200 p-5">
       <div className="header">Our Projects</div>
       <div className="flex flex-wrap items-center justify-start">
-        {listProjects.map((item, index) => {
+        {listProjects.map((project, index) => {
           return (
             <div key={index} className="my-3 flex w-1/2 justify-center px-3">
-              <div className="w-1/2">
-                <CardComponent title={item.title} description={item.description} imageUrl={item.imageUrl} />
+              <div className="flex w-1/2 flex-col items-center justify-center">
+                <div
+                  style={{ width: 'fit-content' }}
+                  onClick={() => {
+                    router.push('/projects/' + project.id)
+                  }}
+                >
+                  <CardComponent title={project.name} description={project.description} imageUrl={project.imageUrl} />
+                </div>
               </div>
             </div>
           )

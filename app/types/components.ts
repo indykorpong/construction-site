@@ -8,4 +8,5 @@ export interface ProjectProps {
   id: number
   name: string
   description: string
+  imageUrl?: string
 }
