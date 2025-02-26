@@ -1,60 +1,41 @@
 'use client'
-import Image from 'next/image'
+import { FC } from 'react'
+
 import { CardComponent } from '../../components/card'
-import { useState } from 'react'
-import { CardProps } from '../../types/components'
+import { ProjectProps } from '../../types/components'
 
-export default function Projects() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [listProducts, setListProducts] = useState<CardProps[]>([
-    { title: 'Product 1', description: 'Description of product 1', imageUrl: '/file.svg' },
-    { title: 'Product 2', description: 'Description of product 2', imageUrl: '/file.svg' },
-    { title: 'Product 3', description: 'Description of product 3', imageUrl: '/file.svg' },
-    { title: 'Product 4', description: 'Description of product 4', imageUrl: '/file.svg' },
-  ])
+import './styles.css'
+import { useRouter } from 'next/navigation'
 
-  // TODO: Add a useEffect to fetch the list of products from the server
+const projects: ProjectProps[] = [
+  { id: 1, name: 'Project One', description: 'Description for project one' },
+  { id: 2, name: 'Project Two', description: 'Description for project two' },
+  { id: 3, name: 'Project Three', description: 'Description for project three' },
+  { id: 4, name: 'Project four', description: 'Description for project four' },
+]
+
+const ProjectsPage: FC = () => {
+  const router = useRouter()
 
   return (
-    <div className="m-4 ml-11">
-      <h1 className="mb-6 text-4xl text-blue-700">Projects</h1>
-      <div className="mb-6 w-full">
-        <ProjectInfo />
-      </div>
-
-      <h2 className="mb-8 text-2xl text-blue-700">Product in project</h2>
-      <div className="mb-6 flex w-full items-center justify-start">
-        {listProducts &&
-          listProducts.map((product, index) => (
-            <div key={index} className="max-w-1/4 mr-12 flex items-center justify-start">
-              <CardComponent title={product.title} description={product.description} imageUrl={product.imageUrl} />
+    <div style={{ padding: '20px' }}>
+      <h1 className="header">Our Projects</h1>
+      <div className="projects">
+        {projects.map((project) => (
+          <div key={project.id} className="card">
+            <div
+              style={{ width: 'fit-content' }}
+              onClick={() => {
+                router.push('/projects/' + project.id)
+              }}
+            >
+              <CardComponent title={project.name} description={project.description} />
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
-const ProjectInfo = () => {
-  const imageDim = 500
-
-  return (
-    <div className="flex items-center justify-start">
-      <div className="mr-4 flex w-2/5 items-center justify-center rounded-md">
-        <Image src={'/Head_Office.jpg'} alt={'Head office'} width={imageDim} height={imageDim} />
-      </div>
-
-      <div className="w-2/5 indent-10">
-        <div>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
+export default ProjectsPage

@@ -1,13 +1,13 @@
 'use client'
 
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Swiper from 'swiper'
 import * as sw from 'swiper/modules'
 import Image from 'next/image'
-import { Pagination } from '@mui/material'
 
 import { CarouselComponent } from '../../components/carousel'
 import { CardComponent } from '../../components/card'
+import Link from 'next/link'
 
 export default function Home() {
   useEffect(() => {
@@ -93,24 +93,15 @@ const HomeProjects = () => {
     { title: 'project 2', description: 'description of project 2', imageUrl: '' },
     { title: 'project 3', description: 'description of project 3', imageUrl: '' },
     { title: 'project 4', description: 'description of project 4', imageUrl: '' },
-    { title: 'project 5', description: 'description of project 5', imageUrl: '' },
   ])
-  const [page, setPage] = useState(1)
 
-  const itemsPerPage = 4
-  const handleChange = (e: ChangeEvent<unknown>, value: number) => {
-    setPage(value)
-  }
-
-  const paginatedProjects = listProjects.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-
-  // TODO: fetch projects from API
+  // TODO: fetch projects from API (only first 4 projects)
 
   return (
     <div className="flex flex-col justify-between bg-gray-200 p-5">
-      <div className="mb-4 text-4xl text-blue-800">Our Project</div>
+      <div className="header">Our Projects</div>
       <div className="flex flex-wrap items-center justify-start">
-        {paginatedProjects.map((item, index) => {
+        {listProjects.map((item, index) => {
           return (
             <div key={index} className="my-3 flex w-1/2 justify-center px-3">
               <div className="w-1/2">
@@ -121,13 +112,9 @@ const HomeProjects = () => {
         })}
       </div>
 
-      <Pagination
-        count={Math.ceil(listProjects.length / itemsPerPage)}
-        page={page}
-        onChange={handleChange}
-        color="primary"
-        autoFocus={false}
-      />
+      <Link href="/projects" style={{ display: 'flex', justifyContent: 'end', color: 'blue', marginRight: '30px' }}>
+        See more...
+      </Link>
     </div>
   )
 }
