@@ -3,26 +3,8 @@
   height: 600px;
 
   --swiper-theme-color: white;
-  --swiper-navigation-color: #116fac;
+  --swiper-navigation-color: white;
   --swiper-pagination-bullet-inactive-color: rgb(174, 174, 174);
   --swiper-pagination-bullet-inactive-opacity: 0.3;
   --swiper-pagination-bullet-size: 10px;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  height: 100%;
-  width: 100%;
-  max-width: 1280px;
-  overflow: hidden;
-  object-fit: cover;
 }
