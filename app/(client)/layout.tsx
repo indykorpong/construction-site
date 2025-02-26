@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { FaRegClock, FaPhoneAlt, FaRegEnvelope } from 'react-icons/fa'
 import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
-import './globals.css'
+import '../globals.css'
 
 export const metadata: Metadata = {
   title: 'Root',
@@ -61,8 +61,8 @@ function Navbar() {
         <Link href="/">HOME</Link>
         <Link href="/products">PRODUCTS</Link>
         <Link href="/projects">PROJECTS</Link>
-        <Link href="/about">ABOUT US</Link>
-        <Link href="/contact">CONTACT US</Link>
+        <Link href="/about-us">ABOUT US</Link>
+        <Link href="/contact-us">CONTACT US</Link>
       </div>
     </div>
   )
