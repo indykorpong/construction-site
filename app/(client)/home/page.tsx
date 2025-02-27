@@ -1,84 +1,99 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Swiper from 'swiper'
-import * as sw from 'swiper/modules'
-import Image from 'next/image'
+import { useState } from 'react'
 
 import { CarouselComponent } from '../../components/carousel'
 import { CardComponent } from '../../components/card'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ProjectProps } from '../../types/components'
+import { Box, Typography } from '@mui/material'
 
 export default function Home() {
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const swiper = new Swiper('.swiper', {
-      loop: true,
-      modules: [sw.Pagination, sw.Navigation, sw.Autoplay],
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      speed: 800,
-    })
-  }, [])
-
-  const home_preview = [1, 2, 3, 4, 5, 6].map((item, index) => {
+  const homePreview = [1, 2, 3, 4, 5, 6].map((item, index) => {
     return (
-      <div key={index} className="swiper-slide color-white">
-        <img src={`/home_preview/home_preview_${item}.jpg`} alt={`home_preview_${item}`} className="m-auto" />
-      </div>
+      <Box
+        key={index}
+        bgcolor="white"
+        textAlign="center"
+        fontSize={18}
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box
+          component="img"
+          src={`/home_preview/home_preview_${item}.jpg`}
+          alt={`home_preview_${item}`}
+          sx={{
+            display: 'block',
+            height: '100%',
+            width: '100%',
+            maxWidth: '1280px',
+            overflow: 'hidden',
+            objectFit: 'cover',
+            margin: 'auto',
+          }}
+        />
+      </Box>
     )
   })
 
   return (
-    <div className="bg-background">
-      <div className="mx-auto flex h-[600px] items-center">
-        <CarouselComponent>{home_preview}</CarouselComponent>
-      </div>
+    <>
+      <Box marginX="auto" flex={1} height={600} alignItems="center" bgcolor="rgba(50,173,230,0.2)">
+        <CarouselComponent>{homePreview}</CarouselComponent>
+      </Box>
       <HomeCompanyInfo />
       <HomeProjects />
-    </div>
+    </>
   )
 }
 
 const HomeCompanyInfo = () => {
   return (
-    <div className="flex w-full items-center justify-center bg-white px-10 py-10">
-      <div className="mr-2 flex w-2/5 items-center justify-center">
-        <Image src={'/Head_Office.jpg'} alt={'Head office'} width={600} height={600} />
-      </div>
+    <Box
+      width="100%"
+      maxWidth={1280}
+      marginX="auto"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="white"
+      height={600}
+      paddingY={10}
+    >
+      <Box
+        component="img"
+        src={'/Head_Office.jpg'}
+        alt={'Head office'}
+        display="flex"
+        width="auto"
+        height="100%"
+        marginRight={6}
+      />
 
-      <div className="w-2/5 overflow-hidden indent-10 text-lg">
-        <div>
-          <p>
-            บริษัท ดับเบิลเอ เอสพี จำกัด ได้ก่อตั้งขึ้นในปี พ.ศ. 2560
-            โดยทีมบริหารที่มีความเชี่ยวชาญในด้านการก่อสร้างมากว่า 25ปี
-            ด้วยความมุ่งมั่นที่จะให้บริการและจัดจำหน่ายแบบหล่อคอนกรีตประเภทต่างๆ
-            รวมถึงไปนั่งร้านและอุปกรณ์ต่างๆที่ช่วยในการก่อสร้างอย่างมืออาชีพ
-            เพื่อช่วยให้งานของคุณเร็วขึ้นกว่าการใช้อุปกรณ์ก่อสร้างทั่วไป และมีคุณภาพในทุกขั้นตอนของโครงการ
-            ด้วยราคาที่สมเหตุสมผล
-          </p>
+      <Box display="flex" flexDirection="column" width="50%" height="100%" overflow="hidden">
+        <Typography component="h2" fontFamily="Noto Sans Thai" fontSize={30} fontWeight={600} marginBottom={2}>
+          บริษัท ดับเบิลเอ เอสพี จำกัด
+        </Typography>
+        <Typography component="p" fontFamily="Noto Sans Thai" fontSize={18} sx={{ textIndent: 40 }}>
+          บริษัท ดับเบิลเอ เอสพี จำกัด ได้ก่อตั้งขึ้นในปี พ.ศ. 2560
+          โดยทีมบริหารที่มีความเชี่ยวชาญในด้านการก่อสร้างมากว่า 25ปี
+          ด้วยความมุ่งมั่นที่จะให้บริการและจัดจำหน่ายแบบหล่อคอนกรีตประเภทต่างๆ
+          รวมถึงไปนั่งร้านและอุปกรณ์ต่างๆที่ช่วยในการก่อสร้างอย่างมืออาชีพ
+          เพื่อช่วยให้งานของคุณเร็วขึ้นกว่าการใช้อุปกรณ์ก่อสร้างทั่วไป และมีคุณภาพในทุกขั้นตอนของโครงการ
+          ด้วยราคาที่สมเหตุสมผล
+        </Typography>
 
-          <br />
+        <br />
 
-          <p>
-            นอกจากนี้ เรายังบริการให้คำแนะนำออกแบบพื้นที่ใช้งานจริง เพื่อประเมินราคา สอนติดตั้งและการใช้งานที่หน้างาน
-            มีรายการคำนวณ ที่รับรองโดยสามัญวิศวกร
-          </p>
-        </div>
-      </div>
-    </div>
+        <Typography component="p" fontFamily="Noto Sans Thai" fontSize={18} sx={{ textIndent: 40 }}>
+          นอกจากนี้ เรายังบริการให้คำแนะนำออกแบบพื้นที่ใช้งานจริง เพื่อประเมินราคา สอนติดตั้งและการใช้งานที่หน้างาน
+          มีรายการคำนวณ ที่รับรองโดยสามัญวิศวกร
+        </Typography>
+      </Box>
+    </Box>
   )
 }
 
