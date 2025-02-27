@@ -6,14 +6,10 @@ import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
 import '../globals.css'
 
 export const metadata: Metadata = {
-  title: 'Root',
+  title: 'AA-SP Co., LTD.',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <head>
