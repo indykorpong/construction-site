@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'AA-SP Co., LTD. Admin',
 }
 
-export default function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function LoginLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" style={{ height: '100%' }}>
       <head>
