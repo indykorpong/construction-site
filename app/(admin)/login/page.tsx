@@ -1,5 +1,8 @@
 'use client'
+
 import { useRouter } from 'next/navigation'
+import { Button } from '@mui/material'
+
 import './style.css'
 
 export default function Login() {
@@ -23,14 +26,17 @@ export default function Login() {
         </div>
 
         <div>
-          <button style={{ marginRight: '10px' }}>Login</button>
-          <button
+          <Button variant="contained" style={{ marginRight: '10px' }}>
+            Login
+          </Button>
+
+          <Button
             onClick={() => {
               router.push('/home')
             }}
           >
             Home
-          </button>
+          </Button>
         </div>
       </form>
     </div>
