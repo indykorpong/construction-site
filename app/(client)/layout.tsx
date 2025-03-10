@@ -2,7 +2,10 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { FaRegClock, FaPhoneAlt, FaRegEnvelope } from 'react-icons/fa'
+import { Box } from '@mui/material'
+
 import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
+
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -14,13 +17,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <head>
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
+          @import url(&apos;https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap&apos;);
         </style>
       </head>
-      <body className="font-Noto text-lg/8">
+      <body style={{ fontFamily: 'Noto Sans Thai', fontSize: '1.125rem', lineHeight: '2rem' }}>
         <Header />
         <Navbar />
-        <div className="min-h-[600px]">{children}</div>
+        <Box minHeight={'600px'}>{children}</Box>
         <Footer />
       </body>
     </html>
@@ -30,20 +33,28 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
 function Header() {
   return (
     <header className="w-full bg-primary">
-      <div className="mx-auto flex h-12 max-w-7xl items-center gap-8 px-2">
-        <div className="flex items-center gap-4">
+      <Box
+        marginInline={'auto'}
+        display={'flex'}
+        height={'3rem'}
+        maxWidth={'80rem'}
+        alignItems={'center'}
+        gap={'2rem'}
+        paddingInline={'0.5rem'}
+      >
+        <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaRegEnvelope />
           <SmallText>test@email.com</SmallText>
-        </div>
-        <div className="flex items-center gap-4">
+        </Box>
+        <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaPhoneAlt />
           <SmallText>081-234-5678</SmallText>
-        </div>
-        <div className="flex items-center gap-4">
+        </Box>
+        <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaRegClock />
           <SmallText>Mon - Fri: 9:00 - 18:00</SmallText>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </header>
   )
 }
