@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import { CarouselComponent } from '../../components/carousel'
-import { CardComponent } from '../../components/card'
+import { CarouselComponent } from '../../_components/carousel'
+import { CardComponent } from '../../_components/card'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ProjectProps } from '../../types/components'

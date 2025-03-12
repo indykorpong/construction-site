@@ -20,6 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           @import url(&apos;https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap&apos;);
         </style>
       </head>
+
       <body style={{ fontFamily: 'Noto Sans Thai', fontSize: '1.125rem', lineHeight: '2rem' }}>
         <Header />
         <Navbar />

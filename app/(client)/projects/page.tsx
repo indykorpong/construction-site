@@ -1,7 +1,7 @@
 'use client'
 import { FC } from 'react'
 
-import { CardComponent } from '../../components/card'
+import { CardComponent } from '../../_components/card'
 import { ProjectProps } from '../../types/components'
 
 import './styles.css'

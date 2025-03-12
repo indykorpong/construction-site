@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { CardComponent } from '../../../components/card'
+import { CardComponent } from '../../../_components/card'
 import { useState } from 'react'
 import { CardProps } from '../../../types/components'
 
