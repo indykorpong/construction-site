@@ -1,7 +1,6 @@
 .swiper {
   width: 100%;
   height: 600px;
-
   --swiper-theme-color: white;
   --swiper-navigation-color: white;
   --swiper-pagination-bullet-inactive-color: rgb(174, 174, 174);

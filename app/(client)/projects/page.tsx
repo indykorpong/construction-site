@@ -6,6 +6,8 @@ import { ProjectProps } from '../../types/components'
 
 import './styles.css'
 import { useRouter } from 'next/navigation'
+import { ContentBox } from '../../_components/content-box'
+import { MainHeader } from '../../_components/main-header'
 
 const projects: ProjectProps[] = [
   { id: 1, name: 'Project One', description: 'Description for project one' },
@@ -18,8 +20,9 @@ const ProjectsPage: FC = () => {
   const router = useRouter()
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1 className="header">Our Projects</h1>
+    <ContentBox>
+      <MainHeader>Our Projects</MainHeader>
+
       <div className="projects">
         {projects.map((project) => (
           <div key={project.id} className="card">
@@ -34,7 +37,7 @@ const ProjectsPage: FC = () => {
           </div>
         ))}
       </div>
-    </div>
+    </ContentBox>
   )
 }
 

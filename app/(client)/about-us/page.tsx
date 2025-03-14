@@ -1,45 +1,43 @@
 import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 
+import { ContentBox } from '../../_components/content-box'
+import { MainHeader } from '../../_components/main-header'
+
 export default function AboutUs() {
   return (
-    <Box>
-      <AboutUsCompanyInfo />
+    <>
+      <ContentBox>
+        <AboutUsCompanyInfo />
+      </ContentBox>
 
-      <AboutUsOurGoal />
+      <ContentBox bgcolor="#ccc">
+        <AboutUsOurGoal />
+      </ContentBox>
 
-      <AboutUsAward />
-    </Box>
+      <ContentBox bgcolor="aliceblue">
+        <AboutUsAward />
+      </ContentBox>
+    </>
   )
 }
 
 const AboutUsCompanyInfo = () => {
   return (
-    <Box padding={4}>
-      <h1 className="header">About Us</h1>
+    <>
+      <MainHeader>About Us</MainHeader>
 
-      <Box
-        width="100%"
-        maxWidth={1280}
-        marginX="auto"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        bgcolor="white"
-        height={600}
-        paddingY={10}
-      >
+      <Box display="flex" alignItems="center" justifyContent="flex-start">
         <Box
           component="img"
           src={'/Head_Office.jpg'}
           alt={'Head office'}
           display="flex"
-          width="auto"
-          height="100%"
+          maxWidth="50%"
           marginRight={6}
         />
 
-        <Box display="flex" flexDirection="column" width="50%" height="100%" overflow="hidden">
+        <Box display="flex" flexDirection="column" overflow="hidden" justifyContent={'center'} maxWidth={'50%'}>
           <Typography component="h2" fontFamily="Noto Sans Thai" fontSize={30} fontWeight={600} marginBottom={2}>
             บริษัท ดับเบิลเอ เอสพี จำกัด
           </Typography>
@@ -61,14 +59,14 @@ const AboutUsCompanyInfo = () => {
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 
 const AboutUsOurGoal = () => {
   return (
-    <Box bgcolor={'#ccc'} padding={4}>
-      <h1 className="header">เป้าหมายของเรา</h1>
+    <>
+      <MainHeader>เป้าหมายของเรา</MainHeader>
 
       <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'}>
         <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
@@ -97,14 +95,14 @@ const AboutUsOurGoal = () => {
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </>
   )
 }
 
 const AboutUsAward = () => {
   return (
-    <Box bgcolor={'aliceblue'} padding={4}>
-      <h1 className="header">สิทธิบัตร-รางวัล</h1>
+    <>
+      <MainHeader>สิทธิบัตร-รางวัล</MainHeader>
 
       <Box display={'flex'} justifyContent={'space-around'}>
         {[1, 2, 3].map((item, index) => {
@@ -115,6 +113,6 @@ const AboutUsAward = () => {
           )
         })}
       </Box>
-    </Box>
+    </>
   )
 }
