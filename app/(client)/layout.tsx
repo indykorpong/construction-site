@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <head>
         <style>
-          @import url(&apos;https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap&apos;);
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
         </style>
       </head>
 
