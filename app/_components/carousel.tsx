@@ -13,9 +13,10 @@ import { Box } from '@mui/material'
 
 type CarouselProps = {
   children: ReactNode[]
+  loop: boolean
 }
 
-export const CarouselComponent = ({ children }: CarouselProps) => {
+export const CarouselComponent: FC<CarouselProps> = ({ children, loop }) => {
   return (
     <Box maxWidth="1280px" margin="auto">
       <Swiper
@@ -25,6 +26,7 @@ export const CarouselComponent = ({ children }: CarouselProps) => {
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         className="swiper"
         speed={800}
+        loop={loop}
       >
         {children.map((child, index) => (
           <SwiperSlide key={index}>{child}</SwiperSlide>

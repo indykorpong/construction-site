@@ -2,25 +2,19 @@
 
 import { useState } from 'react'
 
-import { CarouselComponent } from '../../components/carousel'
-import { CardComponent } from '../../components/card'
+import { CarouselComponent } from '../../_components/carousel'
+import { CardComponent } from '../../_components/card'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ProjectProps } from '../../types/components'
 import { Box, Typography } from '@mui/material'
+import { ContentBox } from '../../_components/content-box'
+import { MainHeader } from '../../_components/main-header'
 
 export default function Home() {
   const homePreview = [1, 2, 3, 4, 5, 6].map((item, index) => {
     return (
-      <Box
-        key={index}
-        bgcolor="white"
-        textAlign="center"
-        fontSize={18}
-        flex={1}
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Box key={index} justifyContent="center" alignItems="center">
         <Box
           component="img"
           src={`/home_preview/home_preview_${item}.jpg`}
@@ -41,11 +35,17 @@ export default function Home() {
 
   return (
     <>
-      <Box marginX="auto" flex={1} height={600} alignItems="center" bgcolor="rgba(50,173,230,0.2)">
-        <CarouselComponent>{homePreview}</CarouselComponent>
+      <Box bgcolor="aliceblue">
+        <CarouselComponent loop={true}>{homePreview}</CarouselComponent>
       </Box>
-      <HomeCompanyInfo />
-      <HomeProjects />
+
+      <ContentBox>
+        <HomeCompanyInfo />
+      </ContentBox>
+
+      <ContentBox bgcolor="aliceblue">
+        <HomeProjects />
+      </ContentBox>
     </>
   )
 }
@@ -111,9 +111,9 @@ const HomeProjects = () => {
   // TODO: fetch projects from API (only first 4 projects)
 
   return (
-    <div className="flex flex-col justify-between bg-gray-200 p-5">
-      <div className="header">Our Projects</div>
-      <div className="flex flex-wrap items-center justify-start">
+    <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
+      <MainHeader>Our Projects</MainHeader>
+      <Box display={'flex'} flexWrap={'wrap'} justifyContent={'start'} alignItems={'center'} marginBlock={'2rem'}>
         {listProjects.map((project, index) => {
           return (
             <div key={index} className="my-3 flex w-1/2 justify-center px-3">
@@ -130,11 +130,11 @@ const HomeProjects = () => {
             </div>
           )
         })}
-      </div>
+      </Box>
 
       <Link href="/projects" style={{ display: 'flex', justifyContent: 'end', color: 'blue', marginRight: '30px' }}>
         See more...
       </Link>
-    </div>
+    </Box>
   )
 }

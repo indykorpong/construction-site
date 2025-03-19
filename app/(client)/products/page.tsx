@@ -1,3 +1,10 @@
+import { ContentBox } from '../../_components/content-box'
+import { MainHeader } from '../../_components/main-header'
+
 export default function Products() {
-  return <div className="h-[600px] p-4">Products</div>
+  return (
+    <ContentBox>
+      <MainHeader>Products</MainHeader>
+    </ContentBox>
+  )
 }
