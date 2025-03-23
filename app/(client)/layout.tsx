@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { FaRegClock, FaPhoneAlt, FaRegEnvelope } from 'react-icons/fa'
 import { Box } from '@mui/material'
+import Image from 'next/image'
+import { Noto_Sans_Thai } from 'next/font/google'
 
 import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
 
@@ -12,16 +14,15 @@ export const metadata: Metadata = {
   title: 'AA-SP Co., LTD.',
 }
 
+const notoSansThai = Noto_Sans_Thai({
+  subsets: ['latin', 'thai'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+})
+
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <style>
-          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
-        </style>
-      </head>
-
-      <body style={{ fontFamily: 'Noto Sans Thai', fontSize: '1.125rem', lineHeight: '2rem' }}>
+    <html lang="en" className={notoSansThai.className}>
+      <body style={{ fontSize: '1.125rem', lineHeight: '2rem' }}>
         <Header />
         <Navbar />
         <Box minHeight={'600px'}>{children}</Box>
@@ -64,7 +65,7 @@ function Navbar() {
   return (
     <div className="w-full bg-white shadow-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center px-2">
-        <img src={DoubleASPLogo.src} alt="Double-A-SP Logo" className="h-full w-auto py-2" />
+        <Image src={DoubleASPLogo.src} alt="Double-A-SP Logo" className="h-full w-auto py-2" width={100} height={100} />
         <div className="mx-auto flex h-full w-full max-w-[800px] items-center justify-between text-xl font-semibold">
           <Link href="/">HOME</Link>
           <Link href="/products">PRODUCTS</Link>
