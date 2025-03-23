@@ -7,7 +7,7 @@ interface MainHeaderProps {
 
 export const MainHeader: FC<MainHeaderProps> = ({ children }) => {
   return (
-    <Typography fontSize={'1.875rem'} lineHeight={'2.25rem'} fontWeight={700}>
+    <Typography fontFamily={'Noto Sans Thai'} fontSize={'1.875rem'} lineHeight={'2.25rem'} fontWeight={700}>
       {children}
     </Typography>
   )
