@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation'
 import { ProjectProps } from '../../types/components'
 import { Box, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
-import { MainHeader } from '../../_components/main-header'
+import { Title } from '../../_components/title'
 
 export default function Home() {
   const homePreview = [1, 2, 3, 4, 5, 6].map((item, index) => {
@@ -111,7 +111,7 @@ const HomeProjects = () => {
 
   return (
     <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
-      <MainHeader>Our Projects</MainHeader>
+      <Title>Our Projects</Title>
       <Box display={'flex'} flexWrap={'wrap'} justifyContent={'start'} alignItems={'center'} marginBlock={'2rem'}>
         {listProjects.map((project, index) => {
           return (
