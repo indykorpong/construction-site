@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
-import { MainHeader } from '../../_components/main-header'
+import { Title } from '../../_components/title'
 
 export default function ContactUs() {
   return (
     <ContentBox>
-      <MainHeader>Contact Us</MainHeader>
+      <Title>Contact Us</Title>
 
       <Box display={'flex'} marginInline={'auto'} marginBlock={'2rem'} gap={'3rem'}>
         <iframe
@@ -18,7 +18,7 @@ export default function ContactUs() {
         />
 
         <Box maxWidth={'42rem'}>
-          <MainHeader>สำนักงานใหญ่</MainHeader>
+          <Title>สำนักงานใหญ่</Title>
           <br />
           <p>1213/144 ซอยลาดพร้าว 94 ถนนลาดพร้าว แขวงพลับพลา เขตวังทองหลาง กรุงเทพมหานคร 10230</p>
           <br />

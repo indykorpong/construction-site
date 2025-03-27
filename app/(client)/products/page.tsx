@@ -1,10 +1,10 @@
 import { ContentBox } from '../../_components/content-box'
-import { MainHeader } from '../../_components/main-header'
+import { Title } from '../../_components/title'
 
 export default function Products() {
   return (
     <ContentBox>
-      <MainHeader>Products</MainHeader>
+      <Title>Products</Title>
     </ContentBox>
   )
 }
