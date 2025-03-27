@@ -9,7 +9,7 @@ const notoSansThai = Noto_Sans_Thai({
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={notoSansThai.className}>
-      <body style={{ fontSize: '1.125rem', lineHeight: '2rem' }}>{children}</body>
+      <body style={{ fontSize: '1.125rem', lineHeight: '2rem', margin: '0px' }}>{children}</body>
     </html>
   )
 }
