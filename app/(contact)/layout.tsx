@@ -5,7 +5,6 @@ import { Noto_Sans_Thai } from 'next/font/google'
 
 import '../globals.css'
 import { Header } from '../_components/header'
-import { Footer } from '../_components/footer'
 import { Navbar } from '../_components/navbar'
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <Header />
         <Navbar />
         <Box minHeight={'600px'}>{children}</Box>
-        <Footer />
       </body>
     </html>
   )

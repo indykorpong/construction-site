@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
 
 import { ContentBox } from '../../_components/content-box'
-import { MainHeader } from '../../_components/main-header'
+import { Title } from '../../_components/title'
 
 export default function AboutUs() {
   return (
@@ -25,7 +25,7 @@ export default function AboutUs() {
 const AboutUsCompanyInfo = () => {
   return (
     <>
-      <MainHeader>About Us</MainHeader>
+      <Title>About Us</Title>
 
       <Box display="flex" alignItems="center" justifyContent="flex-start">
         <Box
@@ -65,7 +65,7 @@ const AboutUsCompanyInfo = () => {
 const AboutUsOurGoal = () => {
   return (
     <>
-      <MainHeader>เป้าหมายของเรา</MainHeader>
+      <Title>เป้าหมายของเรา</Title>
 
       <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'}>
         <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
@@ -101,7 +101,7 @@ const AboutUsOurGoal = () => {
 const AboutUsAward = () => {
   return (
     <>
-      <MainHeader>สิทธิบัตร-รางวัล</MainHeader>
+      <Title>สิทธิบัตร-รางวัล</Title>
 
       <Box display={'flex'} justifyContent={'space-around'}>
         {[1, 2, 3].map((item, index) => {

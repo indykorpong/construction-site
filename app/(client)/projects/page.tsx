@@ -7,7 +7,7 @@ import { ProjectProps } from '../../types/components'
 import './styles.css'
 import { useRouter } from 'next/navigation'
 import { ContentBox } from '../../_components/content-box'
-import { MainHeader } from '../../_components/main-header'
+import { Title } from '../../_components/title'
 
 const projects: ProjectProps[] = [
   { id: 1, name: 'Project One', description: 'Description for project one' },
@@ -21,7 +21,7 @@ const ProjectsPage: FC = () => {
 
   return (
     <ContentBox>
-      <MainHeader>Our Projects</MainHeader>
+      <Title>Our Projects</Title>
 
       <div className="projects">
         {projects.map((project) => (
