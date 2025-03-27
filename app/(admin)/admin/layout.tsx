@@ -7,5 +7,9 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  return <Box minHeight={'600px'}>{children}</Box>
+  return (
+    <>
+      <Box minHeight={'600px'}>{children}</Box>
+    </>
+  )
 }
