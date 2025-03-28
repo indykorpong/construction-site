@@ -1,10 +1,9 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 import { CarouselComponent } from '../../_components/carousel'
 import { CardComponent } from '../../_components/card'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { ProjectProps } from '../../types/components'
 import { Box, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
@@ -96,8 +95,6 @@ const HomeCompanyInfo = () => {
 }
 
 const HomeProjects = () => {
-  const router = useRouter()
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [listProjects, setListProjects] = useState<ProjectProps[]>([
     { id: 1, name: 'Project One', description: 'Description for project one' },
@@ -116,14 +113,9 @@ const HomeProjects = () => {
           return (
             <div key={index} className="my-3 flex w-1/2 justify-center px-3">
               <div className="flex w-1/2 flex-col items-center justify-center">
-                <div
-                  style={{ width: 'fit-content' }}
-                  onClick={() => {
-                    router.push('/projects/' + project.id)
-                  }}
-                >
+                <Link href={'/projects/' + project.id} style={{ width: 'fit-content' }}>
                   <CardComponent title={project.name} description={project.description} imageUrl={project.imageUrl} />
-                </div>
+                </Link>
               </div>
             </div>
           )

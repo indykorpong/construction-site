@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'AA-SP Co., LTD.',
 }
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function ClientLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <>
       <Header />
