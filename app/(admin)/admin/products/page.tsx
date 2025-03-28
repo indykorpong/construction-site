@@ -1,9 +1,12 @@
+'use client'
 import { FC } from 'react'
+
+import { Title } from '../../../_components/title'
 
 const Products: FC = () => {
   return (
     <div>
-      <h1>Products</h1>
+      <Title>Products</Title>
     </div>
   )
 }

@@ -5,9 +5,9 @@ import { CardComponent } from '../../_components/card'
 import { ProjectProps } from '../../types/components'
 
 import './styles.css'
-import { useRouter } from 'next/navigation'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
+import Link from 'next/link'
 
 const projects: ProjectProps[] = [
   { id: 1, name: 'Project One', description: 'Description for project one' },
@@ -17,8 +17,6 @@ const projects: ProjectProps[] = [
 ]
 
 const ProjectsPage: FC = () => {
-  const router = useRouter()
-
   return (
     <ContentBox>
       <Title>Our Projects</Title>
@@ -26,14 +24,9 @@ const ProjectsPage: FC = () => {
       <div className="projects">
         {projects.map((project) => (
           <div key={project.id} className="card">
-            <div
-              style={{ width: 'fit-content' }}
-              onClick={() => {
-                router.push('/projects/' + project.id)
-              }}
-            >
+            <Link href={'/projects/' + project.id} style={{ width: 'fit-content' }}>
               <CardComponent title={project.name} description={project.description} />
-            </div>
+            </Link>
           </div>
         ))}
       </div>
