@@ -1,11 +1,16 @@
-'use client'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { Box, Card, CardActionArea, CardContent, CardMedia, Grid2, Link, Typography } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { Box, Link, Typography } from '@mui/material'
+import { Product, Image } from '@prisma/client'
+import { getProducts } from '@/lib/products'
+import ProductGrid from './product-grid'
 
-export default function Products() {
-  const router = useRouter()
+export type ProductWithImages = Product & {
+  images: Image[]
+}
+
+export default async function Products() {
+  const products = await getProducts()
   return (
     <ContentBox>
       <Title>Products</Title>
@@ -22,25 +27,7 @@ export default function Products() {
             ))}
           </Box>
         </Box>
-        <Grid2 container spacing={4} columns={24} width="75%">
-          {Array.from({ length: 9 }).map((_, index) => (
-            <Grid2 key={index} size={8}>
-              <Card sx={{ maxWidth: 350 }}>
-                <CardActionArea onClick={() => router.push(`/products/${index + 1}`)}>
-                  <CardMedia component="img" height="300" image="/file.svg" />
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      Product {index + 1}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Product {index + 1} description
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid2>
-          ))}
-        </Grid2>
+        <ProductGrid products={products} />
       </Box>
     </ContentBox>
   )
