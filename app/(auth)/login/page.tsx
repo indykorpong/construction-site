@@ -1,41 +1,35 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { Button } from '@mui/material'
+import { useActionState } from 'react'
 
+import { login } from '../../actions/auth'
 import './style.css'
 
 export default function Login() {
-  const router = useRouter()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [state, action, pending] = useActionState(login, undefined)
 
   return (
     <div className="login-page">
-      <form className="login-box">
+      <form action={action} className="login-box">
         <h3>Login</h3>
 
         <div>
-          <label>User</label>
+          <label>Email</label>
 
-          <input style={{ width: '100%' }} />
+          <input id="email" name="email" style={{ width: '100%' }} />
         </div>
 
         <div>
           <label>Password</label>
 
-          <input style={{ width: '100%' }} />
+          <input id="password" name="password" type="password" style={{ width: '100%' }} />
         </div>
 
         <div>
-          <Button variant="contained" style={{ marginRight: '10px' }}>
+          <Button disabled={pending} type="submit" variant="contained">
             Login
-          </Button>
-
-          <Button
-            onClick={() => {
-              router.push('/home')
-            }}
-          >
-            Home
           </Button>
         </div>
       </form>
