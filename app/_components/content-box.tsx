@@ -15,7 +15,7 @@ export const ContentBox: FC<ContentBoxProps> = ({ children, bgcolor }) => {
         maxWidth={'80rem'}
         flexDirection={'column'}
         gap={'1rem'}
-        paddingBlock={'3rem'}
+        padding={'3rem'}
       >
         {children}
       </Box>

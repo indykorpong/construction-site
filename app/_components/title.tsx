@@ -7,7 +7,7 @@ interface TitleProps {
 
 export const Title: FC<TitleProps> = ({ children }) => {
   return (
-    <Typography fontFamily={'Noto Sans Thai'} fontSize={'1.875rem'} lineHeight={'2.25rem'} fontWeight={700}>
+    <Typography variant={'h4'} fontWeight={700}>
       {children}
     </Typography>
   )
