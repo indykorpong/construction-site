@@ -6,8 +6,26 @@ export const theme = createTheme({
     primary: {
       main: '#32ADE6',
     },
+    secondary: {
+      main: '#CFD8DC',
+    },
+    background: {
+      default: 'aliceblue',
+    },
   },
   typography: {
     fontFamily: 'Noto Sans Thai, sans-serif',
+    h4: {
+      fontSize: '1.875rem',
+      lineHeight: '2.5rem',
+    },
+    h5: {
+      fontSize: '1.25rem',
+      lineHeight: '2rem',
+    },
+    body1: {
+      fontSize: '1.125rem',
+      lineHeight: '2rem',
+    },
   },
 })

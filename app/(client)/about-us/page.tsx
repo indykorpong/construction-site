@@ -12,11 +12,11 @@ export default function AboutUs() {
         <AboutUsCompanyInfo />
       </ContentBox>
 
-      <ContentBox bgcolor="#ccc">
+      <ContentBox bgcolor="secondary.main">
         <AboutUsOurGoal />
       </ContentBox>
 
-      <ContentBox bgcolor="aliceblue">
+      <ContentBox bgcolor="background.default">
         <AboutUsAward />
       </ContentBox>
     </>
@@ -28,32 +28,36 @@ const AboutUsCompanyInfo = () => {
     <>
       <Title>About Us</Title>
 
-      <Box display="flex" alignItems="center" justifyContent="flex-start">
+      <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
         <Box
-          component="img"
+          component={'img'}
           src={'/Head_Office.jpg'}
           alt={'Head office'}
-          display="flex"
-          maxWidth="50%"
+          display={'flex'}
+          maxWidth={'50%'}
+          height={'100%'}
           marginRight={6}
         />
 
-        <Box display="flex" flexDirection="column" overflow="hidden" justifyContent={'center'} maxWidth={'50%'}>
-          <Typography component="h2" fontFamily="Noto Sans Thai" fontSize={30} fontWeight={600} marginBottom={2}>
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          overflow={'hidden'}
+          justifyContent={'center'}
+          maxWidth={'50%'}
+          height={'100%'}
+        >
+          <Typography variant={'h4'} gutterBottom fontWeight={700}>
             บริษัท ดับเบิลเอ เอสพี จำกัด
           </Typography>
-
-          <Typography component="p" fontFamily="Noto Sans Thai" fontSize={18} sx={{ textIndent: 40 }}>
+          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
             บริษัท ดับเบิลเอ เอสพี จำกัด ได้ก่อตั้งขึ้นในปี พ.ศ. 2560
             โดยทีมบริหารที่มีความเชี่ยวชาญในด้านการก่อสร้างมากว่า 25ปี
             ด้วยความมุ่งมั่นที่จะให้บริการและจัดจำหน่ายแบบหล่อคอนกรีตประเภทต่างๆ
             รวมไปถึงนั่งร้านและอุปกรณ์ต่างๆที่ช่วยในการก่อสร้าง
             เพื่อให้งานก่อสร้างของลูกค้าเร็วและมีคุณภาพที่ดีกว่าการใช้อุปกรณ์ก่อสร้างทั่วไป ในราคาที่สมเหตุสมผล
           </Typography>
-
-          <br />
-
-          <Typography component="p" fontFamily="Noto Sans Thai" fontSize={18} sx={{ textIndent: 40 }}>
+          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
             นอกจากนี้ เรายังบริการให้คำแนะนำออกแบบพื้นที่ใช้งานจริง เพื่อประเมินราคา สอนติดตั้งและการใช้งานที่หน้างาน
             พร้อมรายการคำนวณ
           </Typography>
@@ -70,11 +74,11 @@ const AboutUsOurGoal = () => {
 
       <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'}>
         <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
-          <Typography variant="h5" marginBottom={2} textAlign={'center'}>
+          <Typography variant={'h5'} gutterBottom textAlign={'center'}>
             Vision
           </Typography>
 
-          <Typography variant="body1" style={{ textIndent: '2em' }}>
+          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
@@ -83,11 +87,11 @@ const AboutUsOurGoal = () => {
         </Box>
 
         <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
-          <Typography variant="h5" marginBottom={2} textAlign={'center'}>
+          <Typography variant={'h5'} gutterBottom textAlign={'center'}>
             Mission
           </Typography>
 
-          <Typography variant="body1" style={{ textIndent: '2em' }}>
+          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
             ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat

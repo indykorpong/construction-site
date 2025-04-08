@@ -14,21 +14,7 @@ export default async function Products() {
   return (
     <ContentBox>
       <Title>Products</Title>
-      <Box display="flex">
-        <Box width="25%" marginRight={4}>
-          <Typography variant="h2" fontSize={24} fontWeight={600} marginBottom={2}>
-            Categories
-          </Typography>
-          <Box width="100%" maxHeight={300} overflow="auto">
-            {Array.from({ length: 9 }).map((_, index) => (
-              <Link key={index} href={`/products/${index + 1}`} display="block" underline="none" paddingBottom={1}>
-                Product {index + 1}
-              </Link>
-            ))}
-          </Box>
-        </Box>
-        <ProductGrid products={products} />
-      </Box>
+      <ProductGrid products={products} />
     </ContentBox>
   )
 }

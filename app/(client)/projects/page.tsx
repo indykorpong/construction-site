@@ -3,11 +3,10 @@ import { FC } from 'react'
 
 import { CardComponent } from '../../_components/card'
 import { ProjectProps } from '../../types/components'
-
-import './styles.css'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
 import Link from 'next/link'
+import { Box } from '@mui/material'
 
 const projects: ProjectProps[] = [
   { id: 1, name: 'Project One', description: 'Description for project one' },
@@ -21,15 +20,15 @@ const ProjectsPage: FC = () => {
     <ContentBox>
       <Title>Our Projects</Title>
 
-      <div className="projects">
+      <Box display={'grid'} gridTemplateColumns={'50% 50%'} gridTemplateRows={'auto'} rowGap={2} marginBlock={2}>
         {projects.map((project) => (
-          <div key={project.id} className="card">
+          <Box key={project.id} display={'flex'} justifyContent={'center'}>
             <Link href={'/projects/' + project.id} style={{ width: 'fit-content' }}>
               <CardComponent title={project.name} description={project.description} />
             </Link>
-          </div>
+          </Box>
         ))}
-      </div>
+      </Box>
     </ContentBox>
   )
 }

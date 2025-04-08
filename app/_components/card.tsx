@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FC } from 'react'
 
 import { CardProps } from '../types/components'
+import { Box } from '@mui/material'
 
 export const CardComponent: FC<CardProps> = ({ title, description, imageUrl }) => {
   const imgDim = 50
@@ -15,9 +16,9 @@ export const CardComponent: FC<CardProps> = ({ title, description, imageUrl }) =
       {imageUrl ? (
         <CardMedia component="img" height={50} image={imageUrl} alt={title} />
       ) : (
-        <div className="flex justify-center">
+        <Box display={'flex'} justifyContent={'center'}>
           <Image src={'/file.svg'} alt={title} width={imgDim} height={imgDim} />
-        </div>
+        </Box>
       )}
 
       <CardContent>
