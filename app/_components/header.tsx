@@ -1,10 +1,10 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 import { FaRegEnvelope, FaPhoneAlt, FaRegClock } from 'react-icons/fa'
 
 export function Header() {
   return (
-    <header className="w-full bg-primary">
+    <Box width={'100%'} bgcolor={'primary.main'}>
       <Box
         marginInline={'auto'}
         display={'flex'}
@@ -15,22 +15,26 @@ export function Header() {
         paddingInline={'0.5rem'}
       >
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
-          <FaRegEnvelope />
+          <FaRegEnvelope color="white" />
           <SmallText>test@email.com</SmallText>
         </Box>
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
-          <FaPhoneAlt />
+          <FaPhoneAlt color="white" />
           <SmallText>081-234-5678</SmallText>
         </Box>
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
-          <FaRegClock />
+          <FaRegClock color="white" />
           <SmallText>Mon - Fri: 9:00 - 18:00</SmallText>
         </Box>
       </Box>
-    </header>
+    </Box>
   )
 }
 
 function SmallText({ children }: { children: ReactNode }) {
-  return <p className="text-sm text-white">{children}</p>
+  return (
+    <Typography variant="body2" color="white">
+      {children}
+    </Typography>
+  )
 }
