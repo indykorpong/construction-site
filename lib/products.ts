@@ -5,6 +5,9 @@ export async function getProducts() {
     include: {
       images: true,
     },
+    orderBy: {
+      id: 'asc',
+    },
   })
   return products
 }
