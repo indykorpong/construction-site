@@ -4,9 +4,13 @@ export async function getProjects() {
   const projects = await prisma.project.findMany({
     include: {
       images: true,
-      products: {
+      projectProducts: {
         include: {
-          images: true,
+          product: {
+            include: {
+              images: true,
+            },
+          },
         },
       },
     },
@@ -22,9 +26,13 @@ export async function getProject(id: number) {
     where: { id },
     include: {
       images: true,
-      products: {
+      projectProducts: {
         include: {
-          images: true,
+          product: {
+            include: {
+              images: true,
+            },
+          },
         },
       },
     },

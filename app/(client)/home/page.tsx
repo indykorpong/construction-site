@@ -33,8 +33,10 @@ export default function Home() {
 
   return (
     <>
-      <Box bgcolor="background.default">
-        <CarouselComponent loop={true}>{homePreview}</CarouselComponent>
+      <Box bgcolor={'background.default'}>
+        <Box maxWidth={'1280px'} height={'600px'} margin={'auto'}>
+          <CarouselComponent loop={true}>{homePreview}</CarouselComponent>
+        </Box>
       </Box>
 
       <ContentBox>

@@ -9,29 +9,27 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 
 import './styles.css'
-import { Box } from '@mui/material'
 
 type CarouselProps = {
   children: ReactNode[]
   loop: boolean
+  className?: string
 }
 
-export const CarouselComponent: FC<CarouselProps> = ({ children, loop }) => {
+export const CarouselComponent: FC<CarouselProps> = ({ children, loop, className = 'swiper' }) => {
   return (
-    <Box maxWidth="1280px" margin="auto">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
-        className="swiper"
-        speed={800}
-        loop={loop}
-      >
-        {children.map((child, index) => (
-          <SwiperSlide key={index}>{child}</SwiperSlide>
-        ))}
-      </Swiper>
-    </Box>
+    <Swiper
+      modules={[Navigation, Pagination]}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      className={className}
+      speed={800}
+      loop={loop}
+    >
+      {children.map((child, index) => (
+        <SwiperSlide key={index}>{child}</SwiperSlide>
+      ))}
+    </Swiper>
   )
 }
