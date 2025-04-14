@@ -1,8 +1,18 @@
 .swiper {
   width: 100%;
-  height: 600px;
+  height: 100%;
   --swiper-theme-color: white;
   --swiper-navigation-color: white;
+  --swiper-pagination-bullet-inactive-color: rgb(174, 174, 174);
+  --swiper-pagination-bullet-inactive-opacity: 0.3;
+  --swiper-pagination-bullet-size: 10px;
+}
+
+.swiper-black {
+  width: 100%;
+  height: 100%;
+  --swiper-theme-color: black;
+  --swiper-navigation-color: black;
   --swiper-pagination-bullet-inactive-color: rgb(174, 174, 174);
   --swiper-pagination-bullet-inactive-opacity: 0.3;
   --swiper-pagination-bullet-size: 10px;
