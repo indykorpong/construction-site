@@ -1,39 +1,20 @@
-'use client'
 import Image from 'next/image'
 import { CardComponent } from '../../../_components/card'
-import { useEffect, useState } from 'react'
-import { CardProps, ProjectProps } from '../../../types/components'
 import { ContentBox } from '@/app/_components/content-box'
 import { Title } from '@/app/_components/title'
 import { Box } from '@mui/material'
-import { useParams } from 'next/navigation'
-import { getProject } from '@/lib/projects'
+import { getProject } from '@/lib/project'
 
-export default function Project() {
-  const params = useParams()
-  const id = params?.id
+export default async function ProjectId({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
 
-  useEffect(() => {
-    if (!id) return
-    const fetchProject = async () => {
-      const project = await getProject(Number(id))
-      setProject(project)
-      setListProducts(
-        project?.products.map((product) => ({
-          title: product.name,
-          description: product.description,
-          imageUrl: product.images[0].url,
-        })) ?? [],
-      )
-    }
-    fetchProject()
-  }, [id])
-
-  const [project, setProject] = useState<ProjectProps | null>(null)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [listProducts, setListProducts] = useState<CardProps[]>([])
-
-  // TODO: Add a useEffect to fetch the list of products from the server
+  const project = await getProject(parseInt(id, 10))
+  const listProducts =
+    project?.projectProducts.map((projectProduct) => ({
+      title: projectProduct.product.name,
+      description: projectProduct.product.description,
+      imageUrl: projectProduct.product.images[0].url,
+    })) ?? []
 
   return (
     project && (

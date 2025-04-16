@@ -1,8 +1,7 @@
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { Box, Link, Typography } from '@mui/material'
 import { Product, Image } from '@prisma/client'
-import { getProducts } from '@/lib/products'
+import { getProducts } from '@/lib/product'
 import ProductGrid from './product-grid'
 
 export type ProductWithImages = Product & {
