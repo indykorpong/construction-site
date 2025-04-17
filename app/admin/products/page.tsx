@@ -1,10 +1,20 @@
-'use client'
+import { Product, Image } from '@prisma/client'
+import { getProducts } from '../../../lib/product'
+import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
+import ProductEditor from './products'
 
-export default function Products() {
+export type ProductWithImages = Product & {
+  images: Image[]
+}
+
+export default async function Products() {
+  const products = await getProducts()
+
   return (
-    <div>
+    <ContentBox sx={{ display: 'flex' }}>
       <Title>Products</Title>
-    </div>
+      <ProductEditor products={products} />
+    </ContentBox>
   )
 }
