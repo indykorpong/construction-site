@@ -1,8 +1,9 @@
 import { CarouselComponent } from '@/app/_components/carousel'
 import { ContentBox } from '@/app/_components/content-box'
+import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/product'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import Image from 'next/image'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
@@ -29,7 +30,7 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
       </ContentBox>
       <ContentBox sx={{ maxWidth: '40rem' }}>
         <Title>{product.name}</Title>
-        <Typography>{product.description}</Typography>
+        <TextWithLineBreak text={product.description} />
       </ContentBox>
     </Box>
   )

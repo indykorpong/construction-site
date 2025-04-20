@@ -19,7 +19,7 @@ type CarouselProps = {
 export const CarouselComponent: FC<CarouselProps> = ({ children, loop, className = 'swiper' }) => {
   return (
     <Swiper
-      modules={[Navigation, Pagination]}
+      modules={[Navigation, Pagination, Autoplay]}
       navigation
       pagination={{ clickable: true }}
       autoplay={{ delay: 2500, disableOnInteraction: false }}
