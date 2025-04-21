@@ -9,6 +9,10 @@ export const theme = createTheme({
     secondary: {
       main: '#CFD8DC',
     },
+    text: {
+      primary: '#000000',
+      secondary: '#116FAC',
+    },
     background: {
       default: 'aliceblue',
     },

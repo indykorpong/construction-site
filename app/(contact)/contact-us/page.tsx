@@ -1,5 +1,5 @@
 'use client'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
 
@@ -20,12 +20,13 @@ export default function ContactUs() {
 
         <Box maxWidth={'42rem'}>
           <Title>สำนักงานใหญ่</Title>
+          <Typography variant={'body1'}>
+            1213/144 ซอยลาดพร้าว 94 ถนนลาดพร้าว แขวงพลับพลา เขตวังทองหลาง กรุงเทพมหานคร 10310
+          </Typography>
           <br />
-          <p>1213/144 ซอยลาดพร้าว 94 ถนนลาดพร้าว แขวงพลับพลา เขตวังทองหลาง กรุงเทพมหานคร 10310</p>
-          <br />
-          <p>เบอร์โทรศัพท์: 083-097-9597</p>
-          <p>อีเมล: aasp8860@gmail.com</p>
-          <p>เวลาทำการ: จันทร์ - ศุกร์ เวลา 8:00 - 17:30 น.</p>
+          <Typography variant={'body1'}>เบอร์โทรศัพท์: 083-097-9597</Typography>
+          <Typography variant={'body1'}>อีเมล: aasp8860@gmail.com</Typography>
+          <Typography variant={'body1'}>เวลาทำการ: จันทร์ - ศุกร์ เวลา 8:00 - 17:30 น.</Typography>
         </Box>
       </Box>
     </ContentBox>

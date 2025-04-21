@@ -16,7 +16,7 @@ type CarouselProps = {
   className?: string
 }
 
-export const CarouselComponent: FC<CarouselProps> = ({ children, loop, className = 'swiper' }) => {
+export const CarouselComponent: FC<CarouselProps> = ({ children, loop, className = 'swiper-light' }) => {
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}

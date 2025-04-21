@@ -7,7 +7,7 @@ interface TitleProps {
 
 export const Title: FC<TitleProps> = ({ children }) => {
   return (
-    <Typography variant={'h4'} fontWeight={700}>
+    <Typography variant={'h4'} fontWeight={700} marginBottom={'2rem'} color={'text.secondary'}>
       {children}
     </Typography>
   )
