@@ -1,68 +1,17 @@
-'use client'
 import { Box, Typography } from '@mui/material'
-import Image from 'next/image'
-
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
+import { CompanyInfo } from '@/app/_components/company-info'
 
 export default function AboutUs() {
   return (
     <>
       <ContentBox>
-        <AboutUsCompanyInfo />
+        <CompanyInfo />
       </ContentBox>
-
-      <ContentBox bgcolor="secondary.main">
+      <ContentBox bgcolor="background.default">
         <AboutUsOurGoal />
       </ContentBox>
-
-      <ContentBox bgcolor="background.default">
-        <AboutUsAward />
-      </ContentBox>
-    </>
-  )
-}
-
-const AboutUsCompanyInfo = () => {
-  return (
-    <>
-      <Title>About Us</Title>
-
-      <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
-        <Box
-          component={'img'}
-          src={'/Head_Office.jpg'}
-          alt={'Head office'}
-          display={'flex'}
-          maxWidth={'50%'}
-          height={'100%'}
-          marginRight={6}
-        />
-
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
-          overflow={'hidden'}
-          justifyContent={'center'}
-          maxWidth={'50%'}
-          height={'100%'}
-        >
-          <Typography variant={'h4'} gutterBottom fontWeight={700}>
-            บริษัท ดับเบิลเอ เอสพี จำกัด
-          </Typography>
-          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
-            บริษัท ดับเบิลเอ เอสพี จำกัด ได้ก่อตั้งขึ้นในปี พ.ศ. 2560
-            โดยทีมบริหารที่มีความเชี่ยวชาญในด้านการก่อสร้างมากว่า 25ปี
-            ด้วยความมุ่งมั่นที่จะให้บริการและจัดจำหน่ายแบบหล่อคอนกรีตประเภทต่างๆ
-            รวมไปถึงนั่งร้านและอุปกรณ์ต่างๆที่ช่วยในการก่อสร้าง
-            เพื่อให้งานก่อสร้างของลูกค้าเร็วและมีคุณภาพที่ดีกว่าการใช้อุปกรณ์ก่อสร้างทั่วไป ในราคาที่สมเหตุสมผล
-          </Typography>
-          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
-            นอกจากนี้ เรายังบริการให้คำแนะนำออกแบบพื้นที่ใช้งานจริง เพื่อประเมินราคา สอนติดตั้งและการใช้งานที่หน้างาน
-            พร้อมรายการคำนวณ
-          </Typography>
-        </Box>
-      </Box>
     </>
   )
 }
@@ -98,24 +47,6 @@ const AboutUsOurGoal = () => {
             nulla pariatur.
           </Typography>
         </Box>
-      </Box>
-    </>
-  )
-}
-
-const AboutUsAward = () => {
-  return (
-    <>
-      <Title>สิทธิบัตร-รางวัล</Title>
-
-      <Box display={'flex'} justifyContent={'space-around'}>
-        {[1, 2, 3].map((item, index) => {
-          return (
-            <Box key={index} margin={4}>
-              <Image src={'/file.svg'} alt={`${item}`} height={100} width={100} />
-            </Box>
-          )
-        })}
       </Box>
     </>
   )

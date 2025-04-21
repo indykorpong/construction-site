@@ -133,6 +133,120 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
             ],
           },
         },
+        {
+          name: 'Quick Form',
+          description:
+            'Quick Form คือ ระบบ Prop Panel หรือแบบหล่อพื้นคอนกรีตที่มีระบบค้ำยันสำหรับใช้ในการ Support โครงสร้างเพื่อความปลอดภัยในการก่อสร้าง\n• สามารถใช้งานเทคอนกรีตพื้นตั้งแต่ชั้น 1 ขึ้นไป ทำให้การทำงาน สะดวก รวดเร็ว\n• ส่วนที่ทำการค้ำยันเรียกว่า Prop\n• แผ่นแบบหล่อที่ใช้รองรับน้ำหนักการเทคอนกรีต เรียกว่า Panel\n• หากต้องการใช้งานในบริเวณที่สูงเกินกว่าที่ Prop จะใช้ได้ สามารถใช้นั่งร้านระบบ Ring lock ร่วมกับระบบ Quick Form ได้เลย',
+          images: {
+            create: [
+              {
+                url: '/products/PropPanel/QuickForm/0.jpg',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/1.jpg',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/2.png',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/3.jpg',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/4.jpg',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/5.png',
+              },
+              {
+                url: '/products/PropPanel/QuickForm/6.jpg',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+]
+
+const projectData: Prisma.ProjectCreateInput[] = [
+  {
+    name: 'AIA Project',
+    description: 'ผู้รับเหมา : ไทยโอบายาชิ',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 2,
+        },
+        {
+          productId: 4,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: '/projects/AIA/1.jpg',
+        },
+        {
+          url: '/projects/AIA/2.jpg',
+        },
+        {
+          url: '/projects/AIA/3.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Avary Factory Project',
+    description: 'ผู้รับเหมา : ไทยโอบายาชิ',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: '/projects/Avary/1.jpg',
+        },
+        {
+          url: '/projects/Avary/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Dusit Central Park Project',
+    description: 'ผู้รับเหมา : ฤทธา',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: '/projects/DusitCentralPark/1.jpg',
+        },
+        {
+          url: '/projects/DusitCentralPark/2.jpg',
+        },
+        {
+          url: '/projects/DusitCentralPark/3.jpg',
+        },
+        {
+          url: '/projects/DusitCentralPark/4.jpg',
+        },
+        {
+          url: '/projects/DusitCentralPark/5.jpg',
+        },
       ],
     },
   },
@@ -142,6 +256,9 @@ export async function main() {
   await prisma.user.createMany({ data: userData })
   for (const productCategory of productCategoryData) {
     await prisma.productCategory.create({ data: productCategory })
+  }
+  for (const project of projectData) {
+    await prisma.project.create({ data: project })
   }
 }
 

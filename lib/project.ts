@@ -39,3 +39,14 @@ export async function getProject(id: number) {
   })
   return project
 }
+
+export async function getFourProjects() {
+  const projects = await prisma.project.findMany({
+    take: 4,
+    orderBy: { id: 'asc' },
+    include: {
+      images: true,
+    },
+  })
+  return projects
+}

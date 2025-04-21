@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
 
 export function Navbar() {
@@ -27,11 +27,31 @@ export function Navbar() {
           fontSize={'1.25rem'}
           fontWeight={'bold'}
         >
-          <Link href="/">HOME</Link>
-          <Link href="/products">PRODUCTS</Link>
-          <Link href="/projects">PROJECTS</Link>
-          <Link href="/about-us">ABOUT US</Link>
-          <Link href="/contact-us">CONTACT US</Link>
+          <Link href="/">
+            <Typography variant="h5" color="text.secondary" fontWeight={700}>
+              HOME
+            </Typography>
+          </Link>
+          <Link href="/product-categories">
+            <Typography variant="h5" color="text.secondary" fontWeight={700}>
+              PRODUCTS
+            </Typography>
+          </Link>
+          <Link href="/projects">
+            <Typography variant="h5" color="text.secondary" fontWeight={700}>
+              PROJECTS
+            </Typography>
+          </Link>
+          <Link href="/about-us">
+            <Typography variant="h5" color="text.secondary" fontWeight={700}>
+              ABOUT US
+            </Typography>
+          </Link>
+          <Link href="/contact-us">
+            <Typography variant="h5" color="text.secondary" fontWeight={700}>
+              CONTACT US
+            </Typography>
+          </Link>
         </Box>
       </Box>
     </Box>
