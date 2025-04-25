@@ -1,19 +1,20 @@
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { Product, Image } from '@prisma/client'
 import { getProducts } from '@/lib/product'
-import ProductGrid from './product-grid'
+import DataGrid from '@/app/_components/data-grid'
 
-export type ProductWithImages = Product & {
-  images: Image[]
-}
-
-export default async function Products() {
+export default async function ProductsPage() {
   const products = await getProducts()
+  const productsData = products.map((product) => ({
+    id: product.id,
+    name: product.name,
+    imageUrl: product.images[0].url,
+    link: '/products/' + product.id,
+  }))
   return (
     <ContentBox>
       <Title>Products</Title>
-      <ProductGrid products={products} />
+      <DataGrid data={productsData} />
     </ContentBox>
   )
 }
