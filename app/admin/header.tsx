@@ -1,13 +1,16 @@
-import { Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
+import LogoutIcon from '@mui/icons-material/Logout'
 
 import { logout } from '../actions/auth'
-import { Title } from '../_components/title'
 
 export const header = (
   <>
-    <Title>Dashboard</Title>
-    <Button variant="contained" color="secondary" onClick={logout}>
-      logout
-    </Button>
+    <Typography component={'h3'}>Dashboard</Typography>
+
+    <Box>
+      <Button variant="contained" color="error" startIcon={<LogoutIcon />} onClick={logout}>
+        logout
+      </Button>
+    </Box>
   </>
 )

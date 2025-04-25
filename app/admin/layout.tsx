@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import { Metadata } from 'next'
 import { ReactNode } from 'react'
 import { header } from './header'
-import { AdminNavBar } from './products/admin-navbar'
+import { AdminNavBar } from './admin-navbar'
 
 export const metadata: Metadata = {
   title: 'AA-SP Co., LTD. Admin',
@@ -15,10 +15,11 @@ export default function AdminLayout({ children }: Readonly<{ children: ReactNode
         <Box
           component="header"
           bgcolor="primary.main"
-          p={2}
           color="white"
           display={'flex'}
           justifyContent={'space-between'}
+          alignItems={'center'}
+          p={2}
         >
           {header}
         </Box>
