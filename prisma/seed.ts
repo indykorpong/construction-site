@@ -93,6 +93,72 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
               {
                 url: '/products/Framepro/4.jpg',
               },
+              {
+                url: '/products/Framepro/5.jpg',
+              },
+              {
+                url: '/products/Framepro/6.jpg',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: 'Industrial Sweeper',
+    products: {
+      create: [
+        {
+          name: 'Industrial Sweeper',
+          description:
+            'Industrial Sweeper หรือ รถดูดฝุ่นไฟฟ้า นั้นกวาดสะอาด รวดเร็ว เงียบและมีประสิทธิภาพสูง สามารถกวาดได้ถึง 10000 ㎡ ต่อชั่วโมง เทียบเท่ากับแรงงาน 8-10 คน แต่ใช้คนขับเพียง 1 คนให้ผลลัพธ์ที่สะอาดหมดจด  ใช้งานต่อเนื่องได้นาน 4-6 ชั่วโมงต่อการชาร์จเต็ม 1 ครั้ง\nรองรับการทำความสะอาดได้อย่างครอบคลุม ไม่ว่าจะเป็นฝุ่น เศษขยะ ใบไม้ หรือสิ่งสกปรกต่างๆ',
+          images: {
+            create: [
+              {
+                url: '/products/IndustrialSweeper/1.jpg',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: 'Mesh Sheet',
+    products: {
+      create: [
+        {
+          name: 'Mesh Sheet',
+          description:
+            'Mesh Sheet หรือ ผ้าใบกันฝุ่น ใช้สำหรับงานคลุมอาคารที่กำลังก่อสร้าง เพื่อป้องกันฝุ่นละออง และเศษวัสดุตกหล่นร่วงออกมานอกอาคาร โดยตาข่ายกันฝุ่นนี้ มีรูพรุนลมจึงผ่านได้นั่งร้านจะไม่ล้ม ในขณะเดียวกันก็ช่วยป้องกันฝุ่น ไม่ให้ฟุ้งกระจาย หรือหลุดรอดไปได้',
+          images: {
+            create: [
+              {
+                url: '/products/MeshSheet/1.jpg',
+              },
+              {
+                url: '/products/MeshSheet/2.jpg',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: 'Passenger Hoist Protective Door',
+    products: {
+      create: [
+        {
+          name: 'Passenger Hoist Protective Door',
+          description:
+            'ประตูลิฟต์สำหรับติดตั้งทั้งภายในและภายนอกอาคารในบริเวณที่ใช้ลิฟท์โดยสาร Passenger Hoist เพื่อเพิ่มความปลอดภัยในการทำงาน โดยวัสดุทำจากเหล็กแผ่นและมีความทนทานที่ดี',
+          images: {
+            create: [
+              {
+                url: '/products/PassengerHoistProtectiveDoor/1.jpg',
+              },
             ],
           },
         },
@@ -166,12 +232,155 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
       ],
     },
   },
+  {
+    name: 'Ringlock',
+    products: {
+      create: [
+        {
+          name: 'Base Collar',
+          description:
+            'Base Collar เป็นอุปกรณ์นั่งร้านระบบลิ่มล็อค ใช้สำหรับเสริมความสูง ของนั่งร้านลิ่มล็อค เพื่อต่อยึดเข้ากับคานนอน ผลิตจากท่อเหล็กชุบกัลวาไนซ์ เหมาะสำหรับงานพื้นที่สูงและหนา รองรับการหล่อคาน,เสาอาคารโครงสร้างขนาดใหญ่ หรือนำมาใช้ทำ นั่งร้าน Protection รอบตึกเพื่อขึงกับ Meshsheets\nมีขนาดดังนี้:\n- Base Collar Ø 48.3 มม\n- Base Collar Ø 60.3 มม',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/1.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Basejack',
+          description:
+            'Basejack หรือฐานปรับระดับล่างใช้งานร่วมกับ Standard เพื่อรองรับน้ำหนักและปรับความสูงให้ได้ระดับที่ต้องการ\nมีขนาดดังนี้:\n- U-Head Ø 48.3 มม',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/2.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Diagonal Brace',
+          description:
+            'Diagonal Brace เป็นอุปกรณ์นั่งร้านระบบ Ringlock ใช้สำหรับยึดโครงนั่งร้าน Ringlock ไม่ให้เอนเอียง เพิ่มความมั่นคง ความแข็งแรง ผลิตจากท่อเหล็กชุบกัลวาไนซ์เหมาะสำหรับงานพื้นที่สูงและหนา รองรับการหล่อคาน,เสาอาคารโครงสร้างขนาดใหญ่\nมีขนาดดังนี้:\n- Diagonal Brace Ø 48.3 มม\n- Diagonal Brace Ø 60.3 มม',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/3.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Ledger (Horizontal)',
+          description:
+            'Ledger(Horizontal) เป็นอุปกรณ์นั่งร้านระบบ Ringlock ใช้สำหรับยึดขาตั้งเข้าด้วยกัน และใช้วางพาดแผ่นทางเดิน และบันได ผลิตจากท่อเหล็กชุบกัลวาไนซ์ เเหมาะสำหรับงานพื้นที่สูงและหนา รองรับการหล่อคาน,เสาอาคารโครงสร้างขนาดใหญ่ หรือนำมาใช้ทำ นั่งร้าน Protection รอบตึกเพื่อขึงกับ Meshsheets\nมีขนาดดังนี้:\n- Ledger Ø 48.3 มม\n- Ledger Ø 60.3 มม',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/4.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Staircase',
+          description: 'Staircase หรือบันได ใช้เพื่อเดินขึ้น-ลง และทำงานในพื้นที่สูงพาดกับขานั่งร้านระบบ Ringlock',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/5.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Standard (Vertical)',
+          description:
+            'Standard เป็นอุปกรณ์นั่งร้านระบบ Ringlock ใช้เป็นเสาหลักรับคานนอน ผลิตจากท่อเหล็กชุบกัลวาไนซ์ เหมาะสำหรับงานพื้นที่สูงและหนา รองรับการหล่อคาน, เสาอาคารโครงสร้างขนาดใหญ่ หรือนำมาใช้ทำ นั่งร้าน Protection รอบตึกเพื่อขึงกับ Meshsheets\nมีขนาดดังนี้:\n- Standard Ø 48.3 มม เหมาะกับงานรับพื้นความหนา30- 60ซม. ,โครงสร้างงานเวทีที่รับน้ำหนักไม่มี\n- Standard Ø 60.3 มม เหมาะกับงานก่อสร้างสะพาน การหล่อคานและเสาขนาดใหญ่',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/6.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'U-Head',
+          description:
+            'U-Head หรือฐานปรับระดับบนใช้งานร่วมกับ Standard ใช้ค้ำยันเพื่อปรับความสูงในการเทพื้น,คาน\nมีขนาดดังนี้:\n- U-Head Ø 48.3 มม',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/7.png',
+              },
+            ],
+          },
+        },
+        {
+          name: 'Walking Platform',
+          description:
+            'Walking Platform หรือ แผ่นทางเดินนั่งร้าน คืออุปกรณ์เสริมสำหรับใช้ในงานก่อสร้างบนพื้นที่สูงควบคู่กับนั่งร้านระบบ Ringlock เพื่อความสะดวกและปลอดภัยในการเดินหรือนั่งบนนั่งร้าน',
+          images: {
+            create: [
+              {
+                url: '/products/Ringlock/8.png',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: 'Soundproof',
+    products: {
+      create: [
+        {
+          name: 'Soundproof',
+          description:
+            'Soundproof หรือ แผ่นกันเสียง คือแผ่น PVC ผสม Polyester ความหนาแน่นสูง มีคุณสมบัติไม่ลามไฟ ลดเสียงได้ 10 -15 db พร้อมรูตาไก่\nมีขนาดดังนี้:\n- 1.8 x 3.4 ม\n- 1.8 x 5.1 ม\n- 1.8 x 6.0 ม',
+          images: {
+            create: [
+              {
+                url: '/products/Soundproof/1.jpg',
+              },
+              {
+                url: '/products/Soundproof/2.jpg',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: 'Wheel Washing Machine',
+    products: {
+      create: [
+        {
+          name: 'Wheel Washing Machine',
+          description:
+            'Wheel Washing Machine หรือ เครื่องล้างล้ออัตโนมัติ  คืออุปกรณ์สำหรับล้างทำความสะอาดล้อรถที่ออกจากไซต์งานก่อสร้างอัตโนมัติ  โดยใช้เวลาเพียง 1 นาทีต่อการล้างล้อ 1 คู่ และน้ำที่ใช้ล้างนั้น จะรีไซเคิลเพื่อกลับมาใช้ล้างรถคันถัดไปได้',
+          images: {
+            create: [
+              {
+                url: '/products/WheelWashingMachine/1.png',
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
 ]
 
 const projectData: Prisma.ProjectCreateInput[] = [
   {
     name: 'AIA Project',
-    description: 'ผู้รับเหมา : ไทยโอบายาชิ',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
     projectProducts: {
       create: [
         {
@@ -196,16 +405,19 @@ const projectData: Prisma.ProjectCreateInput[] = [
         {
           url: '/projects/AIA/3.jpg',
         },
+        {
+          url: '/projects/AIA/4.jpg',
+        },
       ],
     },
   },
   {
     name: 'Avary Factory Project',
-    description: 'ผู้รับเหมา : ไทยโอบายาชิ',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
     projectProducts: {
       create: [
         {
-          productId: 1,
+          productId: 9,
         },
       ],
     },
@@ -222,7 +434,7 @@ const projectData: Prisma.ProjectCreateInput[] = [
   },
   {
     name: 'Dusit Central Park Project',
-    description: 'ผู้รับเหมา : ฤทธา',
+    description: 'ผู้รับเหมา : บริษัท ฤทธา จำกัด',
     projectProducts: {
       create: [
         {
@@ -244,11 +456,71 @@ const projectData: Prisma.ProjectCreateInput[] = [
         {
           url: '/projects/DusitCentralPark/4.jpg',
         },
+      ],
+    },
+  },
+  {
+    name: 'Grand Center Point',
+    description: 'ผู้รับเหมา : บริษัท ฤทธา จำกัด',
+    projectProducts: {
+      create: [
         {
-          url: '/projects/DusitCentralPark/5.jpg',
+          productId: 1,
         },
       ],
     },
+    images: {
+      create: [
+        {
+          url: '/projects/GrandCenterPoint/1.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Grand Center Point Pattaya 3',
+    description: 'ผู้รับเหมา : บริษัท พรีบิลท์ จำกัด (มหาชน)',
+    projectProducts: {
+      create: [
+        {
+          productId: 2,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: '/projects/GrandCenterPointPattaya3/1.jpg',
+        },
+        {
+          url: '/projects/GrandCenterPointPattaya3/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'King Square Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 2,
+        },
+        {
+          productId: 7,
+        },
+        {
+          productId: 8,
+        },
+        {
+          productId: 18,
+        },
+      ],
+    },
+    images: {},
   },
 ]
 
