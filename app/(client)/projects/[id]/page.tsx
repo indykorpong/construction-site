@@ -50,28 +50,6 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
       </Grid2>
       <Title>Products in this project</Title>
       <DataGrid data={projectProducts} />
-      {/* <Box
-        display={'flex'}
-        width={'100%'}
-        flexWrap={'wrap'}
-        justifyContent={'start'}
-        alignItems={'center'}
-        marginBottom={'2rem'}
-      >
-        {projectProducts &&
-          projectProducts.map((product, index) => (
-            <Box
-              key={index}
-              display={'flex'}
-              maxWidth={'25%'}
-              marginRight={'1rem'}
-              alignItems={'center'}
-              justifyContent={'start'}
-            >
-              <CardComponent title={product.title} imageUrl={product.imageUrl} />
-            </Box>
-          ))}
-      </Box> */}
     </ContentBox>
   )
 }

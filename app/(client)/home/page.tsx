@@ -53,7 +53,7 @@ const HomeProjects = async () => {
   const projectsData = projects.map((project) => ({
     id: project.id,
     name: project.name,
-    imageUrl: project.images[0].url,
+    imageUrl: project.images[0]?.url || '',
     link: `/projects/${project.id}`,
   }))
 
