@@ -1,3 +1,4 @@
+import { minioClient } from './minio'
 import prisma from './prisma'
 
 export async function getProducts() {
@@ -9,7 +10,20 @@ export async function getProducts() {
       id: 'asc',
     },
   })
-  return products
+
+  const productsData = await Promise.all(
+    products.map(async (product) => ({
+      ...product,
+      images: await Promise.all(
+        product.images.map(async (image) => {
+          image.url = await minioClient.getFileUrl(image.url)
+          return image
+        }),
+      ),
+    })),
+  )
+
+  return productsData
 }
 
 export async function getProduct(id: number) {
@@ -19,7 +33,22 @@ export async function getProduct(id: number) {
       images: true,
     },
   })
-  return product
+
+  if (!product) {
+    return null
+  }
+
+  const productData = {
+    ...product,
+    images: await Promise.all(
+      product.images.map(async (image) => {
+        image.url = await minioClient.getFileUrl(image.url)
+        return image
+      }),
+    ),
+  }
+
+  return productData
 }
 
 export async function getProductCategories() {
@@ -35,7 +64,25 @@ export async function getProductCategories() {
       id: 'asc',
     },
   })
-  return productCategories
+
+  const productCategoriesData = await Promise.all(
+    productCategories.map(async (productCategory) => ({
+      ...productCategory,
+      products: await Promise.all(
+        productCategory.products.map(async (product) => ({
+          ...product,
+          images: await Promise.all(
+            product.images.map(async (image) => {
+              image.url = await minioClient.getFileUrl(image.url)
+              return image
+            }),
+          ),
+        })),
+      ),
+    })),
+  )
+
+  return productCategoriesData
 }
 
 export async function getProductCategory(id: number) {
@@ -49,5 +96,25 @@ export async function getProductCategory(id: number) {
       },
     },
   })
-  return productCategory
+
+  if (!productCategory) {
+    return null
+  }
+
+  const productCategoryData = {
+    ...productCategory,
+    products: await Promise.all(
+      productCategory?.products.map(async (product) => ({
+        ...product,
+        images: await Promise.all(
+          product.images.map(async (image) => {
+            image.url = await minioClient.getFileUrl(image.url)
+            return image
+          }),
+        ),
+      })),
+    ),
+  }
+
+  return productCategoryData
 }

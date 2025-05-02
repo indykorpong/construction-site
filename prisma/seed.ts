@@ -22,10 +22,10 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/AutoClimbingFormwork/1.jpg',
+                url: 'products/AutoClimbingFormwork/1.jpg',
               },
               {
-                url: '/products/AutoClimbingFormwork/2.jpg',
+                url: 'products/AutoClimbingFormwork/2.jpg',
               },
             ],
           },
@@ -44,7 +44,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/AutoClimbingProtection/1.jpg',
+                url: 'products/AutoClimbingProtection/1.jpg',
               },
             ],
           },
@@ -63,7 +63,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/DustDetector/1.png',
+                url: 'products/DustDetector/1.png',
               },
             ],
           },
@@ -82,22 +82,22 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Framepro/1.jpg',
+                url: 'products/Framepro/1.jpg',
               },
               {
-                url: '/products/Framepro/2.jpg',
+                url: 'products/Framepro/2.jpg',
               },
               {
-                url: '/products/Framepro/3.jpg',
+                url: 'products/Framepro/3.jpg',
               },
               {
-                url: '/products/Framepro/4.jpg',
+                url: 'products/Framepro/4.jpg',
               },
               {
-                url: '/products/Framepro/5.jpg',
+                url: 'products/Framepro/5.jpg',
               },
               {
-                url: '/products/Framepro/6.jpg',
+                url: 'products/Framepro/6.jpg',
               },
             ],
           },
@@ -116,7 +116,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/IndustrialSweeper/1.jpg',
+                url: 'products/IndustrialSweeper/1.jpg',
               },
             ],
           },
@@ -135,10 +135,10 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/MeshSheet/1.jpg',
+                url: 'products/MeshSheet/1.jpg',
               },
               {
-                url: '/products/MeshSheet/2.jpg',
+                url: 'products/MeshSheet/2.jpg',
               },
             ],
           },
@@ -157,7 +157,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/PassengerHoistProtectiveDoor/1.jpg',
+                url: 'products/PassengerHoistProtectiveDoor/1.jpg',
               },
             ],
           },
@@ -176,25 +176,25 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/0.jpg',
+                url: 'products/PropPanel/EarlyDismantlePanel/0.jpg',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/1.png',
+                url: 'products/PropPanel/EarlyDismantlePanel/1.png',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/2.png',
+                url: 'products/PropPanel/EarlyDismantlePanel/2.png',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/3.png',
+                url: 'products/PropPanel/EarlyDismantlePanel/3.png',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/4.jpg',
+                url: 'products/PropPanel/EarlyDismantlePanel/4.jpg',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/5.png',
+                url: 'products/PropPanel/EarlyDismantlePanel/5.png',
               },
               {
-                url: '/products/PropPanel/EarlyDismantlePanel/6.jpg',
+                url: 'products/PropPanel/EarlyDismantlePanel/6.jpg',
               },
             ],
           },
@@ -206,25 +206,25 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/PropPanel/QuickForm/0.jpg',
+                url: 'products/PropPanel/QuickForm/0.jpg',
               },
               {
-                url: '/products/PropPanel/QuickForm/1.jpg',
+                url: 'products/PropPanel/QuickForm/1.jpg',
               },
               {
-                url: '/products/PropPanel/QuickForm/2.png',
+                url: 'products/PropPanel/QuickForm/2.png',
               },
               {
-                url: '/products/PropPanel/QuickForm/3.jpg',
+                url: 'products/PropPanel/QuickForm/3.jpg',
               },
               {
-                url: '/products/PropPanel/QuickForm/4.jpg',
+                url: 'products/PropPanel/QuickForm/4.jpg',
               },
               {
-                url: '/products/PropPanel/QuickForm/5.png',
+                url: 'products/PropPanel/QuickForm/5.png',
               },
               {
-                url: '/products/PropPanel/QuickForm/6.jpg',
+                url: 'products/PropPanel/QuickForm/6.jpg',
               },
             ],
           },
@@ -243,7 +243,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/1.png',
+                url: 'products/Ringlock/1.png',
               },
             ],
           },
@@ -255,7 +255,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/2.png',
+                url: 'products/Ringlock/2.png',
               },
             ],
           },
@@ -267,7 +267,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/3.png',
+                url: 'products/Ringlock/3.png',
               },
             ],
           },
@@ -279,7 +279,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/4.png',
+                url: 'products/Ringlock/4.png',
               },
             ],
           },
@@ -290,7 +290,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/5.png',
+                url: 'products/Ringlock/5.png',
               },
             ],
           },
@@ -302,7 +302,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/6.png',
+                url: 'products/Ringlock/6.png',
               },
             ],
           },
@@ -314,7 +314,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/7.png',
+                url: 'products/Ringlock/7.png',
               },
             ],
           },
@@ -326,7 +326,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Ringlock/8.png',
+                url: 'products/Ringlock/8.png',
               },
             ],
           },
@@ -345,10 +345,10 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/Soundproof/1.jpg',
+                url: 'products/Soundproof/1.jpg',
               },
               {
-                url: '/products/Soundproof/2.jpg',
+                url: 'products/Soundproof/2.jpg',
               },
             ],
           },
@@ -367,7 +367,7 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
           images: {
             create: [
               {
-                url: '/products/WheelWashingMachine/1.png',
+                url: 'products/WheelWashingMachine/1.png',
               },
             ],
           },
@@ -397,16 +397,16 @@ const projectData: Prisma.ProjectCreateInput[] = [
     images: {
       create: [
         {
-          url: '/projects/AIA/1.jpg',
+          url: 'projects/AIA/1.jpg',
         },
         {
-          url: '/projects/AIA/2.jpg',
+          url: 'projects/AIA/2.jpg',
         },
         {
-          url: '/projects/AIA/3.jpg',
+          url: 'projects/AIA/3.jpg',
         },
         {
-          url: '/projects/AIA/4.jpg',
+          url: 'projects/AIA/4.jpg',
         },
       ],
     },
@@ -424,10 +424,10 @@ const projectData: Prisma.ProjectCreateInput[] = [
     images: {
       create: [
         {
-          url: '/projects/Avary/1.jpg',
+          url: 'projects/Avary/1.jpg',
         },
         {
-          url: '/projects/Avary/2.jpg',
+          url: 'projects/Avary/2.jpg',
         },
       ],
     },
@@ -445,16 +445,16 @@ const projectData: Prisma.ProjectCreateInput[] = [
     images: {
       create: [
         {
-          url: '/projects/DusitCentralPark/1.jpg',
+          url: 'projects/DusitCentralPark/1.jpg',
         },
         {
-          url: '/projects/DusitCentralPark/2.jpg',
+          url: 'projects/DusitCentralPark/2.jpg',
         },
         {
-          url: '/projects/DusitCentralPark/3.jpg',
+          url: 'projects/DusitCentralPark/3.jpg',
         },
         {
-          url: '/projects/DusitCentralPark/4.jpg',
+          url: 'projects/DusitCentralPark/4.jpg',
         },
       ],
     },
@@ -472,7 +472,7 @@ const projectData: Prisma.ProjectCreateInput[] = [
     images: {
       create: [
         {
-          url: '/projects/GrandCenterPoint/1.jpg',
+          url: 'projects/GrandCenterPoint/1.jpg',
         },
       ],
     },
@@ -490,10 +490,10 @@ const projectData: Prisma.ProjectCreateInput[] = [
     images: {
       create: [
         {
-          url: '/projects/GrandCenterPointPattaya3/1.jpg',
+          url: 'projects/GrandCenterPointPattaya3/1.jpg',
         },
         {
-          url: '/projects/GrandCenterPointPattaya3/2.jpg',
+          url: 'projects/GrandCenterPointPattaya3/2.jpg',
         },
       ],
     },
