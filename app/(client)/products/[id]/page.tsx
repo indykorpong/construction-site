@@ -3,7 +3,7 @@ import { ContentBox } from '@/app/_components/content-box'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/product'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -35,6 +35,9 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
       </ContentBox>
       <ContentBox sx={{ maxWidth: '40rem' }}>
         <Title>{product.name}</Title>
+        <Typography variant={'h6'} color={'text.secondary'}>
+          Product Details
+        </Typography>
         <TextWithLineBreak text={product.description} />
       </ContentBox>
     </Box>

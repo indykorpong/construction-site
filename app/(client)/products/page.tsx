@@ -8,7 +8,7 @@ export default async function ProductsPage() {
   const productsData = products.map((product) => ({
     id: product.id,
     name: product.name,
-    imageUrl: product.images[0].url,
+    imageUrl: product.images?.[0]?.url,
     link: '/products/' + product.id,
   }))
   return (

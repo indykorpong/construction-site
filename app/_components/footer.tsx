@@ -13,9 +13,9 @@ export function Footer() {
             <Typography variant={'body1'} marginBottom={2}>
               1213/144 ซอยลาดพร้าว 94 ถนนลาดพร้าว แขวงพลับพลา เขตวังทองหลาง กรุงเทพมหานคร 10310
             </Typography>
-            <Typography variant={'body1'}>เบอร์โทรศัพท์: 02-375-0944</Typography>
-            <Typography variant={'body1'}>อีเมล: test@email.com</Typography>
-            <Typography variant={'body1'}>เวลาทำการ: จันทร์ - ศุกร์ 09:00 - 18:00</Typography>
+            <Typography variant={'body1'}>เบอร์โทรศัพท์: 083-097-9597</Typography>
+            <Typography variant={'body1'}>อีเมล: aasp8860@gmail.com</Typography>
+            <Typography variant={'body1'}>เวลาทำการ: จันทร์ - ศุกร์ 08:00 - 17:30 น.</Typography>
           </Box>
           <Box maxWidth={'50%'}>
             <iframe
