@@ -10,164 +10,115 @@ const userData: Prisma.UserCreateInput[] = [
   },
 ]
 
-const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
+const productData: Prisma.ProductCreateInput[] = [
   {
     name: 'Auto Climbing Formwork',
-    products: {
+    description:
+      'Auto Climbing Formwork คือระบบที่ใช้สำหรับการก่อสร้าง CoreWall รูปแบบใหม่ที่ใช้ระบบไฮดรอลิคในการเคลื่อนย้ายโครงสร้างทั้งระบบขึ้นไปตามโครงสร้างของ Corewall ด้วยตัวมันเอง  โดยไม้แบบที่ใช้ในระบบจะเป็นไม้แบบเหล็กที่มีความแข็งแรงและพื้นผิวที่ดี พื้นผิวของผนัง Corewall จึงออกมาสวยงาม  นอกจากนี้ยังมีขั้นตอนสำหรับการปรับแนวดิ่งทุกครั้งก่อนการเทคอนกรีตเพื่อป้องกันการล้มดิ่ง',
+    images: {
       create: [
         {
-          name: 'Auto Climbing Formwork',
-          description:
-            'Auto Climbing Formwork คือระบบที่ใช้สำหรับการก่อสร้าง CoreWall รูปแบบใหม่ที่ใช้ระบบไฮดรอลิคในการเคลื่อนย้ายโครงสร้างทั้งระบบขึ้นไปตามโครงสร้างของ Corewall ด้วยตัวมันเอง  โดยไม้แบบที่ใช้ในระบบจะเป็นไม้แบบเหล็กที่มีความแข็งแรงและพื้นผิวที่ดี พื้นผิวของผนัง Corewall จึงออกมาสวยงาม  นอกจากนี้ยังมีขั้นตอนสำหรับการปรับแนวดิ่งทุกครั้งก่อนการเทคอนกรีตเพื่อป้องกันการล้มดิ่ง',
-          images: {
-            create: [
-              {
-                url: 'products/AutoClimbingFormwork/1.jpg',
-              },
-              {
-                url: 'products/AutoClimbingFormwork/2.jpg',
-              },
-            ],
-          },
+          url: 'products/AutoClimbingFormwork/1.jpg',
+        },
+        {
+          url: 'products/AutoClimbingFormwork/2.jpg',
         },
       ],
     },
   },
   {
     name: 'Auto Climbing Protection',
-    products: {
+    description:
+      'Auto Climbing Protection คือระบบป้องกันความปลอดภัยที่ติดตั้งรอบโครงสร้างอาคาร สามารถปรับระดับขึ้นลงตามความคืบหน้าของงานก่อสร้างได้อย่างมีประสิทธิภาพ โครงสร้างของตัว Protection นี้มีความแข็งแรงและมั่นคง เปลี่ยนพื้นที่ทำงานบนตึกให้เป็นพื้นที่ปิดรอบด้านเพื่อเพิ่มความปลอดภัย และยังสามารถแบ่งส่วนที่จะเลื่อนขึ้นได้ตามลำดับขั้นของการก่อสร้าง ซึ่งสิ่งเหล่านี้ช่วยตอบสนองความต้องการด้านความปลอดภัย ความสวยงาม และความต่อเนื่องของงาน ด้วยคุณสมบัติที่เรียบง่าย และใช้งานสะดวก',
+    images: {
       create: [
         {
-          name: 'Auto Climbing Protection',
-          description:
-            'Auto Climbing Protection คือระบบป้องกันความปลอดภัยที่ติดตั้งรอบโครงสร้างอาคาร สามารถปรับระดับขึ้นลงตามความคืบหน้าของงานก่อสร้างได้อย่างมีประสิทธิภาพ โครงสร้างของตัว Protection นี้มีความแข็งแรงและมั่นคง เปลี่ยนพื้นที่ทำงานบนตึกให้เป็นพื้นที่ปิดรอบด้านเพื่อเพิ่มความปลอดภัย และยังสามารถแบ่งส่วนที่จะเลื่อนขึ้นได้ตามลำดับขั้นของการก่อสร้าง ซึ่งสิ่งเหล่านี้ช่วยตอบสนองความต้องการด้านความปลอดภัย ความสวยงาม และความต่อเนื่องของงาน ด้วยคุณสมบัติที่เรียบง่าย และใช้งานสะดวก',
-          images: {
-            create: [
-              {
-                url: 'products/AutoClimbingProtection/1.jpg',
-              },
-            ],
-          },
+          url: 'products/AutoClimbingProtection/1.jpg',
         },
       ],
     },
   },
   {
     name: 'Dust Detector',
-    products: {
+    description:
+      'Dust Detector หรือ เครื่องตรวจวัดฝุ่น คืออุปกรณ์ตรวจวัดฝุ่นพร้อมหน้าจอแสดงผล ที่สามารถแสดงผลได้แบบ Real time โดยค่าที่สามารถวัดผลได้นั้นจะมี\n1. วันที่และเวลา\n2. PM 2.5\n3. PM 10\n4. อุณหภูมิ\n5. ความดังเสียง (dB)\n6. ความชื้นสัมพัทธ์',
+    images: {
       create: [
         {
-          name: 'Dust Detector',
-          description:
-            'Dust Detector หรือ เครื่องตรวจวัดฝุ่น คืออุปกรณ์ตรวจวัดฝุ่นพร้อมหน้าจอแสดงผล ที่สามารถแสดงผลได้แบบ Real time โดยค่าที่สามารถวัดผลได้นั้นจะมี\n1. วันที่และเวลา\n2. PM 2.5\n3. PM 10\n4. อุณหภูมิ\n5. ความดังเสียง (dB)\n6. ความชื้นสัมพัทธ์',
-          images: {
-            create: [
-              {
-                url: 'products/DustDetector/1.png',
-              },
-            ],
-          },
+          url: 'products/DustDetector/1.png',
         },
       ],
     },
   },
   {
     name: 'Framepro',
-    products: {
+    description:
+      'Framepro คือไม้แบบเหล็กกล้าอเนกประสงค์ที่มีน้ำหนักเบาเพียง 30 kg/m2  กรุด้วยไม้อัด 15 mm สามารถนำไปใช้ได้ตั้งแต่งานกำแพง งานเสา (สามารถปรับขนาดได้ทุก 5 cm) งาน Footing รวมถึงนำไปใช้งานคานได้\nขนาดของ Standard Panel คือ\nกว้าง: 900mm, 750mm, 600mm, 450mm, 300mm\nสูง: 3000mm, 2700mm, 1500mm, 1200mm',
+    images: {
       create: [
         {
-          name: 'Framepro',
-          description:
-            'Framepro คือไม้แบบเหล็กกล้าอเนกประสงค์ที่มีน้ำหนักเบาเพียง 30 kg/m2  กรุด้วยไม้อัด 15 mm สามารถนำไปใช้ได้ตั้งแต่งานกำแพง งานเสา (สามารถปรับขนาดได้ทุก 5 cm) งาน Footing รวมถึงนำไปใช้งานคานได้\nขนาดของ Standard Panel คือ\nกว้าง: 900mm, 750mm, 600mm, 450mm, 300mm\nสูง: 3000mm, 2700mm, 1500mm, 1200mm',
-          images: {
-            create: [
-              {
-                url: 'products/Framepro/1.jpg',
-              },
-              {
-                url: 'products/Framepro/2.jpg',
-              },
-              {
-                url: 'products/Framepro/3.jpg',
-              },
-              {
-                url: 'products/Framepro/4.jpg',
-              },
-              {
-                url: 'products/Framepro/5.jpg',
-              },
-              {
-                url: 'products/Framepro/6.jpg',
-              },
-            ],
-          },
+          url: 'products/Framepro/1.jpg',
+        },
+        {
+          url: 'products/Framepro/2.jpg',
+        },
+        {
+          url: 'products/Framepro/3.jpg',
+        },
+        {
+          url: 'products/Framepro/4.jpg',
+        },
+        {
+          url: 'products/Framepro/5.jpg',
+        },
+        {
+          url: 'products/Framepro/6.jpg',
         },
       ],
     },
   },
   {
     name: 'Industrial Sweeper',
-    products: {
+    description:
+      'Industrial Sweeper หรือ รถดูดฝุ่นไฟฟ้า นั้นกวาดสะอาด รวดเร็ว เงียบและมีประสิทธิภาพสูง สามารถกวาดได้ถึง 10000 ㎡ ต่อชั่วโมง เทียบเท่ากับแรงงาน 8-10 คน แต่ใช้คนขับเพียง 1 คนให้ผลลัพธ์ที่สะอาดหมดจด  ใช้งานต่อเนื่องได้นาน 4-6 ชั่วโมงต่อการชาร์จเต็ม 1 ครั้ง\nรองรับการทำความสะอาดได้อย่างครอบคลุม ไม่ว่าจะเป็นฝุ่น เศษขยะ ใบไม้ หรือสิ่งสกปรกต่างๆ',
+    images: {
       create: [
         {
-          name: 'Industrial Sweeper',
-          description:
-            'Industrial Sweeper หรือ รถดูดฝุ่นไฟฟ้า นั้นกวาดสะอาด รวดเร็ว เงียบและมีประสิทธิภาพสูง สามารถกวาดได้ถึง 10000 ㎡ ต่อชั่วโมง เทียบเท่ากับแรงงาน 8-10 คน แต่ใช้คนขับเพียง 1 คนให้ผลลัพธ์ที่สะอาดหมดจด  ใช้งานต่อเนื่องได้นาน 4-6 ชั่วโมงต่อการชาร์จเต็ม 1 ครั้ง\nรองรับการทำความสะอาดได้อย่างครอบคลุม ไม่ว่าจะเป็นฝุ่น เศษขยะ ใบไม้ หรือสิ่งสกปรกต่างๆ',
-          images: {
-            create: [
-              {
-                url: 'products/IndustrialSweeper/1.jpg',
-              },
-            ],
-          },
+          url: 'products/IndustrialSweeper/1.jpg',
         },
       ],
     },
   },
   {
     name: 'Mesh Sheet',
-    products: {
+    description:
+      'Mesh Sheet หรือ ผ้าใบกันฝุ่น ใช้สำหรับงานคลุมอาคารที่กำลังก่อสร้าง เพื่อป้องกันฝุ่นละออง และเศษวัสดุตกหล่นร่วงออกมานอกอาคาร โดยตาข่ายกันฝุ่นนี้ มีรูพรุนลมจึงผ่านได้นั่งร้านจะไม่ล้ม ในขณะเดียวกันก็ช่วยป้องกันฝุ่น ไม่ให้ฟุ้งกระจาย หรือหลุดรอดไปได้',
+    images: {
       create: [
         {
-          name: 'Mesh Sheet',
-          description:
-            'Mesh Sheet หรือ ผ้าใบกันฝุ่น ใช้สำหรับงานคลุมอาคารที่กำลังก่อสร้าง เพื่อป้องกันฝุ่นละออง และเศษวัสดุตกหล่นร่วงออกมานอกอาคาร โดยตาข่ายกันฝุ่นนี้ มีรูพรุนลมจึงผ่านได้นั่งร้านจะไม่ล้ม ในขณะเดียวกันก็ช่วยป้องกันฝุ่น ไม่ให้ฟุ้งกระจาย หรือหลุดรอดไปได้',
-          images: {
-            create: [
-              {
-                url: 'products/MeshSheet/1.jpg',
-              },
-              {
-                url: 'products/MeshSheet/2.jpg',
-              },
-            ],
-          },
+          url: 'products/MeshSheet/1.jpg',
+        },
+        {
+          url: 'products/MeshSheet/2.jpg',
         },
       ],
     },
   },
   {
     name: 'Passenger Hoist Protective Door',
-    products: {
+    description:
+      'ประตูลิฟต์สำหรับติดตั้งทั้งภายในและภายนอกอาคารในบริเวณที่ใช้ลิฟท์โดยสาร Passenger Hoist เพื่อเพิ่มความปลอดภัยในการทำงาน โดยวัสดุทำจากเหล็กแผ่นและมีความทนทานที่ดี',
+    images: {
       create: [
         {
-          name: 'Passenger Hoist Protective Door',
-          description:
-            'ประตูลิฟต์สำหรับติดตั้งทั้งภายในและภายนอกอาคารในบริเวณที่ใช้ลิฟท์โดยสาร Passenger Hoist เพื่อเพิ่มความปลอดภัยในการทำงาน โดยวัสดุทำจากเหล็กแผ่นและมีความทนทานที่ดี',
-          images: {
-            create: [
-              {
-                url: 'products/PassengerHoistProtectiveDoor/1.jpg',
-              },
-            ],
-          },
+          url: 'products/PassengerHoistProtectiveDoor/1.jpg',
         },
       ],
     },
   },
   {
     name: 'Prop Panel',
-    products: {
+    childrenProducts: {
       create: [
         {
           name: 'Early Dismantle Panel',
@@ -234,7 +185,14 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
   },
   {
     name: 'Ringlock',
-    products: {
+    images: {
+      create: [
+        {
+          url: 'products/Ringlock/0.png',
+        },
+      ],
+    },
+    childrenProducts: {
       create: [
         {
           name: 'Base Collar',
@@ -336,41 +294,27 @@ const productCategoryData: Prisma.ProductCategoryCreateInput[] = [
   },
   {
     name: 'Soundproof',
-    products: {
+    description:
+      'Soundproof หรือ แผ่นกันเสียง คือแผ่น PVC ผสม Polyester ความหนาแน่นสูง มีคุณสมบัติไม่ลามไฟ ลดเสียงได้ 10 -15 db พร้อมรูตาไก่\nมีขนาดดังนี้:\n- 1.8 x 3.4 ม\n- 1.8 x 5.1 ม\n- 1.8 x 6.0 ม',
+    images: {
       create: [
         {
-          name: 'Soundproof',
-          description:
-            'Soundproof หรือ แผ่นกันเสียง คือแผ่น PVC ผสม Polyester ความหนาแน่นสูง มีคุณสมบัติไม่ลามไฟ ลดเสียงได้ 10 -15 db พร้อมรูตาไก่\nมีขนาดดังนี้:\n- 1.8 x 3.4 ม\n- 1.8 x 5.1 ม\n- 1.8 x 6.0 ม',
-          images: {
-            create: [
-              {
-                url: 'products/Soundproof/1.jpg',
-              },
-              {
-                url: 'products/Soundproof/2.jpg',
-              },
-            ],
-          },
+          url: 'products/Soundproof/1.jpg',
+        },
+        {
+          url: 'products/Soundproof/2.jpg',
         },
       ],
     },
   },
   {
     name: 'Wheel Washing Machine',
-    products: {
+    description:
+      'Wheel Washing Machine หรือ เครื่องล้างล้ออัตโนมัติ  คืออุปกรณ์สำหรับล้างทำความสะอาดล้อรถที่ออกจากไซต์งานก่อสร้างอัตโนมัติ  โดยใช้เวลาเพียง 1 นาทีต่อการล้างล้อ 1 คู่ และน้ำที่ใช้ล้างนั้น จะรีไซเคิลเพื่อกลับมาใช้ล้างรถคันถัดไปได้',
+    images: {
       create: [
         {
-          name: 'Wheel Washing Machine',
-          description:
-            'Wheel Washing Machine หรือ เครื่องล้างล้ออัตโนมัติ  คืออุปกรณ์สำหรับล้างทำความสะอาดล้อรถที่ออกจากไซต์งานก่อสร้างอัตโนมัติ  โดยใช้เวลาเพียง 1 นาทีต่อการล้างล้อ 1 คู่ และน้ำที่ใช้ล้างนั้น จะรีไซเคิลเพื่อกลับมาใช้ล้างรถคันถัดไปได้',
-          images: {
-            create: [
-              {
-                url: 'products/WheelWashingMachine/1.png',
-              },
-            ],
-          },
+          url: 'products/WheelWashingMachine/1.png',
         },
       ],
     },
@@ -417,7 +361,7 @@ const projectData: Prisma.ProjectCreateInput[] = [
     projectProducts: {
       create: [
         {
-          productId: 9,
+          productId: 11,
         },
       ],
     },
@@ -439,6 +383,15 @@ const projectData: Prisma.ProjectCreateInput[] = [
       create: [
         {
           productId: 1,
+        },
+        {
+          productId: 2,
+        },
+        {
+          productId: 7,
+        },
+        {
+          productId: 11,
         },
       ],
     },
@@ -466,6 +419,12 @@ const projectData: Prisma.ProjectCreateInput[] = [
       create: [
         {
           productId: 1,
+        },
+        {
+          productId: 10,
+        },
+        {
+          productId: 11,
         },
       ],
     },
@@ -513,21 +472,255 @@ const projectData: Prisma.ProjectCreateInput[] = [
           productId: 7,
         },
         {
-          productId: 8,
+          productId: 9,
         },
         {
-          productId: 18,
+          productId: 11,
+        },
+        {
+          productId: 20,
         },
       ],
     },
-    images: {},
+    images: {
+      create: [
+        {
+          url: 'projects/KingSquare/1.jpg',
+        },
+        {
+          url: 'projects/KingSquare/2.jpg',
+        },
+        {
+          url: 'projects/KingSquare/3.jpg',
+        },
+        {
+          url: 'projects/KingSquare/4.jpg',
+        },
+        {
+          url: 'projects/KingSquare/5.jpg',
+        },
+        {
+          url: 'projects/KingSquare/6.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Muniq Langsuan Project',
+    description: 'ผู้รับเหมา : บริษัท กรณิศ ก่อสร้าง จำกัด',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/MuniqLangsuan/1.jpg',
+        },
+        {
+          url: 'projects/MuniqLangsuan/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'One Bangkok O1AH1 Building Project',
+    description: 'ผู้รับเหมา : บริษัท พรีบิลท์ จำกัด (มหาชน)',
+    projectProducts: {
+      create: [
+        {
+          productId: 2,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/OneBangkokO1AH1Building/1.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'One Bangkok O2 Building Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 2,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/OneBangkokO2Building/1.jpg',
+        },
+        {
+          url: 'projects/OneBangkokO2Building/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Park Nailert Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 2,
+        },
+        {
+          productId: 10,
+        },
+        {
+          productId: 11,
+        },
+        {
+          productId: 20,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/ParkNailert/1.jpg',
+        },
+        {
+          url: 'projects/ParkNailert/2.jpg',
+        },
+        {
+          url: 'projects/ParkNailert/3.jpg',
+        },
+        {
+          url: 'projects/ParkNailert/4.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Park Origin Thonglor Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 2,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/ParkOriginThonglor/1.jpg',
+        },
+        {
+          url: 'projects/ParkOriginThonglor/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Park Silom Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/ParkSilom/1.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Queen Sirikit Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 10,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/QueenSirikit/1.jpg',
+        },
+        {
+          url: 'projects/QueenSirikit/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'Siam Meal Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 10,
+        },
+        {
+          productId: 11,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/SiamMeal/1.jpg',
+        },
+        {
+          url: 'projects/SiamMeal/2.jpg',
+        },
+      ],
+    },
+  },
+  {
+    name: 'YPM9 Project',
+    description: 'ผู้รับเหมา : บริษัท กรณิศ ก่อสร้าง จำกัด',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 6,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/YPM9/1.jpg',
+        },
+        {
+          url: 'projects/YPM9/2.jpg',
+        },
+      ],
+    },
   },
 ]
 
 export async function main() {
   await prisma.user.createMany({ data: userData })
-  for (const productCategory of productCategoryData) {
-    await prisma.productCategory.create({ data: productCategory })
+  for (const product of productData) {
+    await prisma.product.create({ data: product })
   }
   for (const project of projectData) {
     await prisma.project.create({ data: project })

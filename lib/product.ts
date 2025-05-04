@@ -1,10 +1,18 @@
-import { minioClient } from './minio'
 import prisma from './prisma'
+import { getImageUrl } from '@/utils/image'
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
     include: {
       images: true,
+      childrenProducts: {
+        include: {
+          images: true,
+        },
+      },
+    },
+    where: {
+      parentProductId: null,
     },
     orderBy: {
       id: 'asc',
@@ -14,11 +22,12 @@ export async function getProducts() {
   const productsData = await Promise.all(
     products.map(async (product) => ({
       ...product,
-      images: await Promise.all(
-        product.images.map(async (image) => {
-          image.url = await minioClient.getFileUrl(image.url)
-          return image
-        }),
+      images: await Promise.all(product.images.map(getImageUrl)),
+      childrenProducts: await Promise.all(
+        product.childrenProducts.map(async (childProduct) => ({
+          ...childProduct,
+          images: await Promise.all(childProduct.images.map(getImageUrl)),
+        })),
       ),
     })),
   )
@@ -31,6 +40,11 @@ export async function getProduct(id: number) {
     where: { id },
     include: {
       images: true,
+      childrenProducts: {
+        include: {
+          images: true,
+        },
+      },
     },
   })
 
@@ -40,81 +54,14 @@ export async function getProduct(id: number) {
 
   const productData = {
     ...product,
-    images: await Promise.all(
-      product.images.map(async (image) => {
-        image.url = await minioClient.getFileUrl(image.url)
-        return image
-      }),
-    ),
-  }
-
-  return productData
-}
-
-export async function getProductCategories() {
-  const productCategories = await prisma.productCategory.findMany({
-    include: {
-      products: {
-        include: {
-          images: true,
-        },
-      },
-    },
-    orderBy: {
-      id: 'asc',
-    },
-  })
-
-  const productCategoriesData = await Promise.all(
-    productCategories.map(async (productCategory) => ({
-      ...productCategory,
-      products: await Promise.all(
-        productCategory.products.map(async (product) => ({
-          ...product,
-          images: await Promise.all(
-            product.images.map(async (image) => {
-              image.url = await minioClient.getFileUrl(image.url)
-              return image
-            }),
-          ),
-        })),
-      ),
-    })),
-  )
-
-  return productCategoriesData
-}
-
-export async function getProductCategory(id: number) {
-  const productCategory = await prisma.productCategory.findUnique({
-    where: { id },
-    include: {
-      products: {
-        include: {
-          images: true,
-        },
-      },
-    },
-  })
-
-  if (!productCategory) {
-    return null
-  }
-
-  const productCategoryData = {
-    ...productCategory,
-    products: await Promise.all(
-      productCategory?.products.map(async (product) => ({
-        ...product,
-        images: await Promise.all(
-          product.images.map(async (image) => {
-            image.url = await minioClient.getFileUrl(image.url)
-            return image
-          }),
-        ),
+    images: await Promise.all(product.images.map(getImageUrl)),
+    childrenProducts: await Promise.all(
+      product.childrenProducts.map(async (childProduct) => ({
+        ...childProduct,
+        images: await Promise.all(childProduct.images.map(getImageUrl)),
       })),
     ),
   }
 
-  return productCategoryData
+  return productData
 }

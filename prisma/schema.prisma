@@ -16,22 +16,15 @@ model User {
   @@map("user")
 }
 
-model ProductCategory {
-  id       Int       @id @default(autoincrement())
-  name     String
-  products Product[]
-
-  @@map("product_category")
-}
-
 model Product {
-  id                Int              @id @default(autoincrement())
-  name              String
-  description       String
-  images            Image[]
-  productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id])
-  productCategoryId Int?
-  projectProducts   ProjectProduct[]
+  id               Int              @id @default(autoincrement())
+  name             String
+  description      String?
+  images           Image[]
+  parentProductId  Int?
+  parentProduct    Product?         @relation("ParentChildrenProducts", fields: [parentProductId], references: [id])
+  childrenProducts Product[]        @relation("ParentChildrenProducts")
+  projectProducts  ProjectProduct[]
 
   @@map("product")
 }
