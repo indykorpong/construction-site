@@ -20,15 +20,14 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
       component={'img'}
       src={image}
       alt={product.name}
-      width={'640px'}
-      height={'640px'}
-      sx={{ objectFit: 'cover' }}
+      width={'34rem'}
+      sx={{ objectFit: 'cover', aspectRatio: '1/1' }}
     />
   ))
 
   return (
     <Box display={'flex'} gap={'2rem'} maxWidth={'80rem'} margin={'auto'}>
-      <ContentBox sx={{ maxWidth: '40rem' }}>
+      <ContentBox sx={{ maxWidth: '40rem', maxHeight: '40rem' }}>
         <CarouselComponent loop={true} className={'swiper-dark'}>
           {imageCarousel}
         </CarouselComponent>

@@ -9,7 +9,7 @@ import { CardProps } from '../types/components'
 export const CardComponent: FC<CardProps> = ({ title, imageUrl = '/file.svg' }) => {
   return (
     <Card sx={{ maxWidth: 300 }}>
-      <CardMedia component="img" image={imageUrl} sx={{ height: 250, boxShadow: 'none' }} />
+      <CardMedia component="img" image={imageUrl} sx={{ maxHeight: 300, boxShadow: 'none' }} />
       <CardContent>
         <Typography gutterBottom variant="h5" fontWeight={500} sx={{ height: 50 }}>
           {title}
