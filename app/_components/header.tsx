@@ -16,15 +16,15 @@ export function Header() {
       >
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaRegEnvelope color="white" />
-          <SmallText>test@email.com</SmallText>
+          <SmallText>aasp8860@gmail.com</SmallText>
         </Box>
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaPhoneAlt color="white" />
-          <SmallText>081-234-5678</SmallText>
+          <SmallText>083-097-9597</SmallText>
         </Box>
         <Box display={'flex'} alignItems={'center'} gap={'1rem'}>
           <FaRegClock color="white" />
-          <SmallText>Mon - Fri: 9:00 - 18:00</SmallText>
+          <SmallText>จันทร์ - ศุกร์ 08:00 - 17:30 น.</SmallText>
         </Box>
       </Box>
     </Box>

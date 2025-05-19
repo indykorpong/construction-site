@@ -21,9 +21,8 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
       component={'img'}
       src={image}
       alt={project.name}
-      width={'640px'}
-      height={'640px'}
-      sx={{ objectFit: 'cover' }}
+      width={'34rem'}
+      sx={{ objectFit: 'cover', aspectRatio: '1/1' }}
     />
   ))
 
@@ -38,8 +37,8 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
   return (
     <ContentBox>
       <Grid container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
-        <Grid size={12}>
-          <CarouselComponent loop={true} className={'swiper-dark'}>
+        <Grid size={12} sx={{ maxWidth: '34rem' }}>
+          <CarouselComponent loop={true} className={'swiper-light'}>
             {imageCarousel}
           </CarouselComponent>
         </Grid>
@@ -50,28 +49,6 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
       </Grid>
       <Title>Products in this project</Title>
       <DataGrid data={projectProducts} />
-      {/* <Box
-        display={'flex'}
-        width={'100%'}
-        flexWrap={'wrap'}
-        justifyContent={'start'}
-        alignItems={'center'}
-        marginBottom={'2rem'}
-      >
-        {projectProducts &&
-          projectProducts.map((product, index) => (
-            <Box
-              key={index}
-              display={'flex'}
-              maxWidth={'25%'}
-              marginRight={'1rem'}
-              alignItems={'center'}
-              justifyContent={'start'}
-            >
-              <CardComponent title={product.title} imageUrl={product.imageUrl} />
-            </Box>
-          ))}
-      </Box> */}
     </ContentBox>
   )
 }

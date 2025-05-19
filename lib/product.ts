@@ -1,17 +1,40 @@
 'use server'
 import prisma from './prisma'
 import { Product } from '@prisma/client'
+import { getImageUrl } from '@/utils/image'
 
 export async function getProducts() {
   const products = await prisma.product.findMany({
     include: {
       images: true,
+      childrenProducts: {
+        include: {
+          images: true,
+        },
+      },
+    },
+    where: {
+      parentProductId: null,
     },
     orderBy: {
       id: 'asc',
     },
   })
-  return products
+
+  const productsData = await Promise.all(
+    products.map(async (product) => ({
+      ...product,
+      images: await Promise.all(product.images.map(getImageUrl)),
+      childrenProducts: await Promise.all(
+        product.childrenProducts.map(async (childProduct) => ({
+          ...childProduct,
+          images: await Promise.all(childProduct.images.map(getImageUrl)),
+        })),
+      ),
+    })),
+  )
+
+  return productsData
 }
 
 export async function getProduct(id: number) {
@@ -19,39 +42,30 @@ export async function getProduct(id: number) {
     where: { id },
     include: {
       images: true,
-    },
-  })
-  return product
-}
-
-export async function getProductCategories() {
-  const productCategories = await prisma.productCategory.findMany({
-    include: {
-      products: {
-        include: {
-          images: true,
-        },
-      },
-    },
-    orderBy: {
-      id: 'asc',
-    },
-  })
-  return productCategories
-}
-
-export async function getProductCategory(id: number) {
-  const productCategory = await prisma.productCategory.findUnique({
-    where: { id },
-    include: {
-      products: {
+      childrenProducts: {
         include: {
           images: true,
         },
       },
     },
   })
-  return productCategory
+
+  if (!product) {
+    return null
+  }
+
+  const productData = {
+    ...product,
+    images: await Promise.all(product.images.map(getImageUrl)),
+    childrenProducts: await Promise.all(
+      product.childrenProducts.map(async (childProduct) => ({
+        ...childProduct,
+        images: await Promise.all(childProduct.images.map(getImageUrl)),
+      })),
+    ),
+  }
+
+  return productData
 }
 
 export async function updateProduct(id: number, data: Product) {

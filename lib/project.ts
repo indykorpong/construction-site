@@ -1,5 +1,6 @@
 'use server'
 import { Project } from '@prisma/client'
+import { minioClient } from './minio'
 import prisma from './prisma'
 
 export async function getProjects() {
@@ -20,7 +21,34 @@ export async function getProjects() {
       id: 'asc',
     },
   })
-  return projects
+
+  const projectsData = await Promise.all(
+    projects.map(async (project) => ({
+      ...project,
+      images: await Promise.all(
+        project.images.map(async (image) => {
+          image.url = await minioClient.getFileUrl(image.url)
+          return image
+        }),
+      ),
+      projectProducts: await Promise.all(
+        project.projectProducts.map(async (projectProduct) => ({
+          ...projectProduct,
+          product: {
+            ...projectProduct.product,
+            images: await Promise.all(
+              projectProduct.product.images.map(async (image) => {
+                image.url = await minioClient.getFileUrl(image.url)
+                return image
+              }),
+            ),
+          },
+        })),
+      ),
+    })),
+  )
+
+  return projectsData
 }
 
 export async function getProject(id: number) {
@@ -39,7 +67,36 @@ export async function getProject(id: number) {
       },
     },
   })
-  return project
+
+  if (!project) {
+    return null
+  }
+
+  const projectData = {
+    ...project,
+    images: await Promise.all(
+      project.images.map(async (image) => {
+        image.url = await minioClient.getFileUrl(image.url)
+        return image
+      }),
+    ),
+    projectProducts: await Promise.all(
+      project.projectProducts.map(async (projectProduct) => ({
+        ...projectProduct,
+        product: {
+          ...projectProduct.product,
+          images: await Promise.all(
+            projectProduct.product.images.map(async (image) => {
+              image.url = await minioClient.getFileUrl(image.url)
+              return image
+            }),
+          ),
+        },
+      })),
+    ),
+  }
+
+  return projectData
 }
 
 export async function getFourProjects() {
@@ -50,7 +107,20 @@ export async function getFourProjects() {
       images: true,
     },
   })
-  return projects
+
+  const projectsData = await Promise.all(
+    projects.map(async (project) => ({
+      ...project,
+      images: await Promise.all(
+        project.images.map(async (image) => {
+          image.url = await minioClient.getFileUrl(image.url)
+          return image
+        }),
+      ),
+    })),
+  )
+
+  return projectsData
 }
 
 export async function updateProject(id: number, data: Project) {

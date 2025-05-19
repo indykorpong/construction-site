@@ -3,7 +3,7 @@ import { ContentBox } from '@/app/_components/content-box'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/product'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -20,21 +20,23 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
       component={'img'}
       src={image}
       alt={product.name}
-      width={'640px'}
-      height={'640px'}
-      sx={{ objectFit: 'cover' }}
+      width={'34rem'}
+      sx={{ objectFit: 'cover', aspectRatio: '1/1' }}
     />
   ))
 
   return (
     <Box display={'flex'} gap={'2rem'} maxWidth={'80rem'} margin={'auto'}>
-      <ContentBox sx={{ maxWidth: '40rem' }}>
+      <ContentBox sx={{ maxWidth: '40rem', maxHeight: '40rem' }}>
         <CarouselComponent loop={true} className={'swiper-dark'}>
           {imageCarousel}
         </CarouselComponent>
       </ContentBox>
       <ContentBox sx={{ maxWidth: '40rem' }}>
         <Title>{product.name}</Title>
+        <Typography variant={'h6'} color={'text.secondary'}>
+          Product Details
+        </Typography>
         <TextWithLineBreak text={product.description} />
       </ContentBox>
     </Box>
