@@ -4,7 +4,7 @@ import { Title } from '../_components/title'
 export default function Admin() {
   return (
     <ContentBox>
-      <Title>Admin</Title>
+      <Title>Home</Title>
     </ContentBox>
   )
 }

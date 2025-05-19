@@ -1,21 +1,21 @@
 import { Box, TextField, Button } from '@mui/material'
-import toast from 'react-hot-toast'
-import { useState } from 'react'
 
 import { TextEditor } from '../../_components/text-editor'
-import { ProductWithImages } from './page'
-import { updateProduct } from '../../../lib/product'
+import { ProjectWithImage } from './page'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { updateProject } from '../../../lib/project'
 
-type ProductEditorProps = {
-  product: ProductWithImages
+type ProjectEditorProps = {
+  project: ProjectWithImage
   setOpenDrawer: (v: boolean) => void
 }
 
-export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer }) => {
-  const [formData, setFormData] = useState<ProductWithImages>(product)
+export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer }) => {
+  const [formData, setFormData] = useState<ProjectWithImage>(project)
 
-  if (!product) {
-    return <div>Product not found</div>
+  if (!project) {
+    return <div>project not found</div>
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,13 +44,14 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { images, ...data } = formData
 
-    const res = await updateProduct(product.id, data)
+    const res = await updateProject(project.id, data)
 
     if (res.ok) {
-      toast.success('Product updated')
+      toast.success('Project updated')
       setOpenDrawer(false)
     } else {
-      toast.error('Failed to update product ')
+      toast.error('Failed to update project ')
+      console.error('Failed to update project', res.error)
     }
   }
 
@@ -59,8 +60,8 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={250} width={'100%'}>
         <Box
           component={'img'}
-          src={product.images[0]?.url}
-          alt={product.name}
+          src={project.images[0]?.url}
+          alt={project.name}
           width={200}
           height={200}
           sx={{ objectFit: 'cover' }}
@@ -77,19 +78,11 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
           onChange={handleChange}
           required
         />
-        <TextField
-          type="number"
-          defaultValue={formData.productCategoryId}
-          label="category Id"
-          id="productCategoryId"
-          variant="outlined"
-          onChange={handleChange}
-        />
       </Box>
 
       <Box mb={1}>
-        <label>Description</label>
-        <TextEditor id="description" value={formData.description} onChange={handleEditorChange} />
+        <h3>Description</h3>
+        <TextEditor value={formData.description} onChange={handleEditorChange} />
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>

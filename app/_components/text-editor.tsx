@@ -1,9 +1,11 @@
 import { Box, SxProps } from '@mui/material'
 import { Editor } from '@tinymce/tinymce-react'
 
-interface TextEditorProps {
-  initialValue?: string
+type TextEditor = {
+  id?: string
+  value?: string
   sx?: SxProps
+  onChange: (v: string) => void
 }
 
 const EditorConfig = {
@@ -19,10 +21,17 @@ const EditorConfig = {
   },
 }
 
-export const TextEditor: React.FC<TextEditorProps> = ({ initialValue, sx }) => {
+export const TextEditor: React.FC<TextEditor> = ({ id, value, sx, onChange }) => {
   return (
     <Box sx={{ ...sx }}>
-      <Editor initialValue={initialValue} {...EditorConfig} />
+      <Editor
+        id={id}
+        value={value}
+        onEditorChange={(v) => {
+          onChange(v)
+        }}
+        {...EditorConfig}
+      />
     </Box>
   )
 }

@@ -1,24 +1,22 @@
 'use client'
-import { Box, TableContainer, Table, TableHead, TableBody, TableCell, TableRow, Drawer } from '@mui/material'
+import { Drawer, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 import { Fragment, useState } from 'react'
+import { ProjectWithImage } from './page'
+import { ProjectEditor } from './projects-editor'
 
-import { ProductWithImages } from './page'
-import { ProductEditor } from './products-editor'
-
-export default function ProductTable({ products }: { products: ProductWithImages[] }) {
-  const defaultProduct: ProductWithImages = {
+export function ProjectTable({ projects }: { projects: ProjectWithImage[] }) {
+  const defaultProject: ProjectWithImage = {
     id: 0,
     name: '',
     description: '',
-    productCategoryId: 0,
     images: [],
   }
 
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithImages>(defaultProduct)
+  const [selected, setSelected] = useState<ProjectWithImage>(defaultProject)
 
-  const handleEdit = (product: ProductWithImages) => () => {
-    setSelectedProduct(product)
+  const handleEdit = (project: ProjectWithImage) => () => {
+    setSelected(project)
     setOpenDrawer(true)
   }
 
@@ -29,35 +27,33 @@ export default function ProductTable({ products }: { products: ProductWithImages
   return (
     <>
       <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
-        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} />
+        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} />
       </Drawer>
 
       <Box>
-        <TableContainer sx={{ maxHeight: '80vh' }}>
-          <Table stickyHeader>
+        <TableContainer>
+          <Table sx={{ maxWidth: '100%' }} stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell align="center">Id</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell align="center">Category Id</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell align="center">Image</TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {products.map((product, index) => (
-                <Fragment key={`${index}-product-${product.id}`}>
-                  <TableRow onClick={handleEdit(product)} hover sx={{ cursor: 'pointer' }}>
-                    <TableCell align="center">{product.id}</TableCell>
+              {projects.map((project, index) => (
+                <Fragment key={`${index}-product-${project.id}`}>
+                  <TableRow onClick={handleEdit(project)} hover sx={{ cursor: 'pointer' }}>
+                    <TableCell align="center">{project.id}</TableCell>
                     <TableCell align="left" width={'200px'}>
-                      {product.name}
+                      {project.name}
                     </TableCell>
-                    <TableCell align="center">{product.productCategoryId}</TableCell>
                     <TableCell>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: product.description,
+                          __html: project.description,
                         }}
                         style={{
                           display: '-webkit-box',
@@ -71,11 +67,13 @@ export default function ProductTable({ products }: { products: ProductWithImages
                     </TableCell>
                     <TableCell>
                       <Box
+                        key={`${index}-project-${project.id}`}
                         component={'img'}
-                        src={product.images[0]?.url}
-                        alt={product.name}
-                        width={150}
-                        height={150}
+                        src={project.images[0]?.url}
+                        alt={project.name}
+                        width={100}
+                        height={100}
+                        marginRight={1}
                         sx={{ objectFit: 'cover' }}
                       />
                     </TableCell>

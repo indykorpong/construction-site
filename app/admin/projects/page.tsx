@@ -1,10 +1,11 @@
-import { ContentBox } from '../../_components/content-box'
-import { Title } from '../../_components/title'
+import { Project, Image } from '@prisma/client'
+import { getProjects } from '../../../lib/project'
+import { ProjectTable } from './projects'
 
-export default function Projects() {
-  return (
-    <ContentBox>
-      <Title>Projects</Title>
-    </ContentBox>
-  )
+export type ProjectWithImage = Project & { images: Image[] }
+
+export default async function Products() {
+  const projects: ProjectWithImage[] = await getProjects()
+
+  return <ProjectTable projects={projects} />
 }

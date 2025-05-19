@@ -13,7 +13,7 @@ const notoSansThai = Noto_Sans_Thai({
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={notoSansThai.className}>
-      <body style={{ fontSize: '1.125rem', lineHeight: '2rem', margin: '0px', overflow: 'hidden' }}>
+      <body style={{ fontSize: '1.125rem', lineHeight: '2rem', margin: '0px' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
           <Toaster />

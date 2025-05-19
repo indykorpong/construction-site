@@ -1,3 +1,5 @@
+'use server'
+import { Project } from '@prisma/client'
 import prisma from './prisma'
 
 export async function getProjects() {
@@ -49,4 +51,18 @@ export async function getFourProjects() {
     },
   })
   return projects
+}
+
+export async function updateProject(id: number, data: Project) {
+  try {
+    const res = await prisma.project.update({
+      where: { id },
+      data,
+    })
+
+    return { ok: true, data: res }
+  } catch (err) {
+    console.error('Error updating project:', err)
+    return { ok: false, error: 'Failed to update project ' + err }
+  }
 }

@@ -1,13 +1,13 @@
 import { Box, SxProps } from '@mui/material'
 import { FC, ReactNode } from 'react'
 
-interface ContentBoxProps {
+type ContentBox = {
   children: ReactNode
   bgcolor?: string
   sx?: SxProps
 }
 
-export const ContentBox: FC<ContentBoxProps> = ({ children, bgcolor, sx }) => {
+export const ContentBox: FC<ContentBox> = ({ children, bgcolor, sx }) => {
   return (
     <Box bgcolor={bgcolor}>
       <Box
