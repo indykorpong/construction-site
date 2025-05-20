@@ -10,7 +10,7 @@ export default function ProductTable({ products }: { products: ProductWithImages
     id: 0,
     name: '',
     description: '',
-    productCategoryId: 0,
+    parentProductId: 0,
     images: [],
   }
 
@@ -53,21 +53,23 @@ export default function ProductTable({ products }: { products: ProductWithImages
                     <TableCell align="left" width={'200px'}>
                       {product.name}
                     </TableCell>
-                    <TableCell align="center">{product.productCategoryId}</TableCell>
+                    <TableCell align="center">{product.parentProductId}</TableCell>
                     <TableCell>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: product.description,
-                        }}
-                        style={{
-                          display: '-webkit-box',
-                          WebkitBoxOrient: 'vertical',
-                          WebkitLineClamp: 3,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          lineClamp: 3,
-                        }}
-                      />
+                      {product.description && (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: product.description,
+                          }}
+                          style={{
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 3,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            lineClamp: 3,
+                          }}
+                        />
+                      )}
                     </TableCell>
                     <TableCell>
                       <Box
