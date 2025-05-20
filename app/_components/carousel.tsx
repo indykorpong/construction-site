@@ -8,7 +8,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 
-import './styles.css'
+import './carousel.css'
 
 type CarouselProps = {
   children: ReactNode[]

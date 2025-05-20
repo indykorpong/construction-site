@@ -9,10 +9,11 @@ export const CompanyInfo = () => {
       marginX={'auto'}
       display={'flex'}
       alignItems={'center'}
-      justifyContent={'center'}
+      justifyContent={{ mobile: 'center', tablet: 'center', desktop: 'flex-start' }}
+      flexDirection={{ mobile: 'column', tablet: 'column', desktop: 'row' }}
       bgcolor={'white'}
-      height={600}
-      paddingY={10}
+      height={{ mobile: 'auto', tablet: 'auto', desktop: 450 }}
+      gap={{ mobile: 5, tablet: 10, desktop: 6 }}
     >
       <Box
         component={'img'}
@@ -20,11 +21,17 @@ export const CompanyInfo = () => {
         alt={'Head office'}
         display={'flex'}
         width={'auto'}
-        height={'100%'}
-        marginRight={6}
+        height={'auto'}
+        maxWidth={{ mobile: '100%', tablet: '100%', desktop: '50%' }}
       />
 
-      <Box display={'flex'} flexDirection={'column'} width={'50%'} height={'100%'} overflow={'hidden'}>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        width={{ mobile: '100%', tablet: '100%', desktop: '50%' }}
+        height={'100%'}
+        overflow={'hidden'}
+      >
         <Title>บริษัท ดับเบิลเอ เอสพี จำกัด</Title>
         <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
           บริษัท ดับเบิลเอ เอสพี จำกัด ได้ก่อตั้งขึ้นในปี พ.ศ. 2560
