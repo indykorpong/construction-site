@@ -79,7 +79,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
         />
         <TextField
           type="number"
-          defaultValue={formData.productCategoryId}
+          defaultValue={formData.parentProductId}
           label="category Id"
           id="productCategoryId"
           variant="outlined"
@@ -89,7 +89,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
       <Box mb={1}>
         <label>Description</label>
-        <TextEditor id="description" value={formData.description} onChange={handleEditorChange} />
+        <TextEditor id="description" value={formData.description ?? ''} onChange={handleEditorChange} />
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>
