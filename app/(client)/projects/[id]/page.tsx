@@ -1,6 +1,6 @@
 import { ContentBox } from '@/app/_components/content-box'
 import { Title } from '@/app/_components/title'
-import { Box, Grid2 } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { getProject } from '@/lib/project'
 import { CarouselComponent } from '@/app/_components/carousel'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
@@ -36,17 +36,17 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
 
   return (
     <ContentBox>
-      <Grid2 container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
-        <Grid2 size={12} sx={{ maxWidth: '34rem' }}>
+      <Grid container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
+        <Grid size={12} sx={{ maxWidth: '34rem' }}>
           <CarouselComponent loop={true} className={'swiper-light'}>
             {imageCarousel}
           </CarouselComponent>
-        </Grid2>
-        <Grid2 size={12}>
+        </Grid>
+        <Grid size={12}>
           <Title>{project.name}</Title>
           <TextWithLineBreak text={project.description} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       <Title>Products in this project</Title>
       <DataGrid data={projectProducts} />
     </ContentBox>

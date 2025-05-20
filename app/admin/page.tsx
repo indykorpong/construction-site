@@ -1,17 +1,10 @@
-'use client'
-
-import { Button } from '@mui/material'
-
+import { ContentBox } from '../_components/content-box'
 import { Title } from '../_components/title'
-import { logout } from '../actions/auth'
 
 export default function Admin() {
   return (
-    <div>
-      <Title>Admin</Title>
-      <Button variant="contained" onClick={logout}>
-        logout
-      </Button>
-    </div>
+    <ContentBox>
+      <Title>Home</Title>
+    </ContentBox>
   )
 }

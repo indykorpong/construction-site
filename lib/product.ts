@@ -1,4 +1,6 @@
+'use server'
 import prisma from './prisma'
+import { Product } from '@prisma/client'
 import { getImageUrl } from '@/utils/image'
 
 export async function getProducts() {
@@ -64,4 +66,18 @@ export async function getProduct(id: number) {
   }
 
   return productData
+}
+
+export async function updateProduct(id: number, data: Product) {
+  try {
+    const res = await prisma.product.update({
+      where: { id },
+      data,
+    })
+
+    return { ok: true, data: res }
+  } catch (err) {
+    console.error('Error updating product:', err)
+    return { ok: false, error: 'Failed to update product ' + err }
+  }
 }

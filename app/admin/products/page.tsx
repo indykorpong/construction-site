@@ -1,10 +1,14 @@
-'use client'
-import { Title } from '../../_components/title'
+import { Product, Image } from '@prisma/client'
 
-export default function Products() {
-  return (
-    <div>
-      <Title>Products</Title>
-    </div>
-  )
+import ProductTable from './products'
+import { getProducts } from '../../../lib/product'
+
+export type ProductWithImages = Product & {
+  images: Image[]
+}
+
+export default async function Products() {
+  const products = await getProducts()
+
+  return <ProductTable products={products} />
 }
