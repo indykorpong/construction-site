@@ -155,6 +155,9 @@ const productData: Prisma.ProductCreateInput[] = [
               {
                 url: 'products/PropPanel/EarlyDismantlePanel/6.jpg',
               },
+              {
+                url: 'products/PropPanel/EarlyDismantlePanel/7.png',
+              },
             ],
           },
         },
@@ -184,6 +187,9 @@ const productData: Prisma.ProductCreateInput[] = [
               },
               {
                 url: 'products/PropPanel/QuickForm/6.jpg',
+              },
+              {
+                url: 'products/PropPanel/QuickForm/7.png',
               },
             ],
           },
@@ -235,6 +241,9 @@ const productData: Prisma.ProductCreateInput[] = [
               {
                 url: 'products/Ringlock/3.png',
               },
+              {
+                url: 'products/Ringlock/10.png',
+              },
             ],
           },
         },
@@ -246,6 +255,9 @@ const productData: Prisma.ProductCreateInput[] = [
             create: [
               {
                 url: 'products/Ringlock/4.png',
+              },
+              {
+                url: 'products/Ringlock/9.png',
               },
             ],
           },
@@ -269,6 +281,9 @@ const productData: Prisma.ProductCreateInput[] = [
             create: [
               {
                 url: 'products/Ringlock/6.png',
+              },
+              {
+                url: 'products/Ringlock/11.png',
               },
             ],
           },
@@ -699,6 +714,28 @@ const projectData: Prisma.ProjectCreateInput[] = [
       ],
     },
   },
+  {
+    name: 'Thai Group Project',
+    description: 'ผู้รับเหมา : บริษัท นันทวัน จำกัด (THAI OBAYASHI)',
+    projectProducts: {
+      create: [
+        {
+          productId: 1,
+        },
+        {
+          productId: 2,
+        },
+      ],
+    },
+    images: {
+      create: [
+        {
+          url: 'projects/ThaiGroup/1.png',
+        },
+      ],
+    },
+  },
+
   {
     name: 'YPM9 Project',
     description: 'ผู้รับเหมา : บริษัท กรณิศ ก่อสร้าง จำกัด',

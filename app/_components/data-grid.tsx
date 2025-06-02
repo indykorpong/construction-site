@@ -13,7 +13,7 @@ export default function DataGrid<T extends Data>({ data }: { data: T[] }) {
   return (
     <Grid container spacing={4} columns={24} width="100%">
       {data.map((item, index) => (
-        <Grid key={index} size={6}>
+        <Grid key={index} size={{ desktop: 6, tablet: 12, mobile: 24 }}>
           <Link href={item.link} style={{ width: 'fit-content' }}>
             <CardComponent title={item.name} imageUrl={item.imageUrl} />
           </Link>

@@ -1,6 +1,23 @@
 'use client'
 import { createTheme } from '@mui/material'
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: false // removes the `xs` breakpoint
+    sm: false
+    md: false
+    lg: false
+    xl: false
+    mobile: true // adds the `mobile` breakpoint
+    tablet: true
+    desktop: true
+  }
+}
+
+export const MOBILE_MIN_WIDTH = 0
+export const TABLET_MIN_WIDTH = 600
+export const DESKTOP_MIN_WIDTH = 1200
+
 export const theme = createTheme({
   palette: {
     primary: {
@@ -30,6 +47,13 @@ export const theme = createTheme({
     body1: {
       fontSize: '1.125rem',
       lineHeight: '2rem',
+    },
+  },
+  breakpoints: {
+    values: {
+      mobile: MOBILE_MIN_WIDTH,
+      tablet: TABLET_MIN_WIDTH,
+      desktop: DESKTOP_MIN_WIDTH,
     },
   },
 })

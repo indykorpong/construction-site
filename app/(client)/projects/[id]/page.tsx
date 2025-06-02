@@ -22,7 +22,8 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
       src={image}
       alt={project.name}
       width={'34rem'}
-      sx={{ objectFit: 'cover', aspectRatio: '1/1' }}
+      maxWidth={{ desktop: '34rem', tablet: '34rem', mobile: '100%' }}
+      sx={{ objectFit: 'cover', aspectRatio: '1/1', margin: 'auto' }}
     />
   ))
 
@@ -37,12 +38,12 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
   return (
     <ContentBox>
       <Grid container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
-        <Grid size={12} sx={{ maxWidth: '34rem' }}>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }} sx={{ maxWidth: '34rem' }}>
           <CarouselComponent loop={true} className={'swiper-light'}>
             {imageCarousel}
           </CarouselComponent>
         </Grid>
-        <Grid size={12}>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }}>
           <Title>{project.name}</Title>
           <TextWithLineBreak text={project.description} />
         </Grid>
