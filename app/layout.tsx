@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import { ThemeProvider } from '@mui/material'
 import { theme } from './theme'
+import { Toaster } from 'react-hot-toast'
 
 const notoSansThai = Noto_Sans_Thai({
   subsets: ['latin', 'thai'],
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body style={{ fontSize: '1.125rem', lineHeight: '2rem', margin: '0px' }}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <Toaster />
         </AppRouterCacheProvider>
       </body>
     </html>

@@ -8,7 +8,7 @@ import './style.css'
 
 export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [state, action, pending] = useActionState(login, undefined)
+  const [state, action, isPending] = useActionState(login, undefined)
 
   return (
     <div className="login-page">
@@ -28,7 +28,7 @@ export default function Login() {
         </div>
 
         <div>
-          <Button disabled={pending} type="submit" variant="contained">
+          <Button disabled={isPending} type="submit" variant="contained" loading={isPending} sx={{ width: 150 }}>
             Login
           </Button>
         </div>
