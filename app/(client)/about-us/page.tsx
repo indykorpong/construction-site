@@ -19,34 +19,16 @@ export default function AboutUs() {
 const AboutUsOurGoal = () => {
   return (
     <>
-      <Title>เป้าหมายของเรา</Title>
+      <Title>วิสัยทัศน์</Title>
 
       <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'}>
-        <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
-          <Typography variant={'h5'} gutterBottom textAlign={'center'}>
-            Vision
-          </Typography>
-
-          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur.
-          </Typography>
-        </Box>
-
-        <Box maxWidth={'45%'} bgcolor={'white'} borderRadius={4} padding={4} height={'100%'}>
-          <Typography variant={'h5'} gutterBottom textAlign={'center'}>
-            Mission
-          </Typography>
-
-          <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur.
-          </Typography>
-        </Box>
+        <Typography variant={'body1'} gutterBottom sx={{ textIndent: 40 }}>
+          บริษัทของเรามีความมุ่งมั่นที่จะเป็นผู้นำด้านการจัดจำหน่ายอุปกรณ์ก่อสร้างสำหรับตึกสูงในระดับประเทศ
+          โดยยึดมั่นในคุณภาพ ความปลอดภัย และการพัฒนานวัตกรรมอย่างต่อเนื่อง เพื่อตอบโจทย์ความต้องการของลูกค้าในทุกระดับ
+          ด้วยบริการที่เชื่อถือได้ รวดเร็ว และครบวงจร
+          เรามุ่งหวังที่จะเป็นส่วนหนึ่งในการผลักดันอุตสาหกรรมก่อสร้างให้เติบโตอย่างมั่นคง
+          พร้อมทั้งสร้างคุณค่าให้แก่สังคมและสิ่งแวดล้อมอย่างยั่งยืน
+        </Typography>
       </Box>
     </>
   )

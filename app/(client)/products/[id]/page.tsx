@@ -21,24 +21,36 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
       src={image}
       alt={product.name}
       width={'34rem'}
-      sx={{ objectFit: 'cover', aspectRatio: '1/1' }}
+      maxWidth={{ desktop: '34rem', tablet: '34rem', mobile: '100%' }}
+      sx={{ objectFit: 'cover', aspectRatio: '1/1', margin: 'auto' }}
     />
   ))
 
   return (
-    <Box display={'flex'} gap={'2rem'} maxWidth={'80rem'} margin={'auto'}>
-      <ContentBox sx={{ maxWidth: '40rem', maxHeight: '40rem' }}>
+    <Box
+      display={'flex'}
+      gap={{ desktop: '2rem', tablet: '1rem', mobile: '0rem' }}
+      maxWidth={'80rem'}
+      margin={'auto'}
+      flexDirection={{ desktop: 'row', tablet: 'column', mobile: 'column' }}
+      padding={'3rem'}
+    >
+      <Box
+        paddingBottom={{ desktop: '3rem', tablet: '0rem', mobile: '0rem' }}
+        margin={'auto'}
+        maxWidth={{ desktop: '40rem', tablet: '40rem', mobile: '100%' }}
+      >
         <CarouselComponent loop={true} className={'swiper-dark'}>
           {imageCarousel}
         </CarouselComponent>
-      </ContentBox>
-      <ContentBox sx={{ maxWidth: '40rem' }}>
+      </Box>
+      <Box paddingY={{ desktop: '3rem', tablet: '2rem', mobile: '2rem' }}>
         <Title>{product.name}</Title>
-        <Typography variant={'h6'} color={'text.secondary'}>
+        <Typography variant={'h6'} color={'text.secondary'} marginY={'1rem'}>
           Product Details
         </Typography>
         <TextWithLineBreak text={product.description} />
-      </ContentBox>
+      </Box>
     </Box>
   )
 }

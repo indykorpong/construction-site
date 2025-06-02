@@ -89,25 +89,25 @@ export function Navbar() {
           <Button onClick={() => setIsOpen(!isOpen)}>
             <GiHamburgerMenu size={24} />
           </Button>
-          {isOpen ? (
-            <Box
-              position={'absolute'}
-              top={{ desktop: '10rem', tablet: '7rem', mobile: '5.5rem' }}
-              left={0}
-              right={0}
-              bgcolor={'white'}
-              zIndex={1000}
-              display={'flex'}
-              flexDirection={'column'}
-              gap={'1rem'}
-              padding={'1rem'}
-              sx={{ boxShadow: 2 }}
-            >
-              <SiteLinks />
-            </Box>
-          ) : null}
         </Box>
       </Box>
+      {isOpen ? (
+        <Box
+          bgcolor={'white'}
+          zIndex={1000}
+          display={'flex'}
+          flexDirection={'column'}
+          gap={'1rem'}
+          padding={'1rem'}
+          sx={{
+            transition: 'all 0.3s ease-in-out',
+            maxHeight: isOpen ? '500px' : '0',
+            overflow: 'hidden',
+          }}
+        >
+          <SiteLinks />
+        </Box>
+      ) : null}
     </Box>
   )
 }
