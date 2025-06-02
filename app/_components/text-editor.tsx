@@ -10,7 +10,7 @@ type TextEditor = {
 }
 
 const EditorConfig = {
-  apiKey: 'zml2n5kzmgdzdl4su2x2lya5lv1loxbby2uy7gw6c1bcul2c',
+  apiKey: process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
   init: {
     height: 200,
     menubar: false,
