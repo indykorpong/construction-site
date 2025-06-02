@@ -1,12 +1,17 @@
+'use client'
 import { Box, TextField, Button } from '@mui/material'
 
-import { TextEditor } from '../../_components/text-editor'
 import { ProjectWithImage } from './page'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { updateProject } from '../../../lib/project'
 import { ContentBox } from '../../_components/content-box'
 import { CarouselComponent } from '../../_components/carousel'
+import dynamic from 'next/dynamic'
+
+const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
+  ssr: false,
+})
 
 type ProjectEditorProps = {
   project: ProjectWithImage

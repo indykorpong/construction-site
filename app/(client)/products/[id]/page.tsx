@@ -3,7 +3,7 @@ import { ContentBox } from '@/app/_components/content-box'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/product'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

@@ -5,7 +5,7 @@ import { Fragment, useState } from 'react'
 import { ProductWithImages } from './page'
 import { ProductEditor } from './products-editor'
 
-export default function ProductTable({ products }: { products: ProductWithImages[] }) {
+export const ProductTable = ({ products }: { products: ProductWithImages[] }) => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductWithImages | undefined>()
 
