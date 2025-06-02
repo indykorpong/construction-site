@@ -77,7 +77,11 @@ export async function updateProduct(id: number, data: Product) {
   try {
     const res = await prisma.product.update({
       where: { id },
-      data,
+      data: {
+        name: data.name,
+        description: data.description,
+        parentProductId: data.parentProductId,
+      },
     })
 
     return { ok: true, data: res }
