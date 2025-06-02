@@ -1,9 +1,12 @@
 'use server'
-import prisma from './prisma'
 import { Product } from '@prisma/client'
+import prisma from './prisma'
 import { getImageUrl } from '@/utils/image'
+import { minioClient } from './minio'
+import path from 'path'
+import { FileWithPath } from 'react-dropzone'
 
-export async function getProducts() {
+export async function getProducts({ includeChildren }: { includeChildren?: boolean } = { includeChildren: false }) {
   const products = await prisma.product.findMany({
     include: {
       images: true,
@@ -13,9 +16,11 @@ export async function getProducts() {
         },
       },
     },
-    where: {
-      parentProductId: null,
-    },
+    where: includeChildren
+      ? {}
+      : {
+          parentProductId: null,
+        },
     orderBy: {
       id: 'asc',
     },
@@ -79,5 +84,40 @@ export async function updateProduct(id: number, data: Product) {
   } catch (err) {
     console.error('Error updating product:', err)
     return { ok: false, error: 'Failed to update product ' + err }
+  }
+}
+
+export async function uploadProductImage(pathname: string, file: FileWithPath[]) {
+  if (!file || file.length === 0) {
+    return { ok: false, error: 'No file provided' }
+  }
+
+  try {
+    const failedToUpload: string[] = []
+
+    file.map(async (f) => {
+      const filePath = path.join(`/products/`, pathname, f.name)
+
+      if (!f.path) {
+        console.error('File path is undefined for file:', f.name)
+        return { ok: false, error: `File path is undefined for file ${f.name}` }
+      }
+
+      try {
+        await minioClient.uploadFile('construction', filePath, f.path)
+      } catch (err) {
+        console.error('Error uploading file:', err)
+        failedToUpload.push(f.name)
+      }
+    })
+
+    if (failedToUpload.length > 0) {
+      console.error('Failed to upload files:', failedToUpload)
+    }
+
+    return { ok: true, error: failedToUpload.length > 0 ? 'Some file(s) failed to upload' : null }
+  } catch (err) {
+    console.error('Error uploading product image:', err)
+    return { ok: false, error: 'Failed to upload product image ' }
   }
 }

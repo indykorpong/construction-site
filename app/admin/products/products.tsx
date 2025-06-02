@@ -6,16 +6,8 @@ import { ProductWithImages } from './page'
 import { ProductEditor } from './products-editor'
 
 export default function ProductTable({ products }: { products: ProductWithImages[] }) {
-  const defaultProduct: ProductWithImages = {
-    id: 0,
-    name: '',
-    description: '',
-    parentProductId: 0,
-    images: [],
-  }
-
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithImages>(defaultProduct)
+  const [selectedProduct, setSelectedProduct] = useState<ProductWithImages | undefined>()
 
   const handleEdit = (product: ProductWithImages) => () => {
     setSelectedProduct(product)
@@ -39,7 +31,6 @@ export default function ProductTable({ products }: { products: ProductWithImages
               <TableRow>
                 <TableCell align="center">Id</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell align="center">Category Id</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell align="center">Image</TableCell>
               </TableRow>
@@ -53,7 +44,6 @@ export default function ProductTable({ products }: { products: ProductWithImages
                     <TableCell align="left" width={'200px'}>
                       {product.name}
                     </TableCell>
-                    <TableCell align="center">{product.parentProductId}</TableCell>
                     <TableCell>
                       {product.description && (
                         <div

@@ -1,4 +1,4 @@
-import { Product, Image } from '@prisma/client'
+import { Image, Product } from '@prisma/client'
 
 import ProductTable from './products'
 import { getProducts } from '../../../lib/product'
@@ -8,7 +8,7 @@ export type ProductWithImages = Product & {
 }
 
 export default async function Products() {
-  const products = await getProducts()
+  const products = await getProducts({ includeChildren: true })
 
   return <ProductTable products={products} />
 }

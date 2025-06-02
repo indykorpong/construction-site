@@ -3,8 +3,8 @@
 import { Button } from '@mui/material'
 import { useActionState } from 'react'
 
-import { login } from '../../actions/auth'
 import './style.css'
+import { login } from '../../actions/auth'
 
 export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
