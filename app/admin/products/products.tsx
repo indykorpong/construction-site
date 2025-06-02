@@ -25,7 +25,7 @@ export const ProductTable = ({ products }: { products: ProductWithImages[] }) =>
       </Drawer>
 
       <Box>
-        <TableContainer sx={{ maxHeight: '80vh' }}>
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 6rem)' }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>

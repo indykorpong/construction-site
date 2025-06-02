@@ -31,7 +31,7 @@ export const ProjectTable = ({ projects }: { projects: ProjectWithImage[] }) => 
       </Drawer>
 
       <Box>
-        <TableContainer sx={{ maxHeight: '80vh' }}>
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 6rem)' }}>
           <Table sx={{ maxWidth: '100%' }} stickyHeader>
             <TableHead>
               <TableRow>
