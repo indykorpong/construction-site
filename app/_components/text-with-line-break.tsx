@@ -7,5 +7,15 @@ export const TextWithLineBreak = ({ text }: { text: string | null }) => {
       <Typography variant={'body1'}>{line}</Typography>
     </Box>
   ))
-  return <Box>{textWithLineBreaks}</Box>
+  return (
+    <Box>
+      {textWithLineBreaks && (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: text,
+          }}
+        />
+      )}
+    </Box>
+  )
 }

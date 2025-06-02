@@ -1,7 +1,7 @@
 'use client'
 import { Box, Typography } from '@mui/material'
 import { ContentBox } from './content-box'
-import { useWindowDimensions } from '../lib/window'
+import { useWindowDimensions } from '../../lib/window'
 import { useMemo } from 'react'
 import { TABLET_MIN_WIDTH } from '../theme'
 

@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react'
 import { ProjectWithImage } from './page'
 import { ProjectEditor } from './projects-editor'
 
-export function ProjectTable({ projects }: { projects: ProjectWithImage[] }) {
+export const ProjectTable = ({ projects }: { projects: ProjectWithImage[] }) => {
   const defaultProject: ProjectWithImage = {
     id: 0,
     name: '',
@@ -31,7 +31,7 @@ export function ProjectTable({ projects }: { projects: ProjectWithImage[] }) {
       </Drawer>
 
       <Box>
-        <TableContainer>
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 6rem)' }}>
           <Table sx={{ maxWidth: '100%' }} stickyHeader>
             <TableHead>
               <TableRow>

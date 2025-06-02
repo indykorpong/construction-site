@@ -19,6 +19,7 @@ export default function AdminLayout({ children }: Readonly<{ children: ReactNode
           justifyContent={'space-between'}
           alignItems={'center'}
           p={2}
+          height={'3rem'}
         >
           <AdminHeader />
         </Box>

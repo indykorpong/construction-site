@@ -1,11 +1,11 @@
 'use server'
 
-import prisma from '../../lib/prisma'
 import bcrypt from 'bcrypt'
-
-import { FormState, LoginFormSchema } from '../lib/definitions'
-import { createSession, deleteSession } from '../lib/session'
 import { redirect } from 'next/navigation'
+
+import prisma from '../../lib/prisma'
+import { FormState, LoginFormSchema } from '../../lib/login/definitions'
+import { createSession, deleteSession } from '../../lib/login/session'
 
 export async function login(state: FormState, formData: FormData) {
   // Validate form fields

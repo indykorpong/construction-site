@@ -3,8 +3,8 @@ import { Box, Typography } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 import { FaRegEnvelope, FaPhoneAlt, FaRegClock } from 'react-icons/fa'
 import { IconContext } from 'react-icons'
-import { useWindowDimensions } from '../lib/window'
 import { DESKTOP_MIN_WIDTH, TABLET_MIN_WIDTH } from '../theme'
+import { useWindowDimensions } from '../../lib/window'
 
 export function Header() {
   const { width } = useWindowDimensions()

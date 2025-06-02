@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 import { redirect } from 'next/navigation'
-import prisma from '../../lib/prisma'
+import prisma from '../prisma'
 import { decrypt } from './session'
 
 export const verifySession = cache(async () => {

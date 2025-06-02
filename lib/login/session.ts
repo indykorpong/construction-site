@@ -1,6 +1,6 @@
 'use server'
 import { SignJWT, jwtVerify } from 'jose'
-import { SessionPayload } from '@/app/lib/definitions'
+import { SessionPayload } from '@/lib/login/definitions'
 import { cookies } from 'next/headers'
 
 const jwtKey = process.env.JWT_KEY

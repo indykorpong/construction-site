@@ -1,10 +1,17 @@
+'use client'
 import { Box, TextField, Button } from '@mui/material'
 
-import { TextEditor } from '../../_components/text-editor'
 import { ProjectWithImage } from './page'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { updateProject } from '../../../lib/project'
+import { ContentBox } from '../../_components/content-box'
+import { CarouselComponent } from '../../_components/carousel'
+import dynamic from 'next/dynamic'
+
+const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
+  ssr: false,
+})
 
 type ProjectEditorProps = {
   project: ProjectWithImage
@@ -58,14 +65,21 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
   return (
     <Box mx={3} display={'flex'} justifyContent={'flex-start'} flexDirection={'column'} gap={'1rem'} component="form">
       <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={250} width={'100%'}>
-        <Box
-          component={'img'}
-          src={project.images[0]?.url}
-          alt={project.name}
-          width={200}
-          height={200}
-          sx={{ objectFit: 'cover' }}
-        />
+        <ContentBox sx={{ maxWidth: '200px', maxHeight: '200px' }}>
+          <CarouselComponent loop={false} className={'swiper-dark'}>
+            {project.images.map((image, index) => (
+              <Box
+                key={`${index}-project-${project.id}`}
+                component={'img'}
+                src={image.url}
+                alt={project.name}
+                width={200}
+                height={200}
+                sx={{ objectFit: 'cover' }}
+              />
+            ))}
+          </CarouselComponent>
+        </ContentBox>
       </Box>
 
       <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'}>

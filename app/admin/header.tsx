@@ -2,8 +2,8 @@
 import { Box, Button, Tab, Tabs } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-import { logout } from '../actions/auth'
 import { usePathname, useRouter } from 'next/navigation'
+import { logout } from '../actions/auth'
 
 export const AdminHeader: React.FC = () => {
   const router = useRouter()

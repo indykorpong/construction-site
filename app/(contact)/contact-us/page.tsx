@@ -2,7 +2,7 @@
 import { Box, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { useWindowDimensions } from '@/app/lib/window'
+import { useWindowDimensions } from '@/lib/window'
 import { useMemo } from 'react'
 import { TABLET_MIN_WIDTH } from '@/app/theme'
 
