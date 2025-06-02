@@ -16,7 +16,7 @@ declare module '@mui/material/styles' {
 
 export const MOBILE_MIN_WIDTH = 0
 export const TABLET_MIN_WIDTH = 600
-export const DESKTOP_MIN_WIDTH = 1024
+export const DESKTOP_MIN_WIDTH = 1200
 
 export const theme = createTheme({
   palette: {
@@ -51,9 +51,9 @@ export const theme = createTheme({
   },
   breakpoints: {
     values: {
-      mobile: 0,
-      tablet: 600,
-      desktop: 1200,
+      mobile: MOBILE_MIN_WIDTH,
+      tablet: TABLET_MIN_WIDTH,
+      desktop: DESKTOP_MIN_WIDTH,
     },
   },
 })
