@@ -1,6 +1,6 @@
 import { ContentBox } from '@/app/_components/content-box'
 import { Title } from '@/app/_components/title'
-import { Box } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { getProject } from '@/lib/project'
 import { CarouselComponent } from '@/app/_components/carousel'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
@@ -36,29 +36,20 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
     })) ?? []
 
   return (
-    <Box
-      display={'flex'}
-      gap={{ desktop: '2rem', tablet: '1rem', mobile: '0rem' }}
-      maxWidth={'80rem'}
-      margin={'auto'}
-      flexDirection={{ desktop: 'row', tablet: 'column', mobile: 'column' }}
-      padding={'3rem'}
-    >
-      <Box
-        paddingBottom={{ desktop: '3rem', tablet: '0rem', mobile: '0rem' }}
-        margin={'auto'}
-        maxWidth={{ desktop: '40rem', tablet: '40rem', mobile: '100%' }}
-      >
-        <CarouselComponent loop={true} className={'swiper-dark'}>
-          {imageCarousel}
-        </CarouselComponent>
-      </Box>
-      <Box paddingY={{ desktop: '3rem', tablet: '2rem', mobile: '2rem' }}>
-        <Title>{project.name}</Title>
-        <TextWithLineBreak text={project.description} />
-      </Box>
+    <ContentBox>
+      <Grid container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }} sx={{ maxWidth: '34rem' }}>
+          <CarouselComponent loop={true} className={'swiper-light'}>
+            {imageCarousel}
+          </CarouselComponent>
+        </Grid>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }}>
+          <Title>{project.name}</Title>
+          <TextWithLineBreak text={project.description} />
+        </Grid>
+      </Grid>
       <Title>Products in this project</Title>
       <DataGrid data={projectProducts} />
-    </Box>
+    </ContentBox>
   )
 }

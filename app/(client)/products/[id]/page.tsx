@@ -3,7 +3,7 @@ import { ContentBox } from '@/app/_components/content-box'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/product'
-import { Box, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -27,30 +27,18 @@ export default async function ProductId({ params }: { params: Promise<{ id: stri
   ))
 
   return (
-    <Box
-      display={'flex'}
-      gap={{ desktop: '2rem', tablet: '1rem', mobile: '0rem' }}
-      maxWidth={'80rem'}
-      margin={'auto'}
-      flexDirection={{ desktop: 'row', tablet: 'column', mobile: 'column' }}
-      padding={'3rem'}
-    >
-      <Box
-        paddingBottom={{ desktop: '3rem', tablet: '0rem', mobile: '0rem' }}
-        margin={'auto'}
-        maxWidth={{ desktop: '40rem', tablet: '40rem', mobile: '100%' }}
-      >
-        <CarouselComponent loop={true} className={'swiper-dark'}>
-          {imageCarousel}
-        </CarouselComponent>
-      </Box>
-      <Box paddingY={{ desktop: '3rem', tablet: '2rem', mobile: '2rem' }}>
-        <Title>{product.name}</Title>
-        <Typography variant={'h6'} color={'text.secondary'} marginY={'1rem'}>
-          Product Details
-        </Typography>
-        <TextWithLineBreak text={product.description} />
-      </Box>
-    </Box>
+    <ContentBox>
+      <Grid container spacing={8} columns={24} maxWidth={'80rem'} justifyContent={'space-between'} marginY={'2rem'}>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }} sx={{ maxWidth: '34rem' }}>
+          <CarouselComponent loop={true} className={'swiper-dark'}>
+            {imageCarousel}
+          </CarouselComponent>
+        </Grid>
+        <Grid size={{ desktop: 12, tablet: 24, mobile: 24 }}>
+          <Title>{product.name}</Title>
+          <TextWithLineBreak text={product.description} />
+        </Grid>
+      </Grid>
+    </ContentBox>
   )
 }
