@@ -127,7 +127,10 @@ export async function updateProject(id: number, data: Project) {
   try {
     const res = await prisma.project.update({
       where: { id },
-      data,
+      data: {
+        name: data.name,
+        description: data.description,
+      },
     })
 
     return { ok: true, data: res }
