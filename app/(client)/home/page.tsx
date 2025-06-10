@@ -1,11 +1,13 @@
+'use client'
 import Link from 'next/link'
 import { Box, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { getFourProjects } from '@/lib/project'
+import { getProjects } from '@/lib/api/project'
 import DataGrid from '@/app/_components/data-grid'
 import { CompanyInfo } from '@/app/_components/company-info'
 import { HomeCarousel } from './carousel'
+import useSWR from 'swr'
 
 export default function Home() {
   return (
@@ -23,9 +25,11 @@ export default function Home() {
   )
 }
 
-const HomeProjects = async () => {
-  const projects = await getFourProjects()
-  const projectsData = projects.map((project) => ({
+const HomeProjects = () => {
+  const { data: projects, isLoading: isLoadingProjects } = useSWR('/api/projects?limit=4', () =>
+    getProjects({ limit: 4 }),
+  )
+  const projectsData = projects?.map((project) => ({
     id: project.id,
     name: project.name,
     imageUrl: project.images[0]?.url || '',
@@ -35,7 +39,7 @@ const HomeProjects = async () => {
   return (
     <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
       <Title>Projects</Title>
-      <DataGrid data={projectsData} />
+      <DataGrid data={projectsData} isLoading={isLoadingProjects} />
       <Box display={'flex'} justifyContent={'end'} marginTop={'30px'}>
         <Link href="/projects">
           <Typography variant={'body1'} color={'text.secondary'} fontWeight={600} sx={{ textDecoration: 'underline' }}>

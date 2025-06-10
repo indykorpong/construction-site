@@ -1,14 +1,25 @@
+'use client'
 import { CarouselComponent } from '@/app/_components/carousel'
 import { ContentBox } from '@/app/_components/content-box'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
-import { getProduct } from '@/lib/product'
-import { Box, Grid } from '@mui/material'
+import { getProduct } from '@/lib/api/product'
+import { Box, Grid, Skeleton } from '@mui/material'
+import useSWR from 'swr'
 
 export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
-  const product = await getProduct(parseInt(id, 10))
+  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, getProduct)
+
+  if (isLoadingProduct) {
+    return (
+      <ContentBox>
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </ContentBox>
+    )
+  }
+
   if (!product) {
     return <ContentBox>Product not found</ContentBox>
   }

@@ -1,7 +1,7 @@
 import { ContentBox } from '@/app/_components/content-box'
 import DataGrid from '@/app/_components/data-grid'
 import { Title } from '@/app/_components/title'
-import { getProducts } from '@/lib/product'
+import { getProducts } from '@/lib/db/product'
 
 export default async function ProductCategoriesPage() {
   const products = await getProducts()

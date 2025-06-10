@@ -1,7 +1,7 @@
 import { ContentBox } from '@/app/_components/content-box'
 import DataGrid from '@/app/_components/data-grid'
 import { Title } from '@/app/_components/title'
-import { getProduct } from '@/lib/product'
+import { getProduct } from '@/lib/db/product'
 
 export default async function ProductCategoryId({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
