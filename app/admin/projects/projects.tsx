@@ -1,27 +1,46 @@
 'use client'
-import { Drawer, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
+import {
+  Drawer,
+  Box,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  CircularProgress,
+} from '@mui/material'
 import { Fragment, useState } from 'react'
-import { ProjectWithImage } from './page'
 import { ProjectEditor } from './projects-editor'
+import { ProjectData } from '@/lib/api/project'
 
-export const ProjectTable = ({ projects }: { projects: ProjectWithImage[] }) => {
-  const defaultProject: ProjectWithImage = {
+export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[]; isLoading: boolean }) => {
+  const defaultProject: ProjectData = {
     id: 0,
     name: '',
     description: '',
     images: [],
+    projectProducts: [],
   }
 
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selected, setSelected] = useState<ProjectWithImage>(defaultProject)
+  const [selected, setSelected] = useState<ProjectData>(defaultProject)
 
-  const handleEdit = (project: ProjectWithImage) => () => {
+  const handleEdit = (project: ProjectData) => () => {
     setSelected(project)
     setOpenDrawer(true)
   }
 
   const handleSubmit = () => {
     setOpenDrawer(false)
+  }
+
+  if (isLoading) {
+    return (
+      <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100%'}>
+        <CircularProgress />
+      </Box>
+    )
   }
 
   return (

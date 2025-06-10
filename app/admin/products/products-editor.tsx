@@ -9,7 +9,7 @@ import { ProductWithImages } from './page'
 import { CarouselComponent } from '../../_components/carousel'
 import { ContentBox } from '../../_components/content-box'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
-import { updateProduct, uploadProductImage } from '../../../lib/product'
+import { updateProduct, uploadProductImage } from '../../../lib/db/product'
 import dynamic from 'next/dynamic'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {

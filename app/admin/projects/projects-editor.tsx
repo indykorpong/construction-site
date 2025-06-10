@@ -1,25 +1,25 @@
 'use client'
 import { Box, TextField, Button } from '@mui/material'
 
-import { ProjectWithImage } from './page'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { updateProject } from '../../../lib/project'
+import { updateProject } from '../../../lib/db/project'
 import { ContentBox } from '../../_components/content-box'
 import { CarouselComponent } from '../../_components/carousel'
 import dynamic from 'next/dynamic'
+import { ProjectData } from '@/lib/api/project'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,
 })
 
 type ProjectEditorProps = {
-  project: ProjectWithImage
+  project: ProjectData
   setOpenDrawer: (v: boolean) => void
 }
 
 export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer }) => {
-  const [formData, setFormData] = useState<ProjectWithImage>(project)
+  const [formData, setFormData] = useState<ProjectData>(project)
 
   if (!project) {
     return <div>project not found</div>

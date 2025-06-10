@@ -1,9 +1,9 @@
 'use server'
 import { Project } from '@prisma/client'
-import { minioClient } from './minio'
-import prisma from './prisma'
+import { minioClient } from '../minio'
+import prisma from '../prisma'
 
-export async function getProjects() {
+export async function getProjects({ limit }: { limit?: number } = {}) {
   const projects = await prisma.project.findMany({
     include: {
       images: true,
@@ -20,6 +20,7 @@ export async function getProjects() {
     orderBy: {
       id: 'asc',
     },
+    take: limit,
   })
 
   const projectsData = await Promise.all(
