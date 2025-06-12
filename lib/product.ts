@@ -2,9 +2,8 @@
 import { Product } from '@prisma/client'
 import prisma from './prisma'
 import { getImageUrl } from '@/utils/image'
-import { minioClient } from './minio'
-import path from 'path'
 import { FileWithPath } from 'react-dropzone'
+import { minioClient } from './minio'
 
 export async function getProducts({ includeChildren }: { includeChildren?: boolean } = { includeChildren: false }) {
   const products = await prisma.product.findMany({
@@ -75,7 +74,7 @@ export async function getProduct(id: number) {
 
 export async function updateProduct(id: number, data: Product) {
   try {
-    const res = await prisma.product.update({
+    await prisma.product.update({
       where: { id },
       data: {
         name: data.name,
@@ -83,45 +82,49 @@ export async function updateProduct(id: number, data: Product) {
         parentProductId: data.parentProductId,
       },
     })
-
-    return { ok: true, data: res }
   } catch (err) {
     console.error('Error updating product:', err)
-    return { ok: false, error: 'Failed to update product ' + err }
+    throw err
   }
 }
 
-export async function uploadProductImage(pathname: string, file: FileWithPath[]) {
-  if (!file || file.length === 0) {
-    return { ok: false, error: 'No file provided' }
+export async function uploadProductImage(id: number, productName: string, files: FileWithPath[]) {
+  try {
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          if (!file) {
+            throw new Error('file not found')
+          }
+
+          const fileObject = `products/${productName.replaceAll(' ', '')}/${file.name}`
+          console.log('Path: ', fileObject)
+
+          await minioClient.uploadFile('construction', fileObject, file)
+          await prisma.product.update({
+            where: { id },
+            data: {
+              images: {
+                create: {
+                  url: fileObject,
+                },
+              },
+            },
+          })
+        } catch (err) {
+          console.error(file.name, err)
+          throw err
+        }
+      }),
+    )
+  } catch (err) {
+    console.error('Error uploading: ', err)
+    throw err
   }
 
   try {
-    const failedToUpload: string[] = []
-
-    file.map(async (f) => {
-      const filePath = path.join(`/products/`, pathname, f.name)
-
-      if (!f.path) {
-        console.error('File path is undefined for file:', f.name)
-        return { ok: false, error: `File path is undefined for file ${f.name}` }
-      }
-
-      try {
-        await minioClient.uploadFile('construction', filePath, f.path)
-      } catch (err) {
-        console.error('Error uploading file:', err)
-        failedToUpload.push(f.name)
-      }
-    })
-
-    if (failedToUpload.length > 0) {
-      console.error('Failed to upload files:', failedToUpload)
-    }
-
-    return { ok: true, error: failedToUpload.length > 0 ? 'Some file(s) failed to upload' : null }
   } catch (err) {
-    console.error('Error uploading product image:', err)
-    return { ok: false, error: 'Failed to upload product image ' }
+    console.error('Error accessing DB: ', err)
+    throw err
   }
 }

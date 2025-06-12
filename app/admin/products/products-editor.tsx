@@ -2,15 +2,14 @@
 import { Box, TextField, Button } from '@mui/material'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
-import { FileWithPath } from 'react-dropzone'
-import FileUploadIcon from '@mui/icons-material/FileUpload'
 
 import { ProductWithImages } from './page'
 import { CarouselComponent } from '../../_components/carousel'
 import { ContentBox } from '../../_components/content-box'
-import { ImageUploadComponent } from '../../_components/file-upload-component'
 import { updateProduct, uploadProductImage } from '../../../lib/product'
 import dynamic from 'next/dynamic'
+import { FileWithPath } from 'react-dropzone'
+import { ImageUploadComponent } from '../../_components/file-upload-component'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,
@@ -23,7 +22,7 @@ type ProductEditorProps = {
 
 export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer }) => {
   const defaultProduct = {
-    id: 0,
+    id: -1,
     name: '',
     description: '',
     parentProductId: 0,
@@ -32,7 +31,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
   }
 
   const [formData, setFormData] = useState<ProductWithImages>(product ?? defaultProduct)
-  const [imageFiles, setImageFiles] = useState<FileWithPath[]>([])
 
   if (!product) {
     return <div>Product not found...</div>
@@ -45,10 +43,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
   const handleEditorChange = (value: string) => {
     setFormData((prev) => ({ ...prev, description: value }))
-  }
-
-  const handleImageState = async (newFile: File[]) => {
-    setImageFiles((prev) => [...prev, ...newFile])
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -65,35 +59,23 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       return
     }
 
-    const res = await updateProduct(product.id, formData)
-
-    if (res.ok) {
+    try {
+      await updateProduct(product.id, formData)
       toast.success('Product updated')
       setOpenDrawer(false)
-    } else {
-      toast.error('Failed to update product ')
-      console.error(res.error)
+    } catch (err) {
+      toast.error('Submit failed')
+      console.error('Failed to update product: ', err)
     }
   }
 
-  const handleImageUpload = async () => {
-    if (imageFiles.length === 0) {
-      toast.error('No files to upload')
-      return
-    }
-
-    const res = await uploadProductImage(formData.name, imageFiles)
-
-    if (res.ok) {
-      if (res.error) {
-        toast.error(res.error)
-      } else {
-        toast.success('All images uploaded successfully')
-      }
-
-      setImageFiles([])
-    } else {
-      toast.error('Failed to upload images' + res.error)
+  const handleUpload = async (files: FileWithPath[]) => {
+    try {
+      await uploadProductImage(formData.id, formData.name, files)
+      toast.success('Image upload successful')
+    } catch (err) {
+      console.error('Error uploading: ', err)
+      toast.error('Upload failed')
     }
   }
 
@@ -161,17 +143,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
         </Box>
 
         <Box>
-          <b>Upload Images</b>
-          <ImageUploadComponent handleUpload={handleImageState} />
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<FileUploadIcon />}
-            onClick={handleImageUpload}
-            sx={{ mt: 1 }}
-          >
-            Upload
-          </Button>
+          <ImageUploadComponent onDrop={(f) => handleUpload(f)} />
         </Box>
       </Box>
 
