@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { FileWithPath } from 'react-dropzone'
 import FileUploadIcon from '@mui/icons-material/FileUpload'
 
-import { ProductWithImages } from './page'
+import { ProductData } from '@/lib/db/product'
 import { CarouselComponent } from '../../_components/carousel'
 import { ContentBox } from '../../_components/content-box'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
@@ -17,7 +17,7 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 })
 
 type ProductEditorProps = {
-  product?: ProductWithImages
+  product?: ProductData
   setOpenDrawer: (v: boolean) => void
 }
 
@@ -31,11 +31,11 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     childrenProducts: [],
   }
 
-  const [formData, setFormData] = useState<ProductWithImages>(product ?? defaultProduct)
+  const [formData, setFormData] = useState<ProductData>(product ?? defaultProduct)
   const [imageFiles, setImageFiles] = useState<FileWithPath[]>([])
 
   if (!product) {
-    return <div>Product not found...</div>
+    return <Box>Product not found</Box>
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

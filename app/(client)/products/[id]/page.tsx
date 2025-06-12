@@ -5,12 +5,13 @@ import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/api/product'
 import { Box, Grid, Skeleton } from '@mui/material'
+import { useParams } from 'next/navigation'
 import useSWR from 'swr'
 
-export default async function ProductId({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default function ProductId() {
+  const { id } = useParams<{ id: string }>()
 
-  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, getProduct)
+  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, () => getProduct(id))
 
   if (isLoadingProduct) {
     return (

@@ -5,7 +5,7 @@ import useSWR from 'swr'
 import DataGrid from '@/app/_components/data-grid'
 import { getProducts } from '@/lib/api/product'
 
-export default async function ProductsPage() {
+export default function ProductsPage() {
   const { data: products, isLoading: isLoadingProducts } = useSWR('/api/products', getProducts)
   const productsData = products?.map((product) => ({
     id: product.id,

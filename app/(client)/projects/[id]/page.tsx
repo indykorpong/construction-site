@@ -12,7 +12,9 @@ import { useParams } from 'next/navigation'
 export default function ProjectId() {
   const { id } = useParams<{ id: string }>()
 
-  const { data: project, isLoading: isLoadingProject } = useSWR(`/api/projects/${parseInt(id, 10)}`, getProject)
+  const { data: project, isLoading: isLoadingProject } = useSWR(`/api/projects/${id}`, () =>
+    getProject({ id: parseInt(id, 10) }),
+  )
 
   if (isLoadingProject) {
     return (
