@@ -1,11 +1,13 @@
+'use client'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
-import { getProducts } from '@/lib/product'
+import useSWR from 'swr'
 import DataGrid from '@/app/_components/data-grid'
+import { getProducts } from '@/lib/api/product'
 
-export default async function ProductsPage() {
-  const products = await getProducts()
-  const productsData = products.map((product) => ({
+export default function ProductsPage() {
+  const { data: products, isLoading: isLoadingProducts } = useSWR('/api/products', getProducts)
+  const productsData = products?.map((product) => ({
     id: product.id,
     name: product.name,
     imageUrl: product.images?.[0]?.url,
@@ -14,7 +16,7 @@ export default async function ProductsPage() {
   return (
     <ContentBox>
       <Title>Products</Title>
-      <DataGrid data={productsData} />
+      <DataGrid data={productsData} isLoading={isLoadingProducts} />
     </ContentBox>
   )
 }

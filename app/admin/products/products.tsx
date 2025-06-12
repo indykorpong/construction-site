@@ -1,21 +1,39 @@
 'use client'
-import { Box, TableContainer, Table, TableHead, TableBody, TableCell, TableRow, Drawer } from '@mui/material'
+import {
+  Box,
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow,
+  Drawer,
+  CircularProgress,
+} from '@mui/material'
 import { Fragment, useState } from 'react'
 
-import { ProductWithImages } from './page'
+import { ProductData } from '@/lib/db/product'
 import { ProductEditor } from './products-editor'
 
-export const ProductTable = ({ products }: { products: ProductWithImages[] }) => {
+export const ProductTable = ({ products, isLoading }: { products: ProductData[]; isLoading: boolean }) => {
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithImages | undefined>()
+  const [selectedProduct, setSelectedProduct] = useState<ProductData | undefined>()
 
-  const handleEdit = (product: ProductWithImages) => () => {
+  const handleEdit = (product: ProductData) => () => {
     setSelectedProduct(product)
     setOpenDrawer(true)
   }
 
   const handleSubmit = () => {
     setOpenDrawer(false)
+  }
+
+  if (isLoading) {
+    return (
+      <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100%'}>
+        <CircularProgress />
+      </Box>
+    )
   }
 
   return (

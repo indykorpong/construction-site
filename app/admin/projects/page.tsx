@@ -1,11 +1,10 @@
-import { Project, Image } from '@prisma/client'
-import { getProjects } from '../../../lib/project'
+'use client'
+import { getProjects } from '../../../lib/api/project'
 import { ProjectTable } from './projects'
+import useSWR from 'swr'
 
-export type ProjectWithImage = Project & { images: Image[] }
+export default function ProjectsPage() {
+  const { data: projects, isLoading: isLoadingProjects } = useSWR('/api/projects', () => getProjects())
 
-export default async function ProjectsPage() {
-  const projects: ProjectWithImage[] = await getProjects()
-
-  return <ProjectTable projects={projects} />
+  return <ProjectTable projects={projects || []} isLoading={isLoadingProjects} />
 }

@@ -1,15 +1,29 @@
+'use client'
 import { ContentBox } from '@/app/_components/content-box'
 import { Title } from '@/app/_components/title'
-import { Box, Grid } from '@mui/material'
-import { getProject } from '@/lib/project'
+import { Box, Grid, Skeleton } from '@mui/material'
+import { getProject } from '@/lib/api/project'
 import { CarouselComponent } from '@/app/_components/carousel'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import DataGrid from '@/app/_components/data-grid'
+import useSWR from 'swr'
+import { useParams } from 'next/navigation'
 
-export default async function ProjectId({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default function ProjectId() {
+  const { id } = useParams<{ id: string }>()
 
-  const project = await getProject(parseInt(id, 10))
+  const { data: project, isLoading: isLoadingProject } = useSWR(`/api/projects/${id}`, () =>
+    getProject({ id: parseInt(id, 10) }),
+  )
+
+  if (isLoadingProject) {
+    return (
+      <ContentBox>
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </ContentBox>
+    )
+  }
+
   if (!project) {
     return <ContentBox>Project not found</ContentBox>
   }
@@ -49,7 +63,7 @@ export default async function ProjectId({ params }: { params: Promise<{ id: stri
         </Grid>
       </Grid>
       <Title>Products in this project</Title>
-      <DataGrid data={projectProducts} />
+      <DataGrid data={projectProducts} isLoading={isLoadingProject} />
     </ContentBox>
   )
 }

@@ -1,11 +1,26 @@
 'use server'
 import { Product } from '@prisma/client'
-import prisma from './prisma'
+import prisma from '../prisma'
 import { getImageUrl } from '@/utils/image'
+import { minioClient } from '../minio'
+import path from 'path'
 import { FileWithPath } from 'react-dropzone'
 import { minioClient } from './minio'
 
-export async function getProducts({ includeChildren }: { includeChildren?: boolean } = { includeChildren: false }) {
+export type ProductData = Product & {
+  images: {
+    url: string
+  }[]
+  childrenProducts: (Product & {
+    images: {
+      url: string
+    }[]
+  })[]
+}
+
+export async function getProducts(
+  { includeChildren }: { includeChildren?: boolean } = { includeChildren: false },
+): Promise<ProductData[]> {
   const products = await prisma.product.findMany({
     include: {
       images: true,
@@ -41,7 +56,7 @@ export async function getProducts({ includeChildren }: { includeChildren?: boole
   return productsData
 }
 
-export async function getProduct(id: number) {
+export async function getProduct(id: number): Promise<ProductData> {
   const product = await prisma.product.findUnique({
     where: { id },
     include: {
@@ -55,7 +70,7 @@ export async function getProduct(id: number) {
   })
 
   if (!product) {
-    return null
+    throw new Error('Product not found')
   }
 
   const productData = {
