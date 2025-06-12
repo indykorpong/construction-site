@@ -1,9 +1,22 @@
 'use server'
-import { Project } from '@prisma/client'
+import { Product, Project } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
 
-export async function getProjects({ limit }: { limit?: number } = {}) {
+export type ProjectData = Project & {
+  images: {
+    url: string
+  }[]
+  projectProducts: {
+    product: Product & {
+      images: {
+        url: string
+      }[]
+    }
+  }[]
+}
+
+export async function getProjects({ limit }: { limit?: number } = {}): Promise<ProjectData[]> {
   const projects = await prisma.project.findMany({
     include: {
       images: true,
@@ -52,7 +65,7 @@ export async function getProjects({ limit }: { limit?: number } = {}) {
   return projectsData
 }
 
-export async function getProject(id: number) {
+export async function getProject(id: number): Promise<ProjectData> {
   const project = await prisma.project.findUnique({
     where: { id },
     include: {
@@ -70,7 +83,7 @@ export async function getProject(id: number) {
   })
 
   if (!project) {
-    return null
+    throw new Error('Project not found')
   }
 
   const projectData = {

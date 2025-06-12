@@ -12,14 +12,14 @@ import {
 } from '@mui/material'
 import { Fragment, useState } from 'react'
 
-import { ProductWithImages } from './page'
+import { ProductData } from '@/lib/db/product'
 import { ProductEditor } from './products-editor'
 
-export const ProductTable = ({ products, isLoading }: { products: ProductWithImages[]; isLoading: boolean }) => {
+export const ProductTable = ({ products, isLoading }: { products: ProductData[]; isLoading: boolean }) => {
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductWithImages | undefined>()
+  const [selectedProduct, setSelectedProduct] = useState<ProductData | undefined>()
 
-  const handleEdit = (product: ProductWithImages) => () => {
+  const handleEdit = (product: ProductData) => () => {
     setSelectedProduct(product)
     setOpenDrawer(true)
   }

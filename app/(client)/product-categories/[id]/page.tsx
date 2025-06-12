@@ -1,16 +1,16 @@
+'use client'
 import { ContentBox } from '@/app/_components/content-box'
 import DataGrid from '@/app/_components/data-grid'
 import { Title } from '@/app/_components/title'
-import { getProduct } from '@/lib/db/product'
+import { getProduct } from '@/lib/api/product'
+import { useParams } from 'next/navigation'
+import useSWR from 'swr'
 
-export default async function ProductCategoryId({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const product = await getProduct(parseInt(id, 10))
-  if (!product) {
-    return <div>Product not found</div>
-  }
+export default function ProductCategoryId() {
+  const { id } = useParams<{ id: string }>()
+  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, () => getProduct(id))
 
-  const productsData = product.childrenProducts.map((product) => ({
+  const productsData = product?.childrenProducts.map((product) => ({
     id: product.id,
     name: product.name,
     imageUrl: product.images?.[0]?.url,
@@ -19,8 +19,8 @@ export default async function ProductCategoryId({ params }: { params: Promise<{ 
 
   return (
     <ContentBox>
-      <Title>{product.name}</Title>
-      <DataGrid data={productsData} />
+      <Title>{product?.name ?? 'Product not found'}</Title>
+      <DataGrid data={productsData} isLoading={isLoadingProduct} />
     </ContentBox>
   )
 }

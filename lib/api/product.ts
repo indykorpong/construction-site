@@ -1,12 +1,6 @@
-import { Product } from '@prisma/client'
+import { ProductData } from '@/lib/db/product'
 
-export type ProductWithImages = Product & {
-  images: {
-    url: string
-  }[]
-}
-
-export const getProducts = async (): Promise<ProductWithImages[]> => {
+export const getProducts = async (): Promise<ProductData[]> => {
   const res = await fetch('/api/products?includeChildren=true')
 
   if (!res.ok) {
@@ -17,7 +11,7 @@ export const getProducts = async (): Promise<ProductWithImages[]> => {
   return await res.json()
 }
 
-export const getProduct = async (id: string): Promise<ProductWithImages> => {
+export const getProduct = async (id: string): Promise<ProductData> => {
   const res = await fetch(`/api/products/${id}`)
 
   if (!res.ok) {

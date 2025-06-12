@@ -7,7 +7,7 @@ import { updateProject } from '../../../lib/db/project'
 import { ContentBox } from '../../_components/content-box'
 import { CarouselComponent } from '../../_components/carousel'
 import dynamic from 'next/dynamic'
-import { ProjectData } from '@/lib/api/project'
+import { ProjectData } from '@/lib/db/project'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,
@@ -22,7 +22,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
   const [formData, setFormData] = useState<ProjectData>(project)
 
   if (!project) {
-    return <div>project not found</div>
+    return <Box>Project not found</Box>
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
