@@ -3,9 +3,7 @@ import { Product } from '@prisma/client'
 import prisma from '../prisma'
 import { getImageUrl } from '@/utils/image'
 import { minioClient } from '../minio'
-import path from 'path'
 import { FileWithPath } from 'react-dropzone'
-import { minioClient } from './minio'
 
 export type ProductData = Product & {
   images: {
