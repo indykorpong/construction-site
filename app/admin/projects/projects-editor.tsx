@@ -109,22 +109,19 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
     }
   }
 
-  const handleDeleteImage = async (imageUrl: string) => {
+  const handleDeleteImage = async (imageId: number) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this image? \nThis action cannot be undone.')
     if (!confirmDelete) {
       return
     }
 
-    if (!imageUrl) {
+    if (!imageId) {
       toast.error('Image URL not found')
       return
     }
 
-    const url = new URL(imageUrl)
-    const imageName = url.pathname.slice(url.pathname.indexOf('projects'))
-
     try {
-      const response = await fetch(`/api/products/image?imageUrl=${encodeURIComponent(imageName)}`, {
+      const response = await fetch(`/api/projects/image?id=${encodeURIComponent(imageId)}`, {
         method: 'DELETE',
       })
       if (!response.ok) {
@@ -189,7 +186,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
                 display={'flex'}
                 alignItems={'center'}
                 borderRadius={2}
-                onClick={() => handleDeleteImage(image.url)}
+                onClick={() => handleDeleteImage(image.id)}
               >
                 <Box
                   component={'img'}

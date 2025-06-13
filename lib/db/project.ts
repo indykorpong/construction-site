@@ -1,18 +1,14 @@
 'use server'
-import { Product, Project } from '@prisma/client'
+import { Image, Product, Project } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
 import { randomUUID } from 'crypto'
 
 export type ProjectData = Project & {
-  images: {
-    url: string
-  }[]
+  images: Image[]
   projectProducts: {
     product: Product & {
-      images: {
-        url: string
-      }[]
+      images: Image[]
     }
   }[]
 }
@@ -206,11 +202,19 @@ export async function uploadProjectImage(id: number, projectName: string, files:
   }
 }
 
-export async function deleteProjectImage(imageUrl: string) {
+export async function deleteProjectImage(id: number) {
   try {
-    await minioClient.deleteFile(imageUrl)
+    const image = await prisma.image.findUnique({
+      where: { id },
+    })
+
+    if (!image) {
+      throw new Error('Image not found')
+    }
+
+    await minioClient.deleteFile(image.url)
     await prisma.image.delete({
-      where: { url: imageUrl },
+      where: { id },
     })
   } catch (err) {
     console.error('Error deleting image:', err)

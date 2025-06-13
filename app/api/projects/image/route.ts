@@ -26,13 +26,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 export async function DELETE(req: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(req.url)
-    const imageUrl = decodeURIComponent(searchParams.get('imageUrl') ?? '')
+    const imageId = parseInt(decodeURIComponent(searchParams.get('id') ?? ''))
 
-    if (!imageUrl) {
+    if (!imageId) {
       return NextResponse.json({ error: 'Image URL is required' }, { status: 400 })
     }
 
-    await deleteProjectImage(imageUrl)
+    await deleteProjectImage(imageId)
 
     return NextResponse.json({ message: 'Image deleted successfully' }, { status: 200 })
   } catch (error) {
