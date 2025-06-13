@@ -9,6 +9,7 @@ import {
   TableRow,
   Drawer,
   CircularProgress,
+  Button,
 } from '@mui/material'
 import { FC, Fragment, useState } from 'react'
 
@@ -18,11 +19,26 @@ import { ProductEditor } from './products-editor'
 type ProductTableProps = {
   products: ProductData[]
   isLoading: boolean
+  onUpdateProduct: (p: ProductData) => void
 }
 
-export const ProductTable: FC<ProductTableProps> = ({ products, isLoading }) => {
+export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, onUpdateProduct }) => {
+  const defaultProduct = {
+    id: -1,
+    name: '',
+    description: '',
+    parentProductId: 0,
+    images: [],
+    childrenProducts: [],
+  }
+
   const [openDrawer, setOpenDrawer] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<ProductData | undefined>()
+  const [selectedProduct, setSelectedProduct] = useState<ProductData>(defaultProduct)
+
+  const handleCreateProduct = () => {
+    setSelectedProduct(defaultProduct)
+    setOpenDrawer(true)
+  }
 
   const handleEdit = (product: ProductData) => () => {
     setSelectedProduct(product)
@@ -44,11 +60,17 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading }) => 
   return (
     <>
       <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
-        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} />
+        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} onUpdateProduct={onUpdateProduct} />
       </Drawer>
 
+      <Box marginBottom={'8px'}>
+        <Button variant="contained" onClick={handleCreateProduct}>
+          Create
+        </Button>
+      </Box>
+
       <Box>
-        <TableContainer sx={{ maxHeight: 'calc(100vh - 6rem)' }}>
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 10rem)' }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>

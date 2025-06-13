@@ -2,38 +2,30 @@
 import { Box, TextField, Button } from '@mui/material'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 
 import { ProductData } from '@/lib/db/product'
+import { createProduct, updateProduct } from '@/lib/api/product'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
-import { updateProduct } from '@/lib/db/product'
-import dynamic from 'next/dynamic'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,
 })
 
 type ProductEditorProps = {
-  product?: ProductData
+  product: ProductData
   setOpenDrawer: (v: boolean) => void
+  onUpdateProduct: (p: ProductData) => void
 }
 
-export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer }) => {
-  const defaultProduct = {
-    id: -1,
-    name: '',
-    description: '',
-    parentProductId: 0,
-    images: [],
-    childrenProducts: [],
-  }
-
-  const [prodData, setProdData] = useState<ProductData>(product ?? defaultProduct)
+export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer, onUpdateProduct }) => {
+  const [prodData, setProdData] = useState<ProductData>(product)
 
   if (!product) {
     return <Box>Product not found</Box>
   }
 
-  const fetchData = async () => {
+  const refreshProduct = async () => {
     const res = await fetch('/api/products/' + product.id, { method: 'GET' })
     if (!res.ok) {
       console.error('Failed to fetch product data:', res.statusText)
@@ -42,6 +34,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     }
     const newData = await res.json()
     setProdData(newData)
+    onUpdateProduct(newData)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,13 +60,17 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       return
     }
 
-    fetchData()
-
     try {
-      await updateProduct(product.id, prodData)
-      toast.success('Product updated')
+      if (prodData.id === -1) {
+        await createProduct(prodData)
+        toast.success('Product created')
+      } else {
+        await updateProduct(product.id, prodData)
+        toast.success('Product updated')
+      }
+
       setOpenDrawer(false)
-      fetchData()
+      refreshProduct()
     } catch (err) {
       toast.error('Submit failed')
       console.error('Failed to update product: ', err)
@@ -103,7 +100,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
         throw new Error('Failed to upload images')
       }
 
-      fetchData()
+      refreshProduct()
 
       toast.success('Image upload successful')
     } catch (err) {
@@ -133,7 +130,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       if (!response.ok) {
         throw new Error('Failed to delete image')
       }
-      fetchData()
+      refreshProduct()
       toast.success('Image deleted successfully')
     } catch (err) {
       console.error('Error deleting image: ', err)
@@ -186,46 +183,50 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
           <TextEditor id="description" value={prodData.description ?? ''} onChange={handleEditorChange} />
         </Box>
 
-        <Box>
-          <b>Images</b>
-          <Box
-            display={'flex'}
-            flexDirection={'row'}
-            justifyContent={'flex-start'}
-            alignItems={'center'}
-            border={'1px solid #ccc'}
-            overflow={'auto'}
-            padding={1}
-            flexWrap={'wrap'}
-            maxWidth={'590px'}
-          >
-            {prodData.images.map((image, index) => (
+        {product.id !== -1 && (
+          <>
+            <Box>
+              <b>Images</b>
               <Box
-                key={index}
-                border={'1px solid #ccc'}
-                margin={0.5}
-                padding={0.5}
                 display={'flex'}
+                flexDirection={'row'}
+                justifyContent={'flex-start'}
                 alignItems={'center'}
-                borderRadius={2}
-                onClick={() => handleDeleteImage(image.url)}
+                border={'1px solid #ccc'}
+                overflow={'auto'}
+                padding={1}
+                flexWrap={'wrap'}
+                maxWidth={'590px'}
               >
-                <Box
-                  component={'img'}
-                  src={image.url}
-                  alt={product.name}
-                  height={100}
-                  width={100}
-                  sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-                />
+                {prodData.images.map((image, index) => (
+                  <Box
+                    key={index}
+                    border={'1px solid #ccc'}
+                    margin={0.5}
+                    padding={0.5}
+                    display={'flex'}
+                    alignItems={'center'}
+                    borderRadius={2}
+                    onClick={() => handleDeleteImage(image.url)}
+                  >
+                    <Box
+                      component={'img'}
+                      src={image.url}
+                      alt={product.name}
+                      height={100}
+                      width={100}
+                      sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+                    />
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
-        </Box>
+            </Box>
 
-        <Box marginTop={2}>
-          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
-        </Box>
+            <Box marginTop={2}>
+              <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+            </Box>
+          </>
+        )}
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>

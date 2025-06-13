@@ -85,9 +85,24 @@ export async function getProduct(id: number): Promise<ProductData> {
   return productData
 }
 
+export async function createProduct(data: Product) {
+  try {
+    await prisma.product.create({
+      data: {
+        name: data.name,
+        description: data.description,
+        parentProductId: data.parentProductId,
+      },
+    })
+  } catch (err) {
+    console.error('Error creating product:', err)
+    throw err
+  }
+}
+
 export async function updateProduct(id: number, data: Product) {
   try {
-    await prisma.product.update({
+    const res = await prisma.product.update({
       where: { id },
       data: {
         name: data.name,
@@ -95,6 +110,8 @@ export async function updateProduct(id: number, data: Product) {
         parentProductId: data.parentProductId,
       },
     })
+
+    return res
   } catch (err) {
     console.error('Error updating product:', err)
     throw err
