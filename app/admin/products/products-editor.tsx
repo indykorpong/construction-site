@@ -10,7 +10,6 @@ import { ImageUploadComponent } from '../../_components/file-upload-component'
 import { updateProduct, uploadProductImage } from '../../../lib/db/product'
 import dynamic from 'next/dynamic'
 import { FileWithPath } from 'react-dropzone'
-import { ImageUploadComponent } from '../../_components/file-upload-component'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,

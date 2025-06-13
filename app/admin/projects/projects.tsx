@@ -88,7 +88,7 @@ export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[];
                       <Box
                         key={`${index}-project-${project.id}`}
                         component={'img'}
-                        src={project.images[0]?.url ?? ''}
+                        src={project.images[0]?.url}
                         alt={project.name}
                         width={100}
                         height={100}
