@@ -15,10 +15,10 @@ const EditorConfig = {
     height: 200,
     menubar: false,
     plugins: ['anchor', 'autolink', 'charmap', 'image', 'link', 'lists', 'media', 'searchreplace', 'table'],
-    toolbar:
-      'undo redo | formatselect | bold italic backcolor | \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | removeformat ',
+    toolbar: [
+      'undo | formatselect | fontsize | bold italic backcolor | removeformat',
+      'lineheight alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+    ],
   },
 }
 
