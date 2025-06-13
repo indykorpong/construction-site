@@ -3,7 +3,7 @@ import { Product } from '@prisma/client'
 import prisma from '../prisma'
 import { getImageUrl } from '@/utils/image'
 import { minioClient } from '../minio'
-import { FileWithPath } from 'react-dropzone'
+import { randomUUID } from 'crypto'
 
 export type ProductData = Product & {
   images: {
@@ -101,7 +101,7 @@ export async function updateProduct(id: number, data: Product) {
   }
 }
 
-export async function uploadProductImage(id: number, productName: string, files: FileWithPath[]) {
+export async function uploadProductImage(id: number, productName: string, files: File[]) {
   try {
     await Promise.all(
       files.map(async (file) => {
@@ -110,8 +110,8 @@ export async function uploadProductImage(id: number, productName: string, files:
             throw new Error('file not found')
           }
 
-          const fileObject = `products/${productName.replaceAll(' ', '')}/${file.name}`
-          console.log('Path: ', fileObject)
+          const fileName = randomUUID()
+          const fileObject = `products/${productName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
 
           await minioClient.uploadFile('construction', fileObject, file)
           await prisma.product.update({
@@ -134,10 +134,16 @@ export async function uploadProductImage(id: number, productName: string, files:
     console.error('Error uploading: ', err)
     throw err
   }
+}
 
+export async function deleteProductImage(imageUrl: string) {
   try {
+    await minioClient.deleteFile(imageUrl)
+    await prisma.image.delete({
+      where: { url: imageUrl },
+    })
   } catch (err) {
-    console.error('Error accessing DB: ', err)
+    console.error('Error deleting image:', err)
     throw err
   }
 }

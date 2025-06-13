@@ -10,12 +10,17 @@ import {
   Drawer,
   CircularProgress,
 } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 
 import { ProductData } from '@/lib/db/product'
 import { ProductEditor } from './products-editor'
 
-export const ProductTable = ({ products, isLoading }: { products: ProductData[]; isLoading: boolean }) => {
+type ProductTableProps = {
+  products: ProductData[]
+  isLoading: boolean
+}
+
+export const ProductTable: FC<ProductTableProps> = ({ products, isLoading }) => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<ProductData | undefined>()
 
