@@ -138,6 +138,22 @@ export async function getFourProjects() {
   return projectsData
 }
 
+export async function createProject(data: Project) {
+  try {
+    const res = await prisma.project.create({
+      data: {
+        name: data.name,
+        description: data.description,
+      },
+    })
+
+    return res
+  } catch (err) {
+    console.error('Error creating project:', err)
+    throw err
+  }
+}
+
 export async function updateProject(id: number, data: Project) {
   try {
     const res = await prisma.project.update({
@@ -148,10 +164,10 @@ export async function updateProject(id: number, data: Project) {
       },
     })
 
-    return { ok: true, data: res }
+    return res
   } catch (err) {
     console.error('Error updating project:', err)
-    return { ok: false, error: 'Failed to update project ' + err }
+    throw err
   }
 }
 

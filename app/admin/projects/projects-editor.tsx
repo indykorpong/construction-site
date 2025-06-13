@@ -1,13 +1,11 @@
 'use client'
-import { Box, TextField, Button } from '@mui/material'
-
 import { useState } from 'react'
+import { Box, TextField, Button } from '@mui/material'
 import toast from 'react-hot-toast'
-import { updateProject } from '../../../lib/db/project'
-import { ContentBox } from '../../_components/content-box'
-import { CarouselComponent } from '../../_components/carousel'
 import dynamic from 'next/dynamic'
+
 import { ProjectData } from '@/lib/db/project'
+import { createProject, updateProject } from '@/lib/api/project'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
@@ -17,16 +15,17 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 type ProjectEditorProps = {
   project: ProjectData
   setOpenDrawer: (v: boolean) => void
+  onUpdateProject: (p: ProjectData) => void
 }
 
-export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer }) => {
+export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer, onUpdateProject }) => {
   const [projData, setProjData] = useState<ProjectData>(project)
 
   if (!project) {
     return <Box>Project not found</Box>
   }
 
-  const fetchData = async () => {
+  const refreshProject = async () => {
     const res = await fetch('/api/projects/' + project.id, { method: 'GET' })
     if (!res.ok) {
       console.error('Failed to fetch product data:', res.statusText)
@@ -35,6 +34,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
     }
     const newData = await res.json()
     setProjData(newData)
+    onUpdateProject(newData)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,19 +60,20 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
       return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { images, ...data } = projData
+    try {
+      if (projData.id === -1) {
+        await createProject(projData)
+        toast.success('Project created')
+      } else {
+        await updateProject(project.id, projData)
+        toast.success('Project updated')
+      }
 
-    const res = await updateProject(project.id, data)
-
-    fetchData()
-
-    if (res.ok) {
-      toast.success('Project updated')
+      refreshProject()
       setOpenDrawer(false)
-    } else {
-      toast.error('Failed to update project ')
-      console.error('Failed to update project', res.error)
+    } catch (error) {
+      toast.error('Submit failed')
+      console.error('Failed to update product: ', error)
     }
   }
 
@@ -99,7 +100,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
         throw new Error('Failed to upload images')
       }
 
-      fetchData()
+      refreshProject()
 
       toast.success('Image upload successful')
     } catch (err) {
@@ -129,7 +130,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
       if (!response.ok) {
         throw new Error('Failed to delete image')
       }
-      fetchData()
+      refreshProject()
       toast.success('Image deleted successfully')
     } catch (err) {
       console.error('Error deleting image: ', err)
@@ -138,81 +139,74 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
   }
 
   return (
-    <Box mx={3} display={'flex'} justifyContent={'flex-start'} flexDirection={'column'} gap={'1rem'} component="form">
-      <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={250} width={'100%'}>
-        <ContentBox sx={{ maxWidth: '200px', maxHeight: '200px' }}>
-          <CarouselComponent loop={false} className={'swiper-dark'}>
-            {project.images.map((image, index) => (
-              <Box
-                key={`${index}-project-${project.id}`}
-                component={'img'}
-                src={image.url}
-                alt={project.name}
-                width={200}
-                height={200}
-                sx={{ objectFit: 'cover' }}
-              />
-            ))}
-          </CarouselComponent>
-        </ContentBox>
-      </Box>
-
-      <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'}>
-        <TextField
-          error={!projData.name || typeof projData.name !== 'string'}
-          defaultValue={projData.name}
-          id="name"
-          label="Name"
-          variant="outlined"
-          onChange={handleChange}
-          required
-        />
-      </Box>
-
-      <Box mb={1}>
-        <h3>Description</h3>
-        <TextEditor value={projData.description} onChange={handleEditorChange} />
-      </Box>
-
-      <Box>
-        <b>Images</b>
-        <Box
-          display={'flex'}
-          flexDirection={'row'}
-          justifyContent={'flex-start'}
-          alignItems={'center'}
-          border={'1px solid #ccc'}
-          overflow={'auto'}
-          padding={1}
-          flexWrap={'wrap'}
-          maxWidth={'590px'}
-        >
-          {projData.images.map((image, index) => (
-            <Box
-              key={index}
-              border={'1px solid #ccc'}
-              margin={0.5}
-              padding={0.5}
-              display={'flex'}
-              alignItems={'center'}
-              borderRadius={2}
-              onClick={() => handleDeleteImage(image.url)}
-            >
-              <Box
-                component={'img'}
-                src={image.url}
-                alt={project.name}
-                height={100}
-                width={100}
-                sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-              />
-            </Box>
-          ))}
+    <Box
+      mx={3}
+      fontSize={'0.75rem'}
+      display={'flex'}
+      justifyContent={'space-between'}
+      flexDirection={'column'}
+      gap={'1rem'}
+      component="form"
+      height={'100vh'}
+    >
+      <Box overflow={'auto'} marginTop={2}>
+        <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'} paddingTop={2}>
+          <TextField
+            error={!projData.name || typeof projData.name !== 'string'}
+            defaultValue={projData.name}
+            id="name"
+            label="Name"
+            variant="outlined"
+            onChange={handleChange}
+            required
+          />
         </Box>
-      </Box>
 
-      <Box marginTop={2}>
-        <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+        <Box mb={1}>
+          <h3>Description</h3>
+          <TextEditor value={projData.description} onChange={handleEditorChange} />
+        </Box>
+
+        <Box>
+          <b>Images</b>
+          <Box
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'flex-start'}
+            alignItems={'center'}
+            border={'1px solid #ccc'}
+            overflow={'auto'}
+            padding={1}
+            flexWrap={'wrap'}
+            maxWidth={'590px'}
+          >
+            {projData.images.map((image, index) => (
+              <Box
+                key={index}
+                border={'1px solid #ccc'}
+                margin={0.5}
+                padding={0.5}
+                display={'flex'}
+                alignItems={'center'}
+                borderRadius={2}
+                onClick={() => handleDeleteImage(image.url)}
+              >
+                <Box
+                  component={'img'}
+                  src={image.url}
+                  alt={project.name}
+                  height={100}
+                  width={100}
+                  sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        <Box marginTop={2}>
+          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+        </Box>
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>

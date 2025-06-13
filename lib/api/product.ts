@@ -35,11 +35,11 @@ export const createProduct = async (product: ProductData): Promise<void> => {
   }
 }
 
-export const updateProduct = async (id: number, product: ProductData): Promise<ProductData> => {
+export const updateProduct = async (id: number, data: ProductData): Promise<ProductData> => {
   const res = await fetch(`/api/products`, {
     method: 'PUT',
     headers: { 'Content-Type': `application/json` },
-    body: JSON.stringify({ id, data: product }),
+    body: JSON.stringify({ id, data }),
   })
 
   if (!res.ok) {

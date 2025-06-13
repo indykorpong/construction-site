@@ -71,9 +71,9 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
       setOpenDrawer(false)
       refreshProduct()
-    } catch (err) {
+    } catch (error) {
       toast.error('Submit failed')
-      console.error('Failed to update product: ', err)
+      console.error('Failed to update product: ', error)
     }
   }
 

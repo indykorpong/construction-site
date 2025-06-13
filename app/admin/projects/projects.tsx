@@ -17,9 +17,10 @@ import { ProjectData } from '@/lib/db/project'
 type ProjectTableProps = {
   projects: ProjectData[]
   isLoading: boolean
+  onUpdateProject: (p: ProjectData) => void
 }
 
-export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading }) => {
+export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, onUpdateProject }) => {
   const defaultProject: ProjectData = {
     id: -1,
     name: '',
@@ -51,7 +52,7 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading }) => 
   return (
     <>
       <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
-        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} />
+        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} onUpdateProject={onUpdateProject} />
       </Drawer>
 
       <Box>
