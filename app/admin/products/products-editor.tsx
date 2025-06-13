@@ -67,6 +67,8 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       return
     }
 
+    fetchData()
+
     try {
       await updateProduct(product.id, prodData)
       toast.success('Product updated')
@@ -117,7 +119,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     }
 
     if (!imageUrl) {
-      toast.error('Image URL is required')
+      toast.error('Image URL not found')
       return
     }
 

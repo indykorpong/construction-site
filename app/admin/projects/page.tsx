@@ -1,5 +1,5 @@
 'use client'
-import { getProjects } from '../../../lib/api/project'
+import { getProjects } from '@/lib/api/project'
 import { ProjectTable } from './projects'
 import useSWR from 'swr'
 

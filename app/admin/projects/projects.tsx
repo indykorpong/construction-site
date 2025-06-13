@@ -10,13 +10,18 @@ import {
   TableBody,
   CircularProgress,
 } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { ProjectEditor } from './projects-editor'
 import { ProjectData } from '@/lib/db/project'
 
-export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[]; isLoading: boolean }) => {
+type ProjectTableProps = {
+  projects: ProjectData[]
+  isLoading: boolean
+}
+
+export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading }) => {
   const defaultProject: ProjectData = {
-    id: 0,
+    id: -1,
     name: '',
     description: '',
     images: [],
