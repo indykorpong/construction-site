@@ -51,7 +51,13 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, onUpd
 
   return (
     <>
-      <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
+      <Drawer
+        open={openDrawer}
+        onSubmit={handleSubmit}
+        anchor={'right'}
+        onClose={() => setOpenDrawer(false)}
+        slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
+      >
         <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} onUpdateProject={onUpdateProject} />
       </Drawer>
 

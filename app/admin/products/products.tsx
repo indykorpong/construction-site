@@ -59,7 +59,13 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, onUpd
 
   return (
     <>
-      <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
+      <Drawer
+        open={openDrawer}
+        onSubmit={handleSubmit}
+        anchor={'right'}
+        onClose={() => setOpenDrawer(false)}
+        slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
+      >
         <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} onUpdateProduct={onUpdateProduct} />
       </Drawer>
 
