@@ -12,7 +12,7 @@ type TextEditor = {
 const EditorConfig = {
   apiKey: process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
   init: {
-    height: 200,
+    height: 300,
     menubar: false,
     plugins: ['anchor', 'autolink', 'charmap', 'image', 'link', 'lists', 'media', 'searchreplace', 'table'],
     toolbar: [
