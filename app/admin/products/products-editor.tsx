@@ -2,53 +2,48 @@
 import { Box, TextField, Button } from '@mui/material'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
-import { FileWithPath } from 'react-dropzone'
-import FileUploadIcon from '@mui/icons-material/FileUpload'
+import dynamic from 'next/dynamic'
 
 import { ProductData } from '@/lib/db/product'
-import { CarouselComponent } from '../../_components/carousel'
-import { ContentBox } from '../../_components/content-box'
+import { createProduct, updateProduct } from '@/lib/api/product'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
-import { updateProduct, uploadProductImage } from '../../../lib/db/product'
-import dynamic from 'next/dynamic'
 
 const TextEditor = dynamic(() => import('../../_components/text-editor').then((mod) => mod.TextEditor), {
   ssr: false,
 })
 
 type ProductEditorProps = {
-  product?: ProductData
+  product: ProductData
   setOpenDrawer: (v: boolean) => void
+  onUpdateProduct: (p: ProductData) => void
 }
 
-export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer }) => {
-  const defaultProduct = {
-    id: 0,
-    name: '',
-    description: '',
-    parentProductId: 0,
-    images: [],
-    childrenProducts: [],
-  }
-
-  const [formData, setFormData] = useState<ProductData>(product ?? defaultProduct)
-  const [imageFiles, setImageFiles] = useState<FileWithPath[]>([])
+export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer, onUpdateProduct }) => {
+  const [prodData, setProdData] = useState<ProductData>(product)
 
   if (!product) {
     return <Box>Product not found</Box>
   }
 
+  const refreshProduct = async () => {
+    const res = await fetch('/api/products/' + product.id, { method: 'GET' })
+    if (!res.ok) {
+      console.error('Failed to fetch product data:', res.statusText)
+      toast.error('Something went wrong')
+      return
+    }
+    const newData = await res.json()
+    setProdData(newData)
+    onUpdateProduct(newData)
+  }
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target
-    setFormData((prev) => ({ ...prev, [id]: value }))
+    setProdData((prev) => ({ ...prev, [id]: value }))
   }
 
   const handleEditorChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, description: value }))
-  }
-
-  const handleImageState = async (newFile: File[]) => {
-    setImageFiles((prev) => [...prev, ...newFile])
+    setProdData((prev) => ({ ...prev, description: value }))
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -56,7 +51,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
     const requiredAlert = []
 
-    if (!formData.name) {
+    if (!prodData.name) {
       requiredAlert.push('name')
     }
 
@@ -65,35 +60,78 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       return
     }
 
-    const res = await updateProduct(product.id, formData)
+    try {
+      if (prodData.id === -1) {
+        await createProduct(prodData)
+        toast.success('Product created')
+      } else {
+        await updateProduct(product.id, prodData)
+        toast.success('Product updated')
+      }
 
-    if (res.ok) {
-      toast.success('Product updated')
       setOpenDrawer(false)
-    } else {
-      toast.error('Failed to update product ')
-      console.error(res.error)
+      refreshProduct()
+    } catch (error) {
+      toast.error('Submit failed')
+      console.error('Failed to update product: ', error)
     }
   }
 
-  const handleImageUpload = async () => {
-    if (imageFiles.length === 0) {
-      toast.error('No files to upload')
+  const handleUploadImage = async (files: FileList | null) => {
+    if (!files || files.length === 0) {
+      toast.error('No files selected')
       return
     }
 
-    const res = await uploadProductImage(formData.name, imageFiles)
+    try {
+      const formDataObj = new FormData()
+      formDataObj.append('productId', `${product.id}`)
+      formDataObj.append('productName', prodData.name)
+      Array.from(files).forEach((file) => {
+        formDataObj.append('images', file)
+      })
 
-    if (res.ok) {
-      if (res.error) {
-        toast.error(res.error)
-      } else {
-        toast.success('All images uploaded successfully')
+      const response = await fetch('/api/products/image', {
+        method: 'POST',
+        body: formDataObj,
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to upload images')
       }
 
-      setImageFiles([])
-    } else {
-      toast.error('Failed to upload images' + res.error)
+      refreshProduct()
+
+      toast.success('Image upload successful')
+    } catch (err) {
+      console.error('Error uploading: ', err)
+      toast.error('Upload failed')
+    }
+  }
+
+  const handleDeleteImage = async (imageId: number) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this image? \nThis action cannot be undone.')
+    if (!confirmDelete) {
+      return
+    }
+
+    if (!imageId) {
+      toast.error('Image ID not found')
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/products/image?id=${encodeURIComponent(imageId)}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) {
+        throw new Error('Failed to delete image')
+      }
+      refreshProduct()
+      toast.success('Image deleted successfully')
+    } catch (err) {
+      console.error('Error deleting image: ', err)
+      toast.error('Delete failed')
     }
   }
 
@@ -102,35 +140,17 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       mx={3}
       fontSize={'0.75rem'}
       display={'flex'}
-      justifyContent={'flex-start'}
+      justifyContent={'space-between'}
       flexDirection={'column'}
       gap={'1rem'}
       component="form"
-      maxHeight={'100vh'}
+      height={'100vh'}
     >
-      <Box overflow={'auto'}>
-        <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={250} width={'100%'}>
-          <ContentBox sx={{ maxWidth: '200px', maxHeight: '200px' }}>
-            <CarouselComponent loop={false} className={'swiper-dark'}>
-              {product.images.map((image, index) => (
-                <Box
-                  key={`${index}-product-${product.id}`}
-                  component={'img'}
-                  src={image.url}
-                  alt={product.name}
-                  width={150}
-                  height={150}
-                  sx={{ objectFit: 'cover' }}
-                />
-              ))}
-            </CarouselComponent>
-          </ContentBox>
-        </Box>
-
-        <Box display={'flex'} justifyContent={'flex-start'} gap={'2rem'}>
+      <Box overflow={'auto'} marginTop={2}>
+        <Box display={'flex'} justifyContent={'flex-start'} gap={'2rem'} paddingTop={2}>
           <TextField
-            error={!formData.name || typeof formData.name !== 'string'}
-            defaultValue={formData.name}
+            error={!prodData.name || typeof prodData.name !== 'string'}
+            defaultValue={prodData.name}
             id="name"
             label="Name"
             variant="outlined"
@@ -142,7 +162,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
             <Box>
               <TextField
                 type="number"
-                defaultValue={formData.parentProductId}
+                defaultValue={prodData.parentProductId}
                 label="Parent Id"
                 id="productCategoryId"
                 variant="outlined"
@@ -157,22 +177,53 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
         <Box mb={1}>
           <b>Description</b>
-          <TextEditor id="description" value={formData.description ?? ''} onChange={handleEditorChange} />
+          <TextEditor id="description" value={prodData.description ?? ''} onChange={handleEditorChange} />
         </Box>
 
-        <Box>
-          <b>Upload Images</b>
-          <ImageUploadComponent handleUpload={handleImageState} />
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<FileUploadIcon />}
-            onClick={handleImageUpload}
-            sx={{ mt: 1 }}
-          >
-            Upload
-          </Button>
-        </Box>
+        {product.id !== -1 && (
+          <>
+            <Box>
+              <b>Images</b>
+              <Box
+                display={'flex'}
+                flexDirection={'row'}
+                justifyContent={'flex-start'}
+                alignItems={'center'}
+                border={'1px solid #ccc'}
+                overflow={'auto'}
+                padding={1}
+                flexWrap={'wrap'}
+                maxWidth={'590px'}
+              >
+                {prodData.images.map((image, index) => (
+                  <Box
+                    key={index}
+                    border={'1px solid #ccc'}
+                    margin={0.5}
+                    padding={0.5}
+                    display={'flex'}
+                    alignItems={'center'}
+                    borderRadius={2}
+                    onClick={() => handleDeleteImage(image.id)}
+                  >
+                    <Box
+                      component={'img'}
+                      src={image.url}
+                      alt={product.name}
+                      height={100}
+                      width={100}
+                      sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+
+            <Box marginTop={2}>
+              <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+            </Box>
+          </>
+        )}
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>

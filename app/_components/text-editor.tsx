@@ -12,13 +12,13 @@ type TextEditor = {
 const EditorConfig = {
   apiKey: process.env.NEXT_PUBLIC_TINYMCE_API_KEY,
   init: {
-    height: 200,
+    height: 300,
     menubar: false,
     plugins: ['anchor', 'autolink', 'charmap', 'image', 'link', 'lists', 'media', 'searchreplace', 'table'],
-    toolbar:
-      'undo redo | formatselect | bold italic backcolor | \
-            alignleft aligncenter alignright alignjustify | \
-            bullist numlist outdent indent | removeformat ',
+    toolbar: [
+      'undo | formatselect | fontsize | bold italic backcolor | removeformat',
+      'lineheight alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+    ],
   },
 }
 

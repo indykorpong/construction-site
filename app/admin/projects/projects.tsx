@@ -10,13 +10,19 @@ import {
   TableBody,
   CircularProgress,
 } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { ProjectEditor } from './projects-editor'
 import { ProjectData } from '@/lib/db/project'
 
-export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[]; isLoading: boolean }) => {
+type ProjectTableProps = {
+  projects: ProjectData[]
+  isLoading: boolean
+  onUpdateProject: (p: ProjectData) => void
+}
+
+export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, onUpdateProject }) => {
   const defaultProject: ProjectData = {
-    id: 0,
+    id: -1,
     name: '',
     description: '',
     images: [],
@@ -45,8 +51,14 @@ export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[];
 
   return (
     <>
-      <Drawer open={openDrawer} onSubmit={handleSubmit} anchor={'right'} onClose={() => setOpenDrawer(false)}>
-        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} />
+      <Drawer
+        open={openDrawer}
+        onSubmit={handleSubmit}
+        anchor={'right'}
+        onClose={() => setOpenDrawer(false)}
+        slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
+      >
+        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} onUpdateProject={onUpdateProject} />
       </Drawer>
 
       <Box>
@@ -88,7 +100,7 @@ export const ProjectTable = ({ projects, isLoading }: { projects: ProjectData[];
                       <Box
                         key={`${index}-project-${project.id}`}
                         component={'img'}
-                        src={project.images[0]?.url ?? ''}
+                        src={project.images[0]?.url}
                         alt={project.name}
                         width={100}
                         height={100}

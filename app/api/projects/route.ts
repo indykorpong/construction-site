@@ -1,4 +1,4 @@
-import { getProjects, updateProject } from '@/lib/db/project'
+import { createProject, getProjects, updateProject } from '@/lib/db/project'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -10,6 +10,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error('Failed to fetch projects', error)
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
+  }
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+  try {
+    const { data } = await request.json()
+    const project = await createProject(data)
+    return NextResponse.json(project)
+  } catch (error) {
+    console.error('Failed to create or update project', error)
+    return NextResponse.json({ error: 'Failed to create or update project' }, { status: 500 })
   }
 }
 

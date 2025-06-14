@@ -1,17 +1,14 @@
 'use server'
-import { Product, Project } from '@prisma/client'
+import { Image, Product, Project } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
+import { randomUUID } from 'crypto'
 
 export type ProjectData = Project & {
-  images: {
-    url: string
-  }[]
+  images: Image[]
   projectProducts: {
     product: Product & {
-      images: {
-        url: string
-      }[]
+      images: Image[]
     }
   }[]
 }
@@ -137,6 +134,22 @@ export async function getFourProjects() {
   return projectsData
 }
 
+export async function createProject(data: Project) {
+  try {
+    const res = await prisma.project.create({
+      data: {
+        name: data.name,
+        description: data.description,
+      },
+    })
+
+    return res
+  } catch (err) {
+    console.error('Error creating project:', err)
+    throw err
+  }
+}
+
 export async function updateProject(id: number, data: Project) {
   try {
     const res = await prisma.project.update({
@@ -147,9 +160,64 @@ export async function updateProject(id: number, data: Project) {
       },
     })
 
-    return { ok: true, data: res }
+    return res
   } catch (err) {
     console.error('Error updating project:', err)
-    return { ok: false, error: 'Failed to update project ' + err }
+    throw err
+  }
+}
+
+export async function uploadProjectImage(id: number, projectName: string, files: File[]) {
+  try {
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          if (!file) {
+            throw new Error('file not found')
+          }
+
+          const fileName = randomUUID()
+          const fileObject = `projects/${projectName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
+
+          await minioClient.uploadFile('construction', fileObject, file)
+          await prisma.project.update({
+            where: { id },
+            data: {
+              images: {
+                create: {
+                  url: fileObject,
+                },
+              },
+            },
+          })
+        } catch (err) {
+          console.error(file.name, err)
+          throw err
+        }
+      }),
+    )
+  } catch (err) {
+    console.error('Error uploading: ', err)
+    throw err
+  }
+}
+
+export async function deleteProjectImage(id: number) {
+  try {
+    const image = await prisma.image.findUnique({
+      where: { id },
+    })
+
+    if (!image) {
+      throw new Error('Image not found')
+    }
+
+    await minioClient.deleteFile(image.url)
+    await prisma.image.delete({
+      where: { id },
+    })
+  } catch (err) {
+    console.error('Error deleting image:', err)
+    throw err
   }
 }

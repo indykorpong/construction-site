@@ -21,3 +21,31 @@ export const getProduct = async (id: string): Promise<ProductData> => {
 
   return await res.json()
 }
+
+export const createProduct = async (product: ProductData): Promise<void> => {
+  const res = await fetch('/api/products', {
+    method: 'POST',
+    headers: { 'Content-Type': `application/json` },
+    body: JSON.stringify(product),
+  })
+
+  if (!res.ok) {
+    console.error('Failed to create product')
+    throw new Error('Failed to create product')
+  }
+}
+
+export const updateProduct = async (id: number, data: ProductData): Promise<ProductData> => {
+  const res = await fetch(`/api/products`, {
+    method: 'PUT',
+    headers: { 'Content-Type': `application/json` },
+    body: JSON.stringify({ id, data }),
+  })
+
+  if (!res.ok) {
+    console.error('Failed to update product')
+    throw new Error('Failed to update product')
+  }
+
+  return res.json()
+}

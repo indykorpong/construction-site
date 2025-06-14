@@ -1,19 +1,14 @@
 'use server'
-import { Product } from '@prisma/client'
+import { Image, Product } from '@prisma/client'
 import prisma from '../prisma'
 import { getImageUrl } from '@/utils/image'
 import { minioClient } from '../minio'
-import path from 'path'
-import { FileWithPath } from 'react-dropzone'
+import { randomUUID } from 'crypto'
 
 export type ProductData = Product & {
-  images: {
-    url: string
-  }[]
+  images: Image[]
   childrenProducts: (Product & {
-    images: {
-      url: string
-    }[]
+    images: Image[]
   })[]
 }
 
@@ -86,6 +81,21 @@ export async function getProduct(id: number): Promise<ProductData> {
   return productData
 }
 
+export async function createProduct(data: Product) {
+  try {
+    await prisma.product.create({
+      data: {
+        name: data.name,
+        description: data.description,
+        parentProductId: data.parentProductId,
+      },
+    })
+  } catch (err) {
+    console.error('Error creating product:', err)
+    throw err
+  }
+}
+
 export async function updateProduct(id: number, data: Product) {
   try {
     const res = await prisma.product.update({
@@ -97,44 +107,64 @@ export async function updateProduct(id: number, data: Product) {
       },
     })
 
-    return { ok: true, data: res }
+    return res
   } catch (err) {
     console.error('Error updating product:', err)
-    return { ok: false, error: 'Failed to update product ' + err }
+    throw err
   }
 }
 
-export async function uploadProductImage(pathname: string, file: FileWithPath[]) {
-  if (!file || file.length === 0) {
-    return { ok: false, error: 'No file provided' }
-  }
-
+export async function uploadProductImage(id: number, productName: string, files: File[]) {
   try {
-    const failedToUpload: string[] = []
+    await Promise.all(
+      files.map(async (file) => {
+        try {
+          if (!file) {
+            throw new Error('file not found')
+          }
 
-    file.map(async (f) => {
-      const filePath = path.join(`/products/`, pathname, f.name)
+          const fileName = randomUUID()
+          const fileObject = `products/${productName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
 
-      if (!f.path) {
-        console.error('File path is undefined for file:', f.name)
-        return { ok: false, error: `File path is undefined for file ${f.name}` }
-      }
+          await minioClient.uploadFile('construction', fileObject, file)
+          await prisma.product.update({
+            where: { id },
+            data: {
+              images: {
+                create: {
+                  url: fileObject,
+                },
+              },
+            },
+          })
+        } catch (err) {
+          console.error(file.name, err)
+          throw err
+        }
+      }),
+    )
+  } catch (err) {
+    console.error('Error uploading: ', err)
+    throw err
+  }
+}
 
-      try {
-        await minioClient.uploadFile('construction', filePath, f.path)
-      } catch (err) {
-        console.error('Error uploading file:', err)
-        failedToUpload.push(f.name)
-      }
+export async function deleteProductImage(id: number) {
+  try {
+    const image = await prisma.image.findUnique({
+      where: { id },
     })
 
-    if (failedToUpload.length > 0) {
-      console.error('Failed to upload files:', failedToUpload)
+    if (!image) {
+      throw new Error('Image not found')
     }
 
-    return { ok: true, error: failedToUpload.length > 0 ? 'Some file(s) failed to upload' : null }
+    await minioClient.deleteFile(image.url)
+    await prisma.image.delete({
+      where: { id },
+    })
   } catch (err) {
-    console.error('Error uploading product image:', err)
-    return { ok: false, error: 'Failed to upload product image ' }
+    console.error('Error deleting image:', err)
+    throw err
   }
 }
