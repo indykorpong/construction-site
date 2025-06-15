@@ -83,7 +83,7 @@ export async function getProduct(id: number): Promise<ProductData> {
 
 export async function createProduct(data: Product) {
   try {
-    await prisma.product.create({
+    return await prisma.product.create({
       data: {
         name: data.name,
         description: data.description,

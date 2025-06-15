@@ -19,15 +19,15 @@ import { ProductEditor } from './products-editor'
 type ProductTableProps = {
   products: ProductData[]
   isLoading: boolean
-  onUpdateProduct: (p: ProductData) => void
+  refetchProducts: () => void
 }
 
-export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, onUpdateProduct }) => {
+export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, refetchProducts }) => {
   const defaultProduct = {
     id: -1,
     name: '',
     description: '',
-    parentProductId: 0,
+    parentProductId: null,
     images: [],
     childrenProducts: [],
   }
@@ -66,7 +66,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, onUpd
         onClose={() => setOpenDrawer(false)}
         slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
       >
-        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} onUpdateProduct={onUpdateProduct} />
+        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} refetchProducts={refetchProducts} />
       </Drawer>
 
       <Box marginBottom={'8px'}>
@@ -115,7 +115,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, onUpd
                     <TableCell>
                       <Box
                         component={'img'}
-                        src={product.images[0]?.url}
+                        src={product.images?.[0]?.url}
                         alt={product.name}
                         width={150}
                         height={150}

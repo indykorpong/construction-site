@@ -15,10 +15,10 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 type ProjectEditorProps = {
   project: ProjectData
   setOpenDrawer: (v: boolean) => void
-  onUpdateProject: (p: ProjectData) => void
+  refetchProjects: () => void
 }
 
-export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer, onUpdateProject }) => {
+export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer, refetchProjects }) => {
   const [projData, setProjData] = useState<ProjectData>(project)
 
   if (!project) {
@@ -34,7 +34,6 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
     }
     const newData = await res.json()
     setProjData(newData)
-    onUpdateProject(newData)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +68,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
         toast.success('Project updated')
       }
 
-      refreshProject()
+      refetchProjects()
       setOpenDrawer(false)
     } catch (error) {
       toast.error('Submit failed')
@@ -101,7 +100,6 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
       }
 
       refreshProject()
-
       toast.success('Image upload successful')
     } catch (err) {
       console.error('Error uploading: ', err)

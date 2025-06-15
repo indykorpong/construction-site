@@ -7,7 +7,7 @@ import { getProjects } from '@/lib/api/project'
 import DataGrid from '@/app/_components/data-grid'
 import { CompanyInfo } from '@/app/_components/company-info'
 import { HomeCarousel } from './carousel'
-import useSWR from 'swr'
+import { useQuery } from '@tanstack/react-query'
 
 export default function Home() {
   return (
@@ -26,9 +26,10 @@ export default function Home() {
 }
 
 const HomeProjects = () => {
-  const { data: projects, isLoading: isLoadingProjects } = useSWR('/api/projects?limit=4', () =>
-    getProjects({ limit: 4 }),
-  )
+  const { data: projects, isLoading: isLoadingProjects } = useQuery({
+    queryKey: ['projects', 4],
+    queryFn: () => getProjects({ limit: 4 }),
+  })
   const projectsData = projects?.map((project) => ({
     id: project.id,
     name: project.name,

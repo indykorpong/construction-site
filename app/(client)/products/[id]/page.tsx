@@ -6,12 +6,15 @@ import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/api/product'
 import { Box, Grid, Skeleton } from '@mui/material'
 import { useParams } from 'next/navigation'
-import useSWR from 'swr'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ProductId() {
   const { id } = useParams<{ id: string }>()
 
-  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, () => getProduct(id))
+  const { data: product, isLoading: isLoadingProduct } = useQuery({
+    queryKey: ['product', id],
+    queryFn: () => getProduct(id),
+  })
 
   if (isLoadingProduct) {
     return (

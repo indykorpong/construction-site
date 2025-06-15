@@ -6,15 +6,16 @@ import { getProject } from '@/lib/api/project'
 import { CarouselComponent } from '@/app/_components/carousel'
 import { TextWithLineBreak } from '@/app/_components/text-with-line-break'
 import DataGrid from '@/app/_components/data-grid'
-import useSWR from 'swr'
 import { useParams } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ProjectId() {
   const { id } = useParams<{ id: string }>()
 
-  const { data: project, isLoading: isLoadingProject } = useSWR(`/api/projects/${id}`, () =>
-    getProject({ id: parseInt(id, 10) }),
-  )
+  const { data: project, isLoading: isLoadingProject } = useQuery({
+    queryKey: ['project', id],
+    queryFn: () => getProject({ id: parseInt(id, 10) }),
+  })
 
   if (isLoadingProject) {
     return (
