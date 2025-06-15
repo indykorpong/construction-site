@@ -4,11 +4,14 @@ import DataGrid from '@/app/_components/data-grid'
 import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/api/product'
 import { useParams } from 'next/navigation'
-import useSWR from 'swr'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ProductCategoryId() {
   const { id } = useParams<{ id: string }>()
-  const { data: product, isLoading: isLoadingProduct } = useSWR(`/api/products/${id}`, () => getProduct(id))
+  const { data: product, isLoading: isLoadingProduct } = useQuery({
+    queryKey: ['product', id],
+    queryFn: () => getProduct(id),
+  })
 
   const productsData = product?.childrenProducts.map((product) => ({
     id: product.id,

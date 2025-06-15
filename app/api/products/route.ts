@@ -19,13 +19,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { data } = await request.json()
 
     if (!data) {
-      return NextResponse.json({ error: 'Failed to create product' }, { status: 400 })
+      return NextResponse.json(
+        { error: `Failed to create product. Data is empty: ${JSON.stringify(data)}` },
+        { status: 400 },
+      )
     }
     const product = await createProduct(data)
     return NextResponse.json(product)
   } catch (error) {
     console.error(error)
-    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 })
+    return NextResponse.json({ error: `Failed to create product. Error: ${error}` }, { status: 500 })
   }
 }
 

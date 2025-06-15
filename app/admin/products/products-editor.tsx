@@ -15,18 +15,18 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 type ProductEditorProps = {
   product: ProductData
   setOpenDrawer: (v: boolean) => void
-  onUpdateProduct: (p: ProductData) => void
+  refetchProducts: () => void
 }
 
-export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer, onUpdateProduct }) => {
+export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer, refetchProducts }) => {
   const [prodData, setProdData] = useState<ProductData>(product)
 
   if (!product) {
     return <Box>Product not found</Box>
   }
 
-  const refreshProduct = async () => {
-    const res = await fetch('/api/products/' + product.id, { method: 'GET' })
+  const refreshProduct = async (productId: number) => {
+    const res = await fetch('/api/products/' + productId, { method: 'GET' })
     if (!res.ok) {
       console.error('Failed to fetch product data:', res.statusText)
       toast.error('Something went wrong')
@@ -34,7 +34,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     }
     const newData = await res.json()
     setProdData(newData)
-    onUpdateProduct(newData)
+    refetchProducts()
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,16 +61,19 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     }
 
     try {
+      let productId = prodData.id
       if (prodData.id === -1) {
-        await createProduct(prodData)
+        const newProduct = await createProduct(prodData)
+        productId = newProduct.id
+        setProdData(newProduct)
         toast.success('Product created')
       } else {
-        await updateProduct(product.id, prodData)
+        await updateProduct(productId, prodData)
         toast.success('Product updated')
       }
 
       setOpenDrawer(false)
-      refreshProduct()
+      refetchProducts()
     } catch (error) {
       toast.error('Submit failed')
       console.error('Failed to update product: ', error)
@@ -85,7 +88,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
 
     try {
       const formDataObj = new FormData()
-      formDataObj.append('productId', `${product.id}`)
+      formDataObj.append('productId', `${prodData.id}`)
       formDataObj.append('productName', prodData.name)
       Array.from(files).forEach((file) => {
         formDataObj.append('images', file)
@@ -100,7 +103,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
         throw new Error('Failed to upload images')
       }
 
-      refreshProduct()
+      refreshProduct(prodData.id)
 
       toast.success('Image upload successful')
     } catch (err) {
@@ -127,7 +130,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
       if (!response.ok) {
         throw new Error('Failed to delete image')
       }
-      refreshProduct()
+      refreshProduct(prodData.id)
       toast.success('Image deleted successfully')
     } catch (err) {
       console.error('Error deleting image: ', err)

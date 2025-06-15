@@ -1,7 +1,7 @@
 import { ProductData } from '@/lib/db/product'
 
 export const getProducts = async (): Promise<ProductData[]> => {
-  const res = await fetch('/api/products?includeChildren=true')
+  const res = await fetch('/api/products?includeChildren=true', { method: 'GET' })
 
   if (!res.ok) {
     console.error('Failed to fetch products')
@@ -12,7 +12,7 @@ export const getProducts = async (): Promise<ProductData[]> => {
 }
 
 export const getProduct = async (id: string): Promise<ProductData> => {
-  const res = await fetch(`/api/products/${id}`)
+  const res = await fetch(`/api/products/${id}`, { method: 'GET' })
 
   if (!res.ok) {
     console.error('Failed to fetch product')
@@ -22,17 +22,19 @@ export const getProduct = async (id: string): Promise<ProductData> => {
   return await res.json()
 }
 
-export const createProduct = async (product: ProductData): Promise<void> => {
+export const createProduct = async (product: ProductData): Promise<ProductData> => {
   const res = await fetch('/api/products', {
     method: 'POST',
     headers: { 'Content-Type': `application/json` },
-    body: JSON.stringify(product),
+    body: JSON.stringify({ data: product }),
   })
 
   if (!res.ok) {
     console.error('Failed to create product')
     throw new Error('Failed to create product')
   }
+
+  return res.json()
 }
 
 export const updateProduct = async (id: number, data: ProductData): Promise<ProductData> => {

@@ -17,10 +17,10 @@ import { ProjectData } from '@/lib/db/project'
 type ProjectTableProps = {
   projects: ProjectData[]
   isLoading: boolean
-  onUpdateProject: (p: ProjectData) => void
+  refetchProjects: () => void
 }
 
-export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, onUpdateProject }) => {
+export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, refetchProjects }) => {
   const defaultProject: ProjectData = {
     id: -1,
     name: '',
@@ -58,7 +58,7 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, onUpd
         onClose={() => setOpenDrawer(false)}
         slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
       >
-        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} onUpdateProject={onUpdateProject} />
+        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} refetchProjects={refetchProjects} />
       </Drawer>
 
       <Box>
