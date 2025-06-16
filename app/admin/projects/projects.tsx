@@ -9,6 +9,7 @@ import {
   TableCell,
   TableBody,
   CircularProgress,
+  Button,
 } from '@mui/material'
 import { FC, Fragment, useState } from 'react'
 import { ProjectEditor } from './projects-editor'
@@ -31,6 +32,11 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, refet
 
   const [openDrawer, setOpenDrawer] = useState(false)
   const [selected, setSelected] = useState<ProjectData>(defaultProject)
+
+  const handleCreateProduct = () => {
+    setSelected(defaultProject)
+    setOpenDrawer(true)
+  }
 
   const handleEdit = (project: ProjectData) => () => {
     setSelected(project)
@@ -61,8 +67,14 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, refet
         <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} refetchProjects={refetchProjects} />
       </Drawer>
 
+      <Box marginBottom={'8px'}>
+        <Button variant="contained" onClick={handleCreateProduct}>
+          Create
+        </Button>
+      </Box>
+
       <Box>
-        <TableContainer sx={{ maxHeight: 'calc(100vh - 6rem)' }}>
+        <TableContainer sx={{ maxHeight: 'calc(100vh - 10rem)' }}>
           <Table sx={{ maxWidth: '100%' }} stickyHeader>
             <TableHead>
               <TableRow>

@@ -162,46 +162,50 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
           <TextEditor value={projData.description} onChange={handleEditorChange} />
         </Box>
 
-        <Box>
-          <b>Images</b>
-          <Box
-            display={'flex'}
-            flexDirection={'row'}
-            justifyContent={'flex-start'}
-            alignItems={'center'}
-            border={'1px solid #ccc'}
-            overflow={'auto'}
-            padding={1}
-            flexWrap={'wrap'}
-            maxWidth={'590px'}
-          >
-            {projData.images.map((image, index) => (
+        {project.id !== -1 && (
+          <>
+            <Box>
+              <b>Images</b>
               <Box
-                key={index}
-                border={'1px solid #ccc'}
-                margin={0.5}
-                padding={0.5}
                 display={'flex'}
+                flexDirection={'row'}
+                justifyContent={'flex-start'}
                 alignItems={'center'}
-                borderRadius={2}
-                onClick={() => handleDeleteImage(image.id)}
+                border={'1px solid #ccc'}
+                overflow={'auto'}
+                padding={1}
+                flexWrap={'wrap'}
+                maxWidth={'590px'}
               >
-                <Box
-                  component={'img'}
-                  src={image.url}
-                  alt={project.name}
-                  height={100}
-                  width={100}
-                  sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-                />
+                {projData.images.map((image, index) => (
+                  <Box
+                    key={index}
+                    border={'1px solid #ccc'}
+                    margin={0.5}
+                    padding={0.5}
+                    display={'flex'}
+                    alignItems={'center'}
+                    borderRadius={2}
+                    onClick={() => handleDeleteImage(image.id)}
+                  >
+                    <Box
+                      component={'img'}
+                      src={image.url}
+                      alt={project.name}
+                      height={100}
+                      width={100}
+                      sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+                    />
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
-        </Box>
+            </Box>
 
-        <Box marginTop={2}>
-          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
-        </Box>
+            <Box marginTop={2}>
+              <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+            </Box>
+          </>
+        )}
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>
