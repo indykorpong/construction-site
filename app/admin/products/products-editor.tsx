@@ -160,22 +160,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
             onChange={handleChange}
             required
           />
-
-          <Box display={'flex'} flexDirection={'column'}>
-            <Box>
-              <TextField
-                type="number"
-                defaultValue={prodData.parentProductId}
-                label="Parent Id"
-                id="productCategoryId"
-                variant="outlined"
-                onChange={handleChange}
-              />
-            </Box>
-            <Box margin={0}>
-              <b style={{ color: 'red' }}>*</b> <i>for nested products</i>
-            </Box>
-          </Box>
         </Box>
 
         <Box mb={1}>
