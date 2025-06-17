@@ -8,18 +8,25 @@ services:
     env_file:
       - .env
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    memswap_limit: 4G
 
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: kuma_db
+      POSTGRES_USER: indy
+      POSTGRES_PASSWORD: indy-db
+      POSTGRES_DB: indy_db
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
 
