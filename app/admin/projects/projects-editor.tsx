@@ -152,17 +152,9 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
 
   const handleProjectProductsChange = (event: SelectChangeEvent<number[] | undefined>) => {
     const { value } = event.target
-    const selectedValue = value as any[]
-    if (selectedValue.includes(undefined)) {
-      setProjData((prev) => ({
-        ...prev,
-        projectProducts: [],
-      }))
-      return
-    }
     setProjData((prev) => ({
       ...prev,
-      projectProducts: selectedValue.map((id) => ({
+      projectProducts: (value as number[]).map((id) => ({
         product: products.find((p) => p.id === id) ?? {
           id: -1,
           name: '',
