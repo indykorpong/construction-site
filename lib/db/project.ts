@@ -150,13 +150,24 @@ export async function createProject(data: Project) {
   }
 }
 
-export async function updateProject(id: number, data: Project) {
+export async function updateProject(id: number, data: ProjectData) {
   try {
+    await prisma.projectProduct.deleteMany({
+      where: {
+        projectId: id,
+      },
+    })
+
     const res = await prisma.project.update({
       where: { id },
       data: {
         name: data.name,
         description: data.description,
+        projectProducts: {
+          create: data.projectProducts.map((projectProduct) => ({
+            productId: projectProduct.product.id,
+          })),
+        },
       },
     })
 

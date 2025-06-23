@@ -2,6 +2,7 @@
 import { getProjects } from '@/lib/api/project'
 import { ProjectTable } from './projects'
 import { useQuery } from '@tanstack/react-query'
+import { getProducts } from '@/lib/api/product'
 
 export default function ProjectsPage() {
   const {
@@ -13,5 +14,17 @@ export default function ProjectsPage() {
     queryFn: () => getProjects(),
   })
 
-  return <ProjectTable projects={projects || []} isLoading={isLoadingProjects} refetchProjects={refetchProjects} />
+  const { data: products, isLoading: isLoadingProducts } = useQuery({
+    queryKey: ['products'],
+    queryFn: () => getProducts(),
+  })
+
+  return (
+    <ProjectTable
+      projects={projects || []}
+      products={products || []}
+      isLoading={isLoadingProjects || isLoadingProducts}
+      refetchProjects={refetchProjects}
+    />
+  )
 }

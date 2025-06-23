@@ -14,14 +14,16 @@ import {
 import { FC, Fragment, useState } from 'react'
 import { ProjectEditor } from './projects-editor'
 import { ProjectData } from '@/lib/db/project'
+import { ProductData } from '@/lib/db/product'
 
 type ProjectTableProps = {
   projects: ProjectData[]
+  products: ProductData[]
   isLoading: boolean
   refetchProjects: () => void
 }
 
-export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, refetchProjects }) => {
+export const ProjectTable: FC<ProjectTableProps> = ({ projects, products, isLoading, refetchProjects }) => {
   const defaultProject: ProjectData = {
     id: -1,
     name: '',
@@ -62,9 +64,14 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, isLoading, refet
         onSubmit={handleSubmit}
         anchor={'right'}
         onClose={() => setOpenDrawer(false)}
-        slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
+        slotProps={{ paper: { sx: { width: '30%', maxWidth: '700px', minWidth: '550px' } } }}
       >
-        <ProjectEditor project={selected} setOpenDrawer={setOpenDrawer} refetchProjects={refetchProjects} />
+        <ProjectEditor
+          project={selected}
+          products={products}
+          setOpenDrawer={setOpenDrawer}
+          refetchProjects={refetchProjects}
+        />
       </Drawer>
 
       <Box marginBottom={'8px'}>

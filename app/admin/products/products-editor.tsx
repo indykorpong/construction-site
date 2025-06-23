@@ -1,5 +1,5 @@
 'use client'
-import { Box, TextField, Button } from '@mui/material'
+import { Box, TextField, Button, Select, SelectChangeEvent, MenuItem, InputLabel, FormControl } from '@mui/material'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
@@ -13,12 +13,13 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 })
 
 type ProductEditorProps = {
+  products: ProductData[]
   product: ProductData
   setOpenDrawer: (v: boolean) => void
   refetchProducts: () => void
 }
 
-export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDrawer, refetchProducts }) => {
+export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product, setOpenDrawer, refetchProducts }) => {
   const [prodData, setProdData] = useState<ProductData>(product)
 
   if (!product) {
@@ -138,6 +139,14 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     }
   }
 
+  const handleParentProductChange = (event: SelectChangeEvent<number | undefined>) => {
+    if (event.target.value === undefined) {
+      setProdData((prev) => ({ ...prev, parentProductId: null }))
+    } else {
+      setProdData((prev) => ({ ...prev, parentProductId: Number(event.target.value) ?? null }))
+    }
+  }
+
   return (
     <Box
       mx={3}
@@ -151,20 +160,50 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ product, setOpenDr
     >
       <Box overflow={'auto'} marginTop={2}>
         <Box display={'flex'} justifyContent={'flex-start'} gap={'2rem'} paddingTop={2}>
-          <TextField
-            error={!prodData.name || typeof prodData.name !== 'string'}
-            defaultValue={prodData.name}
-            id="name"
-            label="Name"
-            variant="outlined"
-            onChange={handleChange}
-            required
-          />
+          <FormControl sx={{ width: '100%' }}>
+            <TextField
+              error={!prodData.name || typeof prodData.name !== 'string'}
+              defaultValue={prodData.name}
+              id="name"
+              label="Name"
+              variant="outlined"
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
         </Box>
 
-        <Box mb={1}>
+        <Box mb={2}>
           <b>Description</b>
           <TextEditor id="description" value={prodData.description ?? ''} onChange={handleEditorChange} />
+        </Box>
+
+        <Box
+          mb={2}
+          display={'flex'}
+          flexDirection={'row'}
+          gap={1}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <FormControl sx={{ width: '100%' }}>
+            <InputLabel>Parent Product</InputLabel>
+            <Select
+              value={prodData.parentProductId ?? ''}
+              onChange={handleParentProductChange}
+              label="Parent Product"
+              sx={{ width: '100%' }}
+            >
+              <MenuItem value={undefined}>None</MenuItem>
+              {products
+                .filter((p) => p.id !== prodData.id)
+                .map((product) => (
+                  <MenuItem key={product.id} value={product.id}>
+                    {product.name}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
         </Box>
 
         {product.id !== -1 && (
