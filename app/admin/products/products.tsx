@@ -64,9 +64,14 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, refet
         onSubmit={handleSubmit}
         anchor={'right'}
         onClose={() => setOpenDrawer(false)}
-        slotProps={{ paper: { sx: { width: '30%', maxWidth: '600px' } } }}
+        slotProps={{ paper: { sx: { width: '30%', maxWidth: '700px', minWidth: '550px' } } }}
       >
-        <ProductEditor product={selectedProduct} setOpenDrawer={setOpenDrawer} refetchProducts={refetchProducts} />
+        <ProductEditor
+          products={products}
+          product={selectedProduct}
+          setOpenDrawer={setOpenDrawer}
+          refetchProducts={refetchProducts}
+        />
       </Drawer>
 
       <Box marginBottom={'8px'}>

@@ -1,10 +1,22 @@
 'use client'
 import { useState } from 'react'
-import { Box, TextField, Button } from '@mui/material'
+import {
+  Box,
+  TextField,
+  Button,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+  Checkbox,
+  ListItemText,
+  SelectChangeEvent,
+} from '@mui/material'
 import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
 
 import { ProjectData } from '@/lib/db/project'
+import { ProductData } from '@/lib/db/product'
 import { createProject, updateProject } from '@/lib/api/project'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
 
@@ -14,11 +26,12 @@ const TextEditor = dynamic(() => import('../../_components/text-editor').then((m
 
 type ProjectEditorProps = {
   project: ProjectData
+  products: ProductData[]
   setOpenDrawer: (v: boolean) => void
   refetchProjects: () => void
 }
 
-export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDrawer, refetchProjects }) => {
+export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products, setOpenDrawer, refetchProjects }) => {
   const [projData, setProjData] = useState<ProjectData>(project)
 
   if (!project) {
@@ -64,6 +77,10 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
         await createProject(projData)
         toast.success('Project created')
       } else {
+        if (projData.projectProducts.length === 0) {
+          toast.error('Please select at least one product')
+          return
+        }
         await updateProject(project.id, projData)
         toast.success('Project updated')
       }
@@ -133,6 +150,30 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
     }
   }
 
+  const handleProjectProductsChange = (event: SelectChangeEvent<number[] | undefined>) => {
+    const { value } = event.target
+    const selectedValue = value as any[]
+    if (selectedValue.includes(undefined)) {
+      setProjData((prev) => ({
+        ...prev,
+        projectProducts: [],
+      }))
+      return
+    }
+    setProjData((prev) => ({
+      ...prev,
+      projectProducts: selectedValue.map((id) => ({
+        product: products.find((p) => p.id === id) ?? {
+          id: -1,
+          name: '',
+          description: null,
+          parentProductId: null,
+          images: [],
+        },
+      })),
+    }))
+  }
+
   return (
     <Box
       mx={3}
@@ -145,27 +186,57 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, setOpenDr
       height={'100vh'}
     >
       <Box overflow={'auto'} marginTop={2}>
-        <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'} paddingTop={2}>
-          <TextField
-            error={!projData.name || typeof projData.name !== 'string'}
-            defaultValue={projData.name}
-            id="name"
-            label="Name"
-            variant="outlined"
-            onChange={handleChange}
-            required
-          />
+        <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'} paddingTop={2} mb={4}>
+          <FormControl sx={{ width: '100%' }}>
+            <TextField
+              error={!projData.name || typeof projData.name !== 'string'}
+              defaultValue={projData.name}
+              id="name"
+              label="Name"
+              variant="outlined"
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
         </Box>
 
-        <Box mb={1}>
-          <h3>Description</h3>
+        <Box mb={2}>
+          <FormControl sx={{ width: '100%' }}>
+            <InputLabel>Products in this Project</InputLabel>
+            <Select
+              multiple
+              label="Products in this Project"
+              value={projData.projectProducts.map((p) => p.product.id)}
+              onChange={handleProjectProductsChange}
+              renderValue={(selected) => {
+                const selectedProducts = products.filter((p) => selected.includes(p.id))
+                return selectedProducts.map((p) => p.name).join(', ')
+              }}
+              sx={{ width: '100%' }}
+            >
+              {products.map((product) => (
+                <MenuItem key={product.id} value={product.id}>
+                  <Checkbox checked={projData.projectProducts.some((p) => p.product.id === product.id)} />
+                  <ListItemText primary={product.name} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box mb={2}>
+          <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '1rem' }}>
+            <b>Description</b>
+          </InputLabel>
           <TextEditor value={projData.description} onChange={handleEditorChange} />
         </Box>
 
         {project.id !== -1 && (
           <>
             <Box>
-              <b>Images</b>
+              <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '0.5rem' }}>
+                <b>Images</b>
+              </InputLabel>
               <Box
                 display={'flex'}
                 flexDirection={'row'}
