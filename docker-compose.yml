@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -20,13 +18,13 @@ services:
     memswap_limit: 4G
 
   db:
-    image: postgres:15
+    image: postgres:17
     environment:
       POSTGRES_USER: indy
       POSTGRES_PASSWORD: indy-db
       POSTGRES_DB: indy_db
     ports:
-      - '5432:5432'
+      - '5555:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
 
