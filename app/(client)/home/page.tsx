@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Box, Typography } from '@mui/material'
+import { Box, Skeleton, Typography } from '@mui/material'
 import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
 import { getProjects } from '@/lib/api/project'
@@ -30,6 +30,15 @@ const HomeProjects = () => {
     queryKey: ['projects', 4],
     queryFn: () => getProjects({ limit: 4 }),
   })
+
+  if (isLoadingProjects) {
+    return (
+      <ContentBox>
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </ContentBox>
+    )
+  }
+
   const projectsData = projects?.map((project) => ({
     id: project.id,
     name: project.name,

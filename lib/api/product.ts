@@ -1,7 +1,7 @@
 import { ProductData } from '@/lib/db/product'
 
 export const getProducts = async (): Promise<ProductData[]> => {
-  const res = await fetch('/api/products?includeChildren=true', { method: 'GET' })
+  const res = await fetch('/api/products', { method: 'GET' })
 
   if (!res.ok) {
     console.error('Failed to fetch products')

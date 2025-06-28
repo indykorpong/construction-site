@@ -3,6 +3,7 @@ import { ContentBox } from '../../_components/content-box'
 import { Title } from '../../_components/title'
 import DataGrid from '@/app/_components/data-grid'
 import { getProjects } from '@/lib/api/project'
+import { Skeleton } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 
 export default function ProjectsPage() {
@@ -10,6 +11,15 @@ export default function ProjectsPage() {
     queryKey: ['projects'],
     queryFn: () => getProjects(),
   })
+
+  if (isLoadingProjects) {
+    return (
+      <ContentBox>
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </ContentBox>
+    )
+  }
+
   const projectsData = projects?.map((project) => ({
     id: project.id,
     name: project.name,
