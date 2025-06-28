@@ -5,6 +5,7 @@ import { Title } from '@/app/_components/title'
 import { getProduct } from '@/lib/api/product'
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
+import { Skeleton } from '@mui/material'
 
 export default function ProductCategoryId() {
   const { id } = useParams<{ id: string }>()
@@ -12,6 +13,14 @@ export default function ProductCategoryId() {
     queryKey: ['product', id],
     queryFn: () => getProduct(id),
   })
+
+  if (isLoadingProduct) {
+    return (
+      <ContentBox>
+        <Skeleton variant="rectangular" width="100%" height="100%" />
+      </ContentBox>
+    )
+  }
 
   const productsData = product?.childrenProducts.map((product) => ({
     id: product.id,

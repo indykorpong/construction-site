@@ -7,8 +7,7 @@ import './style.css'
 import { login } from '../../actions/auth'
 
 export default function Login() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [state, action, isPending] = useActionState(login, undefined)
+  const [, action, isPending] = useActionState(login, undefined)
 
   return (
     <div className="login-page">
