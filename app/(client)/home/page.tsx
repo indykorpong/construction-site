@@ -1,62 +1,80 @@
-'use client'
-import Link from 'next/link'
-import { Box, Skeleton, Typography } from '@mui/material'
-import { ContentBox } from '../../_components/content-box'
-import { Title } from '../../_components/title'
-import { getProjects } from '@/lib/api/project'
-import DataGrid from '@/app/_components/data-grid'
-import { CompanyInfo } from '@/app/_components/company-info'
-import { HomeCarousel } from './carousel'
-import { useQuery } from '@tanstack/react-query'
+import { Box, Button, Link, Paper, Typography } from '@mui/material'
+import AaspLogo from '@/public/logo/aasp.png'
+import YdpiLogo from '@/public/logo/aasp.png'
+import EpsLogo from '@/public/logo/aasp.png'
 
-export default function Home() {
+const CompanyCard = ({ logo, name, bgColor, url }: { logo: string; name: string; bgColor: string; url: string }) => {
   return (
-    <>
-      <Box bgcolor={'background.default'}>
-        <HomeCarousel />
-      </Box>
-      <ContentBox sx={{ paddingY: { mobile: 5, tablet: 10, desktop: 10 } }}>
-        <CompanyInfo />
-      </ContentBox>
-      <ContentBox bgcolor="background.default">
-        <HomeProjects />
-      </ContentBox>
-    </>
+    <Box sx={{ width: '18%', height: '80%' }}>
+      <Link href={url} style={{ textDecoration: 'none' }}>
+        <Paper
+          sx={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: '1rem',
+            paddingTop: '1rem',
+            borderRadius: '1rem',
+          }}
+        >
+          <Box
+            component="img"
+            src={logo}
+            alt="AASP Logo"
+            height={'auto'}
+            width={'85%'}
+            sx={{ objectFit: 'contain', marginTop: '0.5rem' }}
+          />
+          <Box
+            bgcolor={bgColor}
+            sx={{ width: '100%', height: '100%', margin: '0 1rem 0 1rem', borderRadius: '0 0 1rem 1rem' }}
+          >
+            <Typography variant="h4" sx={{ fontWeight: 'bold', marginTop: '3rem', textAlign: 'center' }}>
+              {name}
+            </Typography>
+          </Box>
+        </Paper>
+      </Link>
+    </Box>
   )
 }
 
-const HomeProjects = () => {
-  const { data: projects, isLoading: isLoadingProjects } = useQuery({
-    queryKey: ['projects', 4],
-    queryFn: () => getProjects({ limit: 4 }),
-  })
-
-  if (isLoadingProjects) {
-    return (
-      <ContentBox>
-        <Skeleton variant="rectangular" width="100%" height="100%" />
-      </ContentBox>
-    )
-  }
-
-  const projectsData = projects?.map((project) => ({
-    id: project.id,
-    name: project.name,
-    imageUrl: project.images[0]?.url || '',
-    link: `/projects/${project.id}`,
-  }))
-
+export default function PortalHome() {
   return (
-    <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
-      <Title>Projects</Title>
-      <DataGrid data={projectsData} isLoading={isLoadingProjects} />
-      <Box display={'flex'} justifyContent={'end'} marginTop={'30px'}>
-        <Link href="/projects">
-          <Typography variant={'body1'} color={'text.secondary'} fontWeight={600} sx={{ textDecoration: 'underline' }}>
-            See more
-          </Typography>
-        </Link>
+    <>
+      <Box
+        bgcolor={'lightGreen.main'}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '45vh',
+        }}
+      >
+        <Typography variant="h1" color="lightGreen.dark" sx={{ textAlign: 'center' }}>
+          EP&S Group Co., Ltd.
+        </Typography>
       </Box>
-    </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+          height: '55vh',
+          position: 'relative',
+          zIndex: 1,
+          marginTop: '-6rem',
+        }}
+      >
+        <CompanyCard logo={AaspLogo.src} name="AASP Company" bgColor="blue.main" url="/aasp/home" />
+        <CompanyCard logo={YdpiLogo.src} name="YDPI Company" bgColor="yellow.main" url="/ydpi/home" />
+        <CompanyCard logo={EpsLogo.src} name="EP&S Company" bgColor="green.main" url="/eps/home" />
+      </Box>
+    </>
   )
 }
