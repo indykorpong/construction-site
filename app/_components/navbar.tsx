@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
+import AaspLogo from '@/public/logo/aasp.png'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -65,8 +65,8 @@ export function Navbar() {
         >
           <Box
             component="img"
-            src={DoubleASPLogo.src}
-            alt="DoubleASP Logo"
+            src={AaspLogo.src}
+            alt="AASP Logo"
             height={{ desktop: '6rem', tablet: '4rem', mobile: '3rem' }}
             width={'auto'}
             sx={{ objectFit: 'cover' }}

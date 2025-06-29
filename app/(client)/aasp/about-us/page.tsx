@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { ContentBox } from '../../_components/content-box'
-import { Title } from '../../_components/title'
+import { ContentBox } from '@/app/_components/content-box'
+import { Title } from '@/app/_components/title'
 import { CompanyInfo } from '@/app/_components/company-info'
 
 export default function AboutUs() {
