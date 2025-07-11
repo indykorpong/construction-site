@@ -178,6 +178,32 @@ export async function updateProject(id: number, data: ProjectData) {
   }
 }
 
+export async function deleteProject(id: number) {
+  try {
+    const project = await prisma.project.findUnique({
+      where: { id },
+      include: { images: true },
+    })
+
+    if (!project) {
+      throw new Error('Project not found')
+    }
+
+    await Promise.all(project.images.map((image) => minioClient.deleteFile(image.url)))
+    await prisma.image.deleteMany({
+      where: { projectId: id },
+    })
+    await prisma.project.delete({
+      where: { id },
+    })
+
+    console.log('Project deleted successfully')
+  } catch (err) {
+    console.error('Error deleting project:', err)
+    throw err
+  }
+}
+
 export async function uploadProjectImage(id: number, projectName: string, files: File[]) {
   try {
     await Promise.all(

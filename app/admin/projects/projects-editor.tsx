@@ -39,7 +39,7 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
   }
 
   const refreshProject = async () => {
-    const res = await fetch('/api/projects/' + project.id, { method: 'GET' })
+    const res = await fetch(`/api/projects/${project.id}`, { method: 'GET' })
     if (!res.ok) {
       console.error('Failed to fetch product data:', res.statusText)
       toast.error('Something went wrong')
@@ -90,6 +90,38 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
     } catch (error) {
       toast.error('Submit failed')
       console.error('Failed to update product: ', error)
+    }
+  }
+
+  const handleDeleteProject = async () => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this project? \nThis action cannot be undone.',
+    )
+
+    if (!confirmDelete) {
+      return
+    }
+
+    const projectId = projData.id
+
+    if (!projectId) {
+      toast.error('Project ID not found')
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/projects/${project.id}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) {
+        throw new Error('Failed to delete project')
+      }
+      toast.success('Project deleted successfully')
+      setOpenDrawer(false)
+      refetchProjects()
+    } catch (error) {
+      console.error('Failed to delete project: ', error)
+      toast.error('Project delete failed')
     }
   }
 
@@ -276,8 +308,14 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
           Submit
         </Button>
 
-        <Button variant="outlined" sx={{ width: '40%' }} color="error" onClick={() => setOpenDrawer(false)}>
-          Discard
+        <Button
+          variant="contained"
+          sx={{ width: '40%' }}
+          color="error"
+          onClick={() => handleDeleteProject()}
+          disabled={project.id === -1}
+        >
+          Delete
         </Button>
       </Box>
     </Box>

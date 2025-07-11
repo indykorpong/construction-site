@@ -114,6 +114,33 @@ export async function updateProduct(id: number, data: Product) {
   }
 }
 
+export async function deleteProduct(id: number) {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { id },
+      include: { images: true },
+    })
+
+    if (!product) {
+      throw new Error('Product not found')
+    }
+
+    await Promise.all(product.images.map((image) => minioClient.deleteFile(image.url)))
+    await prisma.image.findMany({ where: { productId: id } })
+    await prisma.product.delete({
+      where: { id },
+      include: {
+        images: true,
+      },
+    })
+
+    console.log('Product deleted successfully:', id)
+  } catch (err) {
+    console.error('Error deleting product:', err)
+    throw err
+  }
+}
+
 export async function uploadProductImage(id: number, productName: string, files: File[]) {
   try {
     await Promise.all(

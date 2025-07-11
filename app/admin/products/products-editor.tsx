@@ -27,7 +27,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
   }
 
   const refreshProduct = async (productId: number) => {
-    const res = await fetch('/api/products/' + productId, { method: 'GET' })
+    const res = await fetch(`/api/products/${productId}`, { method: 'GET' })
     if (!res.ok) {
       console.error('Failed to fetch product data:', res.statusText)
       toast.error('Something went wrong')
@@ -78,6 +78,37 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
     } catch (error) {
       toast.error('Submit failed')
       console.error('Failed to update product: ', error)
+    }
+  }
+
+  const handleDeleteProduct = async () => {
+    const id = prodData.id
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this product? \nThis action cannot be undone.',
+    )
+
+    if (!confirmDelete) {
+      return
+    }
+
+    if (!id) {
+      toast.error('Product ID not found')
+      return
+    }
+
+    try {
+      const res = await fetch(`/api/products/${id}`, { method: 'DELETE' })
+      if (!res.ok) {
+        throw new Error('Failed to delete product')
+      }
+
+      console.log('Product deleted successfully', res)
+      setOpenDrawer(false)
+      refetchProducts()
+      toast.success('Product deleted successfully')
+    } catch (err) {
+      console.error('Error deleting product: ', err)
+      toast.error('Product delete failed')
     }
   }
 
@@ -257,8 +288,14 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
           Submit
         </Button>
 
-        <Button variant="outlined" sx={{ width: '40%' }} color="error" onClick={() => setOpenDrawer(false)}>
-          Discard
+        <Button
+          variant="contained"
+          sx={{ width: '40%' }}
+          color="error"
+          onClick={() => handleDeleteProduct()}
+          disabled={prodData.id === -1}
+        >
+          Delete
         </Button>
       </Box>
     </Box>
