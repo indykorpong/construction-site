@@ -15,7 +15,7 @@ interface MyPaletteExtensions {
     main: string
     dark: string
   }
-  yellow: {
+  orange: {
     main: string
     dark: string
   }
@@ -49,15 +49,15 @@ export const myPalette: PaletteOptions = {
     dark: '#151D19',
   },
   green: {
-    main: '#6B937C',
+    main: '#016600',
     dark: '#151D19',
   },
-  yellow: {
-    main: '#FEE715',
+  orange: {
+    main: '#ff7f00',
     dark: '#FFFFFF',
   },
   blue: {
-    main: '#116FAC',
+    main: '#0389d2',
     dark: '#FFFFFF',
   },
   text: {
