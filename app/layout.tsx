@@ -3,7 +3,7 @@ import { Noto_Sans_Thai } from 'next/font/google'
 import { ReactNode } from 'react'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import { ThemeProvider } from '@mui/material'
-import { theme } from './theme'
+import { mainTheme } from './theme'
 import { Toaster } from 'react-hot-toast'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body style={{ fontSize: '1.125rem', lineHeight: '2rem', margin: '0px' }}>
         <AppRouterCacheProvider>
           <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            <ThemeProvider theme={mainTheme}>{children}</ThemeProvider>
             <Toaster />
           </QueryClientProvider>
         </AppRouterCacheProvider>

@@ -7,19 +7,19 @@ interface MyPaletteExtensions {
   secondary: {
     main: string
   }
-  lightGreen: {
+  lightGreen?: {
     main: string
     dark: string
   }
-  green: {
+  green?: {
     main: string
     dark: string
   }
-  orange: {
+  orange?: {
     main: string
     dark: string
   }
-  blue: {
+  blue?: {
     main: string
     dark: string
   }
@@ -37,7 +37,7 @@ declare module '@mui/material/styles' {
   interface PaletteOptions extends MyPaletteExtensions {}
 }
 
-export const myPalette: PaletteOptions = {
+export const mainPalette: PaletteOptions = {
   primary: {
     main: '#32ADE6',
   },

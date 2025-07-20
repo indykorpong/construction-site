@@ -5,18 +5,18 @@ import { Box, ThemeProvider } from '@mui/material'
 import { Header } from '@/app/_components/header'
 import { Footer } from '@/app/_components/footer'
 import { Navbar } from '@/app/_components/navbar'
-import { aaspTheme } from './theme'
+import { ydpiTheme } from './theme'
 import { Sites } from '@/app/common/enums/sites'
 
 export const metadata: Metadata = {
-  title: 'Double A SP Co., LTD.',
+  title: 'YDPI Co., LTD.',
 }
 
-export default function AaspLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default function YdpiLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <ThemeProvider theme={aaspTheme}>
-      <Header site={Sites.AASP} />
-      <Navbar site={Sites.AASP} />
+    <ThemeProvider theme={ydpiTheme}>
+      <Header site={Sites.YDPI} />
+      <Navbar site={Sites.YDPI} />
       <Box minHeight={'600px'}>{children}</Box>
       <Footer />
     </ThemeProvider>

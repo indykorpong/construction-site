@@ -4,13 +4,13 @@ import { CarouselComponent } from '@/app/_components/carousel'
 import { Box } from '@mui/material'
 
 export const HomeCarousel = () => {
-  const homePreview = [1, 2, 3, 4, 5, 6].map((item, index) => {
+  const homePreview = Array.from({ length: 6 }, (_, index) => {
     return (
       <Box key={index} justifyContent="center" alignItems="center">
         <Box
           component={'img'}
-          src={`/home_preview/home_preview_${item}.jpg`}
-          alt={`home_preview_${item}`}
+          src={`/home_preview/home_preview_${index + 1}.jpg`}
+          alt={`home_preview_${index + 1}`}
           height={{ mobile: 300, tablet: 500, desktop: 600 }}
           sx={{
             display: 'block',

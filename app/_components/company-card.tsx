@@ -30,10 +30,17 @@ export const CompanyCard = ({
           <Box
             component="img"
             src={logo}
-            alt="AASP Logo"
+            alt={`${name} Logo`}
+            width={'auto'}
             height={'auto'}
-            width={'85%'}
-            sx={{ objectFit: 'contain', marginTop: '0.5rem' }}
+            sx={{
+              objectFit: 'contain',
+              marginTop: '0.5rem',
+              marginBottom: '0.5rem',
+              maxWidth: '85%',
+              maxHeight: '40%',
+              aspectRatio: '16/9',
+            }}
           />
           <Box
             bgcolor={bgColor}
