@@ -1,6 +1,6 @@
 'use client'
-import { ContentBox } from '../../_components/content-box'
-import { Title } from '../../_components/title'
+import { ContentBox } from '@/app/_components/content-box'
+import { Title } from '@/app/_components/title'
 import DataGrid from '@/app/_components/data-grid'
 import { getProjects } from '@/lib/api/project'
 import { Skeleton } from '@mui/material'
@@ -24,7 +24,7 @@ export default function ProjectsPage() {
     id: project.id,
     name: project.name,
     imageUrl: project.images?.[0]?.url,
-    link: `/projects/${project.id}`,
+    link: `/aasp/projects/${project.id}`,
   }))
   return (
     <ContentBox>

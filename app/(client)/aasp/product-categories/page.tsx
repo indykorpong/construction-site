@@ -20,7 +20,7 @@ export default function ProductCategoriesPage() {
   }
   const productsData = products?.map((product) => {
     const childrenProductsLength = product.childrenProducts.length
-    const link = childrenProductsLength > 0 ? '/product-categories/' + product.id : '/products/' + product.id
+    const link = childrenProductsLength > 0 ? '/aasp/product-categories/' + product.id : '/aasp/products/' + product.id
     return {
       id: product.id,
       name: product.name,

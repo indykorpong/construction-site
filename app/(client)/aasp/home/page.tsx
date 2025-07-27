@@ -9,7 +9,7 @@ import { CompanyInfo } from '@/app/_components/company-info'
 import { HomeCarousel } from './carousel'
 import { useQuery } from '@tanstack/react-query'
 
-export default function Home() {
+export default function AaspHome() {
   return (
     <>
       <Box bgcolor={'background.default'}>
@@ -43,7 +43,7 @@ const HomeProjects = () => {
     id: project.id,
     name: project.name,
     imageUrl: project.images[0]?.url || '',
-    link: `/projects/${project.id}`,
+    link: `/aasp/projects/${project.id}`,
   }))
 
   return (
@@ -51,7 +51,7 @@ const HomeProjects = () => {
       <Title>Projects</Title>
       <DataGrid data={projectsData} isLoading={isLoadingProjects} />
       <Box display={'flex'} justifyContent={'end'} marginTop={'30px'}>
-        <Link href="/projects">
+        <Link href="/aasp/projects">
           <Typography variant={'body1'} color={'text.secondary'} fontWeight={600} sx={{ textDecoration: 'underline' }}>
             See more
           </Typography>

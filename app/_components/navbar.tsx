@@ -18,53 +18,75 @@ const menuItems: Record<Sites, MenuItem[]> = {
   [Sites.AASP]: [
     {
       label: 'HOME',
-      href: '/',
+      href: '/aasp/home',
     },
     {
       label: 'PRODUCTS',
-      href: '/product-categories',
+      href: '/aasp/product-categories',
     },
     {
       label: 'PROJECTS',
-      href: '/projects',
+      href: '/aasp/projects',
     },
     {
       label: 'ABOUT US',
-      href: '/about-us',
+      href: '/aasp/about-us',
     },
     {
       label: 'CONTACT US',
-      href: '/contact-us',
+      href: '/aasp/contact-us',
     },
   ],
   [Sites.YDPI]: [
     {
       label: 'HOME',
-      href: '/',
+      href: '/ydpi/home',
     },
     {
       label: 'PRODUCTS',
-      href: '/product-categories',
+      href: '/ydpi/product-categories',
     },
     {
       label: 'PROJECTS',
-      href: '/projects',
+      href: '/ydpi/projects',
     },
     {
       label: 'ABOUT US',
-      href: '/about-us',
+      href: '/ydpi/about-us',
     },
     {
       label: 'CONTACT US',
-      href: '/contact-us',
+      href: '/ydpi/contact-us',
     },
   ],
   [Sites.EPS]: [
     {
       label: 'HOME',
-      href: '/',
+      href: '/eps/home',
+    },
+    {
+      label: 'PRODUCTS',
+      href: '/eps/product-categories',
+    },
+    {
+      label: 'PROJECTS',
+      href: '/eps/projects',
+    },
+    {
+      label: 'ABOUT US',
+      href: '/eps/about-us',
+    },
+    {
+      label: 'CONTACT US',
+      href: '/eps/contact-us',
     },
   ],
+}
+
+const homeUrls: Record<Sites, string> = {
+  [Sites.AASP]: '/aasp/home',
+  [Sites.YDPI]: '/ydpi/home',
+  [Sites.EPS]: '/eps/home',
 }
 
 export function Navbar({ site = Sites.AASP }: { site?: Sites }) {
@@ -106,7 +128,7 @@ export function Navbar({ site = Sites.AASP }: { site?: Sites }) {
         paddingX={'1rem'}
       >
         <Button
-          href="/home"
+          href={homeUrls[site]}
           sx={{
             width: 'auto',
             height: { desktop: '7rem', tablet: '5rem', mobile: '4rem' },

@@ -4,9 +4,13 @@ import { ContentBox } from './content-box'
 import { useWindowDimensions } from '../../lib/window'
 import { useMemo } from 'react'
 import { TABLET_MIN_WIDTH } from '../theme'
+import { usePathname } from 'next/navigation'
 
 export function Footer() {
   const { width } = useWindowDimensions()
+
+  const pathname = usePathname()
+  const isContactUs = pathname.includes('contact-us')
 
   const mapWidth = useMemo(() => {
     return width < TABLET_MIN_WIDTH ? 275 : 550
@@ -23,7 +27,7 @@ export function Footer() {
     return width < TABLET_MIN_WIDTH ? mapMobileSrc : mapTabletSrc
   }, [width])
 
-  return (
+  return isContactUs ? null : (
     <Box bgcolor={'secondary.main'} width={'100%'}>
       <ContentBox>
         <Box

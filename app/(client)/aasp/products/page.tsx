@@ -1,6 +1,6 @@
 'use client'
-import { ContentBox } from '../../_components/content-box'
-import { Title } from '../../_components/title'
+import { ContentBox } from '@/app/_components/content-box'
+import { Title } from '@/app/_components/title'
 import { useQuery } from '@tanstack/react-query'
 import DataGrid from '@/app/_components/data-grid'
 import { getProducts } from '@/lib/api/product'
@@ -22,7 +22,7 @@ export default function ProductsPage() {
     id: product.id,
     name: product.name,
     imageUrl: product.images?.[0]?.url,
-    link: '/products/' + product.id,
+    link: '/aasp/products/' + product.id,
   }))
   return (
     <ContentBox>
