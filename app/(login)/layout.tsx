@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'AA-SP Co., LTD. Admin',
+  title: 'EP & S Group Co., LTD. Admin',
 }
 
 export default function LoginLayout({ children }: Readonly<{ children: ReactNode }>) {

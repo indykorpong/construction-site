@@ -1,12 +1,21 @@
 import { createProduct, getProducts, updateProduct } from '@/lib/db/product'
 import { NextRequest, NextResponse } from 'next/server'
+import { getSiteIdFromRequest } from '@/lib/utils/site'
+import { getSession } from '@/lib/login/session'
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const searchParams = request.nextUrl.searchParams
     const includeChildren = searchParams.get('includeChildren') === 'true'
 
-    const products = await getProducts({ includeChildren })
+    // Try to get siteId from query params first, then from request headers
+    let siteId = searchParams.get('siteId') ? Number(searchParams.get('siteId')) : undefined
+
+    if (!siteId) {
+      siteId = getSiteIdFromRequest(request) ?? (await getSession())?.siteId
+    }
+
+    const products = await getProducts({ includeChildren, siteId })
     return NextResponse.json(products)
   } catch (error) {
     console.error('Failed to fetch products', error)
@@ -24,6 +33,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         { status: 400 },
       )
     }
+
+    // Automatically set siteId from request if not provided
+    if (!data.siteId) {
+      const siteId = getSiteIdFromRequest(request) ?? (await getSession())?.siteId
+      if (siteId) {
+        data.siteId = siteId
+      }
+    }
+
     const product = await createProduct(data)
     return NextResponse.json(product)
   } catch (error) {
@@ -38,6 +56,14 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
 
     if (!id || !data) {
       return NextResponse.json({ error: 'Failed to update product' }, { status: 400 })
+    }
+
+    // Automatically set siteId from request if not provided
+    if (!data.siteId) {
+      const siteId = getSiteIdFromRequest(request) ?? (await getSession())?.siteId
+      if (siteId) {
+        data.siteId = siteId
+      }
     }
 
     const product = await updateProduct(id, data)

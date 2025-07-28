@@ -12,7 +12,7 @@ export const getProjects = async ({ limit }: { limit?: number } = {}): Promise<P
   return await res.json()
 }
 
-export const getProject = async ({ id }: { id: number }): Promise<ProjectData> => {
+export const getProject = async (id: number): Promise<ProjectData> => {
   const res = await fetch(`/api/projects/${id}`)
 
   if (!res.ok) {

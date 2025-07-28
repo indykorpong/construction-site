@@ -4,6 +4,11 @@ import { SessionPayload } from '@/lib/login/definitions'
 import { cookies } from 'next/headers'
 
 const jwtKey = process.env.JWT_KEY
+
+if (!jwtKey || jwtKey.length === 0) {
+  throw new Error('JWT_KEY is not set in environment variables')
+}
+
 const encodedKey = new TextEncoder().encode(jwtKey)
 
 export async function encrypt(payload: SessionPayload) {
@@ -26,9 +31,9 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
-export async function createSession(id: number) {
+export async function createSession(id: number, siteId: number) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ id })
+  const session = await encrypt({ userId: id, siteId })
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {
@@ -63,4 +68,10 @@ export async function updateSession() {
 export async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
+}
+
+export async function getSession(): Promise<SessionPayload | null> {
+  const cookieStore = await cookies()
+  const session = cookieStore.get('session')?.value
+  return session ? await decrypt(session) : null
 }

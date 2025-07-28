@@ -1,11 +1,20 @@
 import { deleteProduct, getProduct } from '@/lib/db/product'
 import { NextRequest, NextResponse } from 'next/server'
+import { getSiteIdFromRequest } from '@/lib/utils/site'
+import { getSession } from '@/lib/login/session'
 
-export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id
 
   try {
-    const product = await getProduct(parseInt(id, 10))
+    // Get siteId from request headers
+    const siteId = getSiteIdFromRequest(request) ?? (await getSession())?.siteId
+
+    if (!siteId) {
+      return NextResponse.json({ error: 'Site not found in request' }, { status: 400 })
+    }
+
+    const product = await getProduct(parseInt(id, 10), siteId)
     return NextResponse.json(product)
   } catch (error) {
     console.error('Failed to fetch product', error)

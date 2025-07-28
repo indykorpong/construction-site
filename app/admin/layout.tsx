@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { AdminHeader } from './header'
 
 export const metadata: Metadata = {
-  title: 'AA-SP Co., LTD. Admin',
+  title: 'EP & S Group Co., LTD. Admin',
 }
 
 export default function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {

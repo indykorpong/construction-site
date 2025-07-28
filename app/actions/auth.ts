@@ -42,7 +42,7 @@ export async function login(state: FormState, formData: FormData) {
     }
   }
 
-  await createSession(user.id)
+  await createSession(user.id, user.siteId ?? 1)
 
   redirect('/admin')
 }
