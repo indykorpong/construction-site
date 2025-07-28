@@ -3,8 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { FC } from 'react'
-
-import { CardProps } from '../types/components'
+import { CardProps } from '@/app/common/types/components'
 
 export const CardComponent: FC<CardProps> = ({ title, imageUrl = '/file.svg' }) => {
   return (

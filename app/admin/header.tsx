@@ -15,7 +15,7 @@ export const AdminHeader: React.FC = () => {
 
   return (
     <>
-      <Tabs value={pathname} sx={{ marginLeft: 2 }} textColor="secondary" indicatorColor="secondary">
+      <Tabs value={pathname} sx={{ marginLeft: 2 }} textColor="primary" indicatorColor="primary">
         <Tab label="Home" value={'/admin'} onClick={() => router.push('/admin')} />
         <Tab label="Products" value={'/admin/products'} onClick={() => router.push('/admin/products')} />
         <Tab label="Projects" value={'/admin/projects'} onClick={() => router.push('/admin/projects')} />

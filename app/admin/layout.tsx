@@ -2,18 +2,19 @@ import { Box } from '@mui/material'
 import { Metadata } from 'next'
 import { ReactNode } from 'react'
 import { AdminHeader } from './header'
+import { ServerThemeProvider } from './theme/server-theme-provider'
 
 export const metadata: Metadata = {
-  title: 'AA-SP Co., LTD. Admin',
+  title: 'EP&S Group Co., LTD. Admin',
 }
 
 export default function AdminLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <>
+    <ServerThemeProvider>
       <Box minHeight={'100vh'} display="flex" flexDirection="column">
         <Box
           component="header"
-          bgcolor="primary.main"
+          bgcolor="background.default"
           color="white"
           display={'flex'}
           justifyContent={'space-between'}
@@ -30,6 +31,6 @@ export default function AdminLayout({ children }: Readonly<{ children: ReactNode
           </Box>
         </Box>
       </Box>
-    </>
+    </ServerThemeProvider>
   )
 }

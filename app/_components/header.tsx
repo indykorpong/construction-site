@@ -5,12 +5,35 @@ import { FaRegEnvelope, FaPhoneAlt, FaRegClock } from 'react-icons/fa'
 import { IconContext } from 'react-icons'
 import { DESKTOP_MIN_WIDTH, TABLET_MIN_WIDTH } from '../theme'
 import { useWindowDimensions } from '../../lib/window'
+import { Sites } from '../common/enums/sites'
 
-export function Header() {
+export function Header({ site = Sites.AASP }: { site?: Sites }) {
   const { width } = useWindowDimensions()
   const iconSize = useMemo(() => {
     return width < TABLET_MIN_WIDTH ? 8 : width < DESKTOP_MIN_WIDTH ? 10 : 20
   }, [width])
+  const siteInfo = useMemo(() => {
+    switch (site) {
+      case Sites.AASP:
+        return {
+          email: 'aasp8860@gmail.com',
+          phone: '083-097-9597',
+          hours: 'จันทร์ - ศุกร์ 08:00 - 17:30 น.',
+        }
+      case Sites.YDPI:
+        return {
+          email: 'aasp8860@gmail.com',
+          phone: '083-097-9597',
+          hours: 'จันทร์ - ศุกร์ 08:00 - 17:30 น.',
+        }
+      case Sites.EPANDS:
+        return {
+          email: 'aasp8860@gmail.com',
+          phone: '083-097-9597',
+          hours: 'จันทร์ - ศุกร์ 08:00 - 17:30 น.',
+        }
+    }
+  }, [site])
   return (
     <Box width={'100%'} bgcolor={'primary.main'}>
       <Box
@@ -25,15 +48,15 @@ export function Header() {
         <IconContext.Provider value={{ color: 'white' }}>
           <HeaderText>
             <FaRegEnvelope size={iconSize} />
-            <SmallText>aasp8860@gmail.com</SmallText>
+            <SmallText>{siteInfo.email}</SmallText>
           </HeaderText>
           <HeaderText>
             <FaPhoneAlt size={iconSize} />
-            <SmallText>083-097-9597</SmallText>
+            <SmallText>{siteInfo.phone}</SmallText>
           </HeaderText>
           <HeaderText>
             <FaRegClock size={iconSize} />
-            <SmallText>จันทร์ - ศุกร์ 08:00 - 17:30 น.</SmallText>
+            <SmallText>{siteInfo.hours}</SmallText>
           </HeaderText>
         </IconContext.Provider>
       </Box>

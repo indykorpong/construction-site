@@ -8,7 +8,7 @@ type Title = {
 export const Title: FC<Title> = ({ children }) => {
   return (
     <Typography
-      variant={'h4'}
+      variant={'h3'}
       fontWeight={700}
       marginBottom={{ desktop: '2rem', tablet: '2rem', mobile: '1rem' }}
       color={'text.secondary'}

@@ -16,5 +16,6 @@ export type FormState =
   | undefined
 
 export type SessionPayload = {
-  id: number
+  userId: number
+  siteId: number
 }

@@ -13,7 +13,10 @@ export type ProductData = Product & {
 }
 
 export async function getProducts(
-  { includeChildren }: { includeChildren?: boolean } = { includeChildren: false },
+  { includeChildren, siteId }: { includeChildren?: boolean; siteId?: number } = {
+    includeChildren: false,
+    siteId: 1,
+  },
 ): Promise<ProductData[]> {
   const products = await prisma.product.findMany({
     include: {
@@ -24,11 +27,10 @@ export async function getProducts(
         },
       },
     },
-    where: includeChildren
-      ? {}
-      : {
-          parentProductId: null,
-        },
+    where: {
+      ...(includeChildren ? {} : { parentProductId: null }),
+      siteId,
+    },
     orderBy: {
       id: 'asc',
     },
@@ -50,9 +52,9 @@ export async function getProducts(
   return productsData
 }
 
-export async function getProduct(id: number): Promise<ProductData> {
+export async function getProduct(id: number, siteId: number): Promise<ProductData> {
   const product = await prisma.product.findUnique({
-    where: { id },
+    where: { id, siteId },
     include: {
       images: true,
       childrenProducts: {
@@ -88,6 +90,7 @@ export async function createProduct(data: Product) {
         name: data.name,
         description: data.description,
         parentProductId: data.parentProductId,
+        siteId: data.siteId,
       },
     })
   } catch (err) {
@@ -104,6 +107,7 @@ export async function updateProduct(id: number, data: Product) {
         name: data.name,
         description: data.description,
         parentProductId: data.parentProductId,
+        siteId: data.siteId,
       },
     })
 

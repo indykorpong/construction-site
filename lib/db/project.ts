@@ -13,7 +13,18 @@ export type ProjectData = Project & {
   }[]
 }
 
-export async function getProjects({ limit }: { limit?: number } = {}): Promise<ProjectData[]> {
+export async function getProjects(
+  {
+    limit,
+    siteId,
+  }: {
+    limit?: number
+    siteId?: number
+  } = {
+    limit: undefined,
+    siteId: 1,
+  },
+): Promise<ProjectData[]> {
   const projects = await prisma.project.findMany({
     include: {
       images: true,
@@ -26,6 +37,9 @@ export async function getProjects({ limit }: { limit?: number } = {}): Promise<P
           },
         },
       },
+    },
+    where: {
+      siteId,
     },
     orderBy: {
       id: 'asc',
@@ -62,9 +76,9 @@ export async function getProjects({ limit }: { limit?: number } = {}): Promise<P
   return projectsData
 }
 
-export async function getProject(id: number): Promise<ProjectData> {
+export async function getProject(id: number, siteId: number): Promise<ProjectData> {
   const project = await prisma.project.findUnique({
-    where: { id },
+    where: { id, siteId },
     include: {
       images: true,
       projectProducts: {
@@ -110,8 +124,11 @@ export async function getProject(id: number): Promise<ProjectData> {
   return projectData
 }
 
-export async function getFourProjects() {
+export async function getFourProjects(siteId: number) {
   const projects = await prisma.project.findMany({
+    where: {
+      siteId,
+    },
     take: 4,
     orderBy: { id: 'asc' },
     include: {
@@ -140,6 +157,7 @@ export async function createProject(data: Project) {
       data: {
         name: data.name,
         description: data.description,
+        siteId: data.siteId,
       },
     })
 
@@ -163,6 +181,7 @@ export async function updateProject(id: number, data: ProjectData) {
       data: {
         name: data.name,
         description: data.description,
+        siteId: data.siteId,
         projectProducts: {
           create: data.projectProducts.map((projectProduct) => ({
             productId: projectProduct.product.id,

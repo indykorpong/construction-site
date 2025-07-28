@@ -28,6 +28,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, refet
     name: '',
     description: '',
     parentProductId: null,
+    siteId: null,
     images: [],
     childrenProducts: [],
   }

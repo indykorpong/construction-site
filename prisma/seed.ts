@@ -3,11 +3,48 @@ import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
+const siteData: Prisma.SiteCreateInput[] = [
+  {
+    name: 'AASP',
+  },
+  {
+    name: 'YDPI',
+  },
+  {
+    name: 'EPS',
+  },
+]
+
 const userData: Prisma.UserCreateInput[] = [
   {
     name: 'Lam',
     email: 'lam@lam.com',
-    password: bcrypt.hashSync('123456789', 10),
+    password: bcrypt.hashSync('P@ssw0rd-1', 10),
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
+  },
+  {
+    name: 'Lam2',
+    email: 'lam2@lam.com',
+    password: bcrypt.hashSync('P@ssw0rd-2', 10),
+    site: {
+      connect: {
+        id: 2,
+      },
+    },
+  },
+  {
+    name: 'Lam3',
+    email: 'lam3@lam.com',
+    password: bcrypt.hashSync('P@ssw0rd-3', 10),
+    site: {
+      connect: {
+        id: 3,
+      },
+    },
   },
 ]
 
@@ -763,7 +800,10 @@ const projectData: Prisma.ProjectCreateInput[] = [
 ]
 
 export async function main() {
-  await prisma.user.createMany({ data: userData })
+  await prisma.site.createMany({ data: siteData })
+  for (const user of userData) {
+    await prisma.user.create({ data: user })
+  }
   for (const product of productData) {
     await prisma.product.create({ data: product })
   }

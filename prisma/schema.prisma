@@ -12,6 +12,8 @@ model User {
   email    String  @unique
   password String
   name     String?
+  siteId   Int?
+  site     Site?   @relation("SiteUsers", fields: [siteId], references: [id])
 
   @@map("user")
 }
@@ -25,6 +27,8 @@ model Product {
   parentProduct    Product?         @relation("ParentChildrenProducts", fields: [parentProductId], references: [id])
   childrenProducts Product[]        @relation("ParentChildrenProducts")
   projectProducts  ProjectProduct[]
+  siteId           Int?
+  site             Site?            @relation("SiteProducts", fields: [siteId], references: [id])
 
   @@map("product")
 }
@@ -35,6 +39,8 @@ model Project {
   description     String
   images          Image[]
   projectProducts ProjectProduct[]
+  siteId          Int?
+  site            Site?            @relation("SiteProjects", fields: [siteId], references: [id])
 
   @@map("project")
 }
@@ -58,4 +64,15 @@ model Image {
   project   Project? @relation(fields: [projectId], references: [id])
 
   @@map("image")
+}
+
+model Site {
+  id       Int       @id @default(autoincrement())
+  name     String
+  logoUrl  String?
+  products Product[] @relation("SiteProducts")
+  projects Project[] @relation("SiteProjects")
+  users    User[]    @relation("SiteUsers")
+
+  @@map("site")
 }

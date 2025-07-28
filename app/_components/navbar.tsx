@@ -1,47 +1,119 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import DoubleASPLogo from '@/public/logo/double-a-s-p.png'
+import AaspLogo from '@/public/logo/aasp.png'
+import YdpiLogo from '@/public/logo/ydpi.jpg'
+import EpandsLogo from '@/public/logo/epands.jpg'
+import { Sites } from '../common/enums/sites'
 
-export function Navbar() {
+type MenuItem = {
+  label: string
+  href: string
+}
+
+const menuItems: Record<Sites, MenuItem[]> = {
+  [Sites.AASP]: [
+    {
+      label: 'HOME',
+      href: '/aasp/home',
+    },
+    {
+      label: 'PRODUCTS',
+      href: '/aasp/product-categories',
+    },
+    {
+      label: 'PROJECTS',
+      href: '/aasp/projects',
+    },
+    {
+      label: 'ABOUT US',
+      href: '/aasp/about-us',
+    },
+    {
+      label: 'CONTACT US',
+      href: '/aasp/contact-us',
+    },
+  ],
+  [Sites.YDPI]: [
+    {
+      label: 'HOME',
+      href: '/ydpi/home',
+    },
+    {
+      label: 'PRODUCTS',
+      href: '/ydpi/product-categories',
+    },
+    {
+      label: 'PROJECTS',
+      href: '/ydpi/projects',
+    },
+    {
+      label: 'ABOUT US',
+      href: '/ydpi/about-us',
+    },
+    {
+      label: 'CONTACT US',
+      href: '/ydpi/contact-us',
+    },
+  ],
+  [Sites.EPANDS]: [
+    {
+      label: 'HOME',
+      href: '/epands/home',
+    },
+    {
+      label: 'PRODUCTS',
+      href: '/epands/product-categories',
+    },
+    {
+      label: 'PROJECTS',
+      href: '/epands/projects',
+    },
+    {
+      label: 'ABOUT US',
+      href: '/epands/about-us',
+    },
+    {
+      label: 'CONTACT US',
+      href: '/epands/contact-us',
+    },
+  ],
+}
+
+const homeUrls: Record<Sites, string> = {
+  [Sites.AASP]: '/aasp/home',
+  [Sites.YDPI]: '/ydpi/home',
+  [Sites.EPANDS]: '/epands/home',
+}
+
+export function Navbar({ site = Sites.AASP }: { site?: Sites }) {
   const [isOpen, setIsOpen] = useState(false)
   const handleClickSiteLink = () => {
     setIsOpen(false)
   }
 
-  const SiteLinks = () => {
-    return (
-      <>
-        <Link href="/" onClick={handleClickSiteLink}>
-          <Typography variant="h5" color="text.secondary" fontWeight={700}>
-            HOME
-          </Typography>
-        </Link>
-        <Link href="/product-categories" onClick={handleClickSiteLink}>
-          <Typography variant="h5" color="text.secondary" fontWeight={700}>
-            PRODUCTS
-          </Typography>
-        </Link>
-        <Link href="/projects" onClick={handleClickSiteLink}>
-          <Typography variant="h5" color="text.secondary" fontWeight={700}>
-            PROJECTS
-          </Typography>
-        </Link>
-        <Link href="/about-us" onClick={handleClickSiteLink}>
-          <Typography variant="h5" color="text.secondary" fontWeight={700}>
-            ABOUT US
-          </Typography>
-        </Link>
-        <Link href="/contact-us" onClick={handleClickSiteLink}>
-          <Typography variant="h5" color="text.secondary" fontWeight={700}>
-            CONTACT US
-          </Typography>
-        </Link>
-      </>
-    )
+  const logo = useMemo(() => {
+    switch (site) {
+      case Sites.AASP:
+        return AaspLogo
+      case Sites.YDPI:
+        return YdpiLogo
+      case Sites.EPANDS:
+        return EpandsLogo
+    }
+  }, [site])
+
+  const SiteLinks = ({ site }: { site: Sites }) => {
+    return menuItems[site].map((item) => (
+      <Link key={item.label} href={item.href} onClick={handleClickSiteLink}>
+        <Typography variant="h5" color="text.secondary" fontWeight={700}>
+          {item.label}
+        </Typography>
+      </Link>
+    ))
   }
 
   return (
@@ -56,7 +128,7 @@ export function Navbar() {
         paddingX={'1rem'}
       >
         <Button
-          href="/home"
+          href={homeUrls[site]}
           sx={{
             width: 'auto',
             height: { desktop: '7rem', tablet: '5rem', mobile: '4rem' },
@@ -65,8 +137,8 @@ export function Navbar() {
         >
           <Box
             component="img"
-            src={DoubleASPLogo.src}
-            alt="DoubleASP Logo"
+            src={logo.src}
+            alt="AASP Logo"
             height={{ desktop: '6rem', tablet: '4rem', mobile: '3rem' }}
             width={'auto'}
             sx={{ objectFit: 'cover' }}
@@ -83,7 +155,7 @@ export function Navbar() {
           fontSize={'1.25rem'}
           fontWeight={'bold'}
         >
-          <SiteLinks />
+          <SiteLinks site={site} />
         </Box>
         <Box display={{ desktop: 'none', tablet: 'block', mobile: 'block' }}>
           <Button onClick={() => setIsOpen(!isOpen)}>
@@ -105,7 +177,7 @@ export function Navbar() {
             overflow: 'hidden',
           }}
         >
-          <SiteLinks />
+          <SiteLinks site={site} />
         </Box>
       ) : null}
     </Box>
