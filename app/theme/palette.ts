@@ -1,4 +1,4 @@
-import { PaletteOptions } from '@mui/material'
+import { PaletteColor, PaletteColorOptions, PaletteOptions, TypeBackground, TypeText } from '@mui/material'
 
 interface MyPaletteExtensions {
   primary: {
@@ -33,8 +33,18 @@ interface MyPaletteExtensions {
 }
 
 declare module '@mui/material/styles' {
-  interface Palette extends MyPaletteExtensions {}
-  interface PaletteOptions extends MyPaletteExtensions {}
+  interface Palette extends MyPaletteExtensions {
+    primary: PaletteColor
+    secondary: PaletteColor
+    text: TypeText
+    background: TypeBackground
+  }
+  interface PaletteOptions extends MyPaletteExtensions {
+    primary?: PaletteColorOptions
+    secondary?: PaletteColorOptions
+    text?: Partial<TypeText>
+    background?: Partial<TypeBackground>
+  }
 }
 
 export const mainPalette: PaletteOptions = {

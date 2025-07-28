@@ -28,6 +28,7 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projects, products, isLoad
     id: -1,
     name: '',
     description: '',
+    siteId: null,
     images: [],
     projectProducts: [],
   }
