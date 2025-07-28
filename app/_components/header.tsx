@@ -26,7 +26,7 @@ export function Header({ site = Sites.AASP }: { site?: Sites }) {
           phone: '083-097-9597',
           hours: 'จันทร์ - ศุกร์ 08:00 - 17:30 น.',
         }
-      case Sites.EPS:
+      case Sites.EPANDS:
         return {
           email: 'aasp8860@gmail.com',
           phone: '083-097-9597',

@@ -31,17 +31,33 @@ export async function decrypt(session: string | undefined = '') {
   }
 }
 
+type CookieOptions = {
+  httpOnly: boolean
+  secure: boolean
+  sameSite: 'lax' | 'strict' | 'none'
+  path: string
+}
+
+const cookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'lax',
+  path: '/',
+}
+
 export async function createSession(id: number, siteId: number) {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   const session = await encrypt({ userId: id, siteId })
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-    sameSite: 'lax',
-    path: '/',
+    ...cookieOptions,
+    expires,
+  })
+  cookieStore.set('siteId', siteId.toString(), {
+    ...cookieOptions,
+    httpOnly: false,
+    expires,
   })
 }
 
@@ -57,17 +73,20 @@ export async function updateSession() {
 
   const cookieStore = await cookies()
   cookieStore.set('session', session, {
-    httpOnly: true,
-    secure: true,
-    expires: expires,
-    sameSite: 'lax',
-    path: '/',
+    ...cookieOptions,
+    expires,
+  })
+  cookieStore.set('siteId', payload.siteId.toString(), {
+    ...cookieOptions,
+    httpOnly: false,
+    expires,
   })
 }
 
 export async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
+  cookieStore.delete('siteId')
 }
 
 export async function getSession(): Promise<SessionPayload | null> {

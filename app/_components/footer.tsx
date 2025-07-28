@@ -38,7 +38,7 @@ export function Footer() {
           gap={{ desktop: '1rem', tablet: '2rem', mobile: '2rem' }}
         >
           <Box maxWidth={{ desktop: '50%', tablet: '100%', mobile: '100%' }}>
-            <Typography variant={'h3'} color={'primary.main'} fontWeight={700} marginBottom={2}>
+            <Typography variant={'h3'} color={'text.secondary'} fontWeight={700} marginBottom={2}>
               Contact Us
             </Typography>
             <Typography variant={'body1'} marginBottom={2}>

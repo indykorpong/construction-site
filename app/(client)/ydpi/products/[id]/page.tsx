@@ -13,7 +13,7 @@ export default function ProductId() {
 
   const { data: product, isLoading: isLoadingProduct } = useQuery({
     queryKey: ['product', id],
-    queryFn: () => getProduct(id),
+    queryFn: () => getProduct(parseInt(id, 10)),
   })
 
   if (isLoadingProduct) {

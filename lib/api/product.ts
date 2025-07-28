@@ -11,7 +11,7 @@ export const getProducts = async (): Promise<ProductData[]> => {
   return await res.json()
 }
 
-export const getProduct = async (id: string): Promise<ProductData> => {
+export const getProduct = async (id: number): Promise<ProductData> => {
   const res = await fetch(`/api/products/${id}`, { method: 'GET' })
 
   if (!res.ok) {

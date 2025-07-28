@@ -4,7 +4,7 @@ import { Sites } from '@/app/common/enums/sites'
 export const SITE_ID_MAP: Record<Sites, number> = {
   [Sites.AASP]: 1,
   [Sites.YDPI]: 2,
-  [Sites.EPS]: 3,
+  [Sites.EPANDS]: 3,
 }
 
 /**
@@ -34,8 +34,8 @@ export function getSiteIdFromUrl(url: string): number | undefined {
     case 'ydpi':
       site = Sites.YDPI
       break
-    case 'eps':
-      site = Sites.EPS
+    case 'epands':
+      site = Sites.EPANDS
       break
     default:
       return undefined

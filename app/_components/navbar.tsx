@@ -6,7 +6,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import AaspLogo from '@/public/logo/aasp.png'
 import YdpiLogo from '@/public/logo/ydpi.jpg'
-import EpsLogo from '@/public/logo/eps.jpg'
+import EpandsLogo from '@/public/logo/epands.jpg'
 import { Sites } from '../common/enums/sites'
 
 type MenuItem = {
@@ -59,26 +59,26 @@ const menuItems: Record<Sites, MenuItem[]> = {
       href: '/ydpi/contact-us',
     },
   ],
-  [Sites.EPS]: [
+  [Sites.EPANDS]: [
     {
       label: 'HOME',
-      href: '/eps/home',
+      href: '/epands/home',
     },
     {
       label: 'PRODUCTS',
-      href: '/eps/product-categories',
+      href: '/epands/product-categories',
     },
     {
       label: 'PROJECTS',
-      href: '/eps/projects',
+      href: '/epands/projects',
     },
     {
       label: 'ABOUT US',
-      href: '/eps/about-us',
+      href: '/epands/about-us',
     },
     {
       label: 'CONTACT US',
-      href: '/eps/contact-us',
+      href: '/epands/contact-us',
     },
   ],
 }
@@ -86,7 +86,7 @@ const menuItems: Record<Sites, MenuItem[]> = {
 const homeUrls: Record<Sites, string> = {
   [Sites.AASP]: '/aasp/home',
   [Sites.YDPI]: '/ydpi/home',
-  [Sites.EPS]: '/eps/home',
+  [Sites.EPANDS]: '/epands/home',
 }
 
 export function Navbar({ site = Sites.AASP }: { site?: Sites }) {
@@ -101,8 +101,8 @@ export function Navbar({ site = Sites.AASP }: { site?: Sites }) {
         return AaspLogo
       case Sites.YDPI:
         return YdpiLogo
-      case Sites.EPS:
-        return EpsLogo
+      case Sites.EPANDS:
+        return EpandsLogo
     }
   }, [site])
 

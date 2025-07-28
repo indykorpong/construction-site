@@ -14,7 +14,7 @@ export default function ProjectId() {
 
   const { data: project, isLoading: isLoadingProject } = useQuery({
     queryKey: ['project', id],
-    queryFn: () => getProject({ id: parseInt(id, 10) }),
+    queryFn: () => getProject(parseInt(id, 10)),
   })
 
   if (isLoadingProject) {

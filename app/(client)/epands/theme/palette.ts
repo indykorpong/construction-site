@@ -1,17 +1,17 @@
 import { PaletteOptions } from '@mui/material'
 
-export const ydpiPalette: PaletteOptions = {
+export const epandsPalette: PaletteOptions = {
   primary: {
-    main: '#FFA147',
+    main: '#339E45',
   },
   secondary: {
-    main: '#FAC898',
+    main: '#D4DFD4',
   },
   text: {
     primary: '#000000',
-    secondary: '#F17F0E',
+    secondary: '#1D5927',
   },
   background: {
-    default: '#FBDBBC',
+    default: '#ECF9EE',
   },
 }

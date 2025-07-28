@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import AaspLogo from '@/public/logo/aasp.png'
 import YdpiLogo from '@/public/logo/ydpi.jpg'
-import EpsLogo from '@/public/logo/eps.jpg'
+import EpsLogo from '@/public/logo/epands.jpg'
 import { CompanyCard } from '@/app/_components/company-card'
 
 export default function PortalHome() {

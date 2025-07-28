@@ -26,7 +26,7 @@ export default function ProductCategoryId() {
     id: product.id,
     name: product.name,
     imageUrl: product.images?.[0]?.url,
-    link: '/aasp/products/' + product.id,
+    link: '/epands/products/' + product.id,
   }))
 
   return (
