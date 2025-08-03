@@ -8,6 +8,7 @@ import DataGrid from '@/app/_components/data-grid'
 import { CompanyInfo } from '@/app/_components/company-info'
 import { HomeCarousel } from './carousel'
 import { useQuery } from '@tanstack/react-query'
+import { Sites } from '@/app/common/enums/sites'
 
 export default function EpandsHome() {
   return (
@@ -16,7 +17,7 @@ export default function EpandsHome() {
         <HomeCarousel />
       </Box>
       <ContentBox sx={{ paddingY: { mobile: 5, tablet: 10, desktop: 10 } }}>
-        <CompanyInfo />
+        <CompanyInfo site={Sites.EPANDS} />
       </ContentBox>
       <ContentBox bgcolor="background.default">
         <HomeProjects />

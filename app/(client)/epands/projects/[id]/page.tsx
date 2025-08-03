@@ -47,7 +47,7 @@ export default function ProjectId() {
       id: projectProduct.product.id,
       name: projectProduct.product.name,
       imageUrl: projectProduct.product.images[0].url,
-      link: `/aasp/products/${projectProduct.product.id}`,
+      link: `/epands/products/${projectProduct.product.id}`,
     })) ?? []
 
   return (

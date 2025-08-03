@@ -12,7 +12,7 @@ export const CompanyCard = ({
   url: string
 }) => {
   return (
-    <Box sx={{ width: '18%', height: '80%' }}>
+    <Box sx={{ width: '15%', height: '100%' }}>
       <Link href={url} style={{ textDecoration: 'none' }}>
         <Paper
           sx={{
@@ -38,13 +38,13 @@ export const CompanyCard = ({
               marginTop: '0.5rem',
               marginBottom: '0.5rem',
               maxWidth: '85%',
-              maxHeight: '40%',
+              height: '40%',
               aspectRatio: '16/9',
             }}
           />
           <Box
             bgcolor={bgColor}
-            sx={{ width: '100%', height: '100%', margin: '0 1rem 0 1rem', borderRadius: '0 0 1rem 1rem' }}
+            sx={{ width: '100%', height: '60%', margin: '0 1rem 0 1rem', borderRadius: '0 0 1rem 1rem' }}
           >
             <Typography
               variant="h4"

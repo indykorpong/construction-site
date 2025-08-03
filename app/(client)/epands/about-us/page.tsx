@@ -2,12 +2,13 @@ import { Box, Typography } from '@mui/material'
 import { ContentBox } from '@/app/_components/content-box'
 import { Title } from '@/app/_components/title'
 import { CompanyInfo } from '@/app/_components/company-info'
+import { Sites } from '@/app/common/enums/sites'
 
 export default function AboutUs() {
   return (
     <>
       <ContentBox>
-        <CompanyInfo />
+        <CompanyInfo site={Sites.EPANDS} />
       </ContentBox>
       <ContentBox bgcolor="background.default">
         <AboutUsOurGoal />

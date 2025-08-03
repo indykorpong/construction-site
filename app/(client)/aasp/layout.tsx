@@ -9,7 +9,7 @@ import { aaspTheme } from './theme'
 import { Sites } from '@/app/common/enums/sites'
 
 export const metadata: Metadata = {
-  title: 'Double A SP Co., LTD.',
+  title: 'AA-SP Co., LTD.',
 }
 
 export default function AaspLayout({ children }: Readonly<{ children: ReactNode }>) {

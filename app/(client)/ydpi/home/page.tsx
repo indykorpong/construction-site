@@ -7,6 +7,7 @@ import { getProjects } from '@/lib/api/project'
 import { Title } from '@/app/_components/title'
 import DataGrid from '@/app/_components/data-grid'
 import { HomeCarousel } from './carousel'
+import { Sites } from '@/app/common/enums/sites'
 
 export default function YdpiHome() {
   return (
@@ -15,7 +16,7 @@ export default function YdpiHome() {
         <HomeCarousel />
       </Box>
       <ContentBox sx={{ paddingY: { mobile: 5, tablet: 10, desktop: 10 } }}>
-        <CompanyInfo />
+        <CompanyInfo site={Sites.YDPI} />
       </ContentBox>
       <ContentBox bgcolor="background.default">
         <HomeProjects />
@@ -42,7 +43,7 @@ const HomeProjects = () => {
     id: project.id,
     name: project.name,
     imageUrl: project.images[0]?.url || '',
-    link: `/aasp/projects/${project.id}`,
+    link: `/ydpi/projects/${project.id}`,
   }))
 
   return (
@@ -50,7 +51,7 @@ const HomeProjects = () => {
       <Title>Projects</Title>
       <DataGrid data={projectsData} isLoading={isLoadingProjects} />
       <Box display={'flex'} justifyContent={'end'} marginTop={'30px'}>
-        <Link href="/aasp/projects">
+        <Link href="/ydpi/projects">
           <Typography variant={'body1'} color={'text.secondary'} fontWeight={600} sx={{ textDecoration: 'underline' }}>
             See more
           </Typography>

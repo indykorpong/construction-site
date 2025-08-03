@@ -5,7 +5,7 @@ export const ydpiPalette: PaletteOptions = {
     main: '#FFA147',
   },
   secondary: {
-    main: '#FAC898',
+    main: '#E8B98B',
   },
   text: {
     primary: '#000000',

@@ -25,7 +25,7 @@ export const theme = (options: ThemeOptions) =>
     typography: {
       fontFamily: 'Noto Sans Thai, sans-serif',
       h1: {
-        fontSize: '2.5rem',
+        fontSize: '3rem',
         lineHeight: '3rem',
         fontWeight: 700,
       },
