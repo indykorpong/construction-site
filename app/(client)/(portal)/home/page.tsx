@@ -23,7 +23,7 @@ export default function PortalHome() {
           justifyContent: 'center',
         }}
       >
-        <Typography variant="h1" color="green" sx={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        <Typography variant="h1" color="lightGreen.main" sx={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           EP&S Group Co., Ltd.
         </Typography>
       </Box>

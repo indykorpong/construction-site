@@ -55,7 +55,7 @@ export const mainPalette: PaletteOptions = {
     main: '#CFD8DC',
   },
   lightGreen: {
-    main: '#ABEBC6',
+    main: '#007F00',
     dark: '#151D19',
   },
   green: {
