@@ -11,7 +11,7 @@ export default function ProductsPage() {
     refetch: refetchProducts,
   } = useQuery({
     queryKey: ['products'],
-    queryFn: () => getProducts(),
+    queryFn: () => getProducts(true),
   })
 
   return <ProductTable products={products || []} isLoading={isLoadingProducts} refetchProducts={refetchProducts} />
