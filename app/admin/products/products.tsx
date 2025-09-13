@@ -121,7 +121,7 @@ export const ProductTable: FC<ProductTableProps> = ({ products, isLoading, refet
                     <TableCell>
                       <Box
                         component={'img'}
-                        src={product.images?.[0]?.minioUrl}
+                        src={product.images?.[0]?.url}
                         alt={product.name}
                         width={150}
                         height={150}

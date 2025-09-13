@@ -6,7 +6,7 @@ import { minioClient } from '../minio'
 import { randomUUID } from 'crypto'
 
 export type ImageData = Image & {
-  minioUrl?: string
+  url?: string
 }
 
 export type ProductData = Product & {
@@ -123,7 +123,7 @@ export async function updateProduct(id: number, data: ProductData) {
               id: image.id,
             },
             create: {
-              url: image.url,
+              filePath: image.filePath,
             },
           })),
         },
@@ -148,8 +148,7 @@ export async function deleteProduct(id: number) {
       throw new Error('Product not found')
     }
 
-    await Promise.all(product.images.map((image) => minioClient.deleteFile(image.url)))
-    await prisma.image.findMany({ where: { productId: id } })
+    await Promise.all(product.images.map((image) => minioClient.deleteFile(image.filePath)))
     await prisma.product.delete({
       where: { id },
       include: {
@@ -179,7 +178,7 @@ export async function uploadProductImage(id: number, productName: string, files:
           await minioClient.uploadFile('construction', fileObject, file)
           const image = await prisma.image.create({
             data: {
-              url: fileObject,
+              filePath: fileObject,
             },
           })
           if (id && id !== -1) {
@@ -217,7 +216,7 @@ export async function deleteProductImage(id: number) {
       throw new Error('Image not found')
     }
 
-    await minioClient.deleteFile(image.url)
+    await minioClient.deleteFile(image.filePath)
     await prisma.image.delete({
       where: { id },
     })

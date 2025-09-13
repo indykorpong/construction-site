@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
-import { ProductData } from '@/lib/db/product'
+import { ImageData, ProductData } from '@/lib/db/product'
 import { createProduct, updateProduct } from '@/lib/api/product'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
 
@@ -73,6 +73,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         toast.success('Product updated')
       }
 
+      console.log('======prodData========', prodData)
       setOpenDrawer(false)
       refetchProducts()
     } catch (error) {
@@ -135,7 +136,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         throw new Error('Failed to upload images')
       }
 
-      const data = await response.json()
+      const data = (await response.json()) as { images: ImageData[] }
       const images = data.images
 
       setProdData((prev) => ({
@@ -260,7 +261,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
             flexWrap={'wrap'}
             maxWidth={'590px'}
           >
-            {prodData.images.map((image, index) => (
+            {prodData.images?.map((image, index) => (
               <Box
                 key={index}
                 border={'1px solid #ccc'}
@@ -273,7 +274,7 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
               >
                 <Box
                   component={'img'}
-                  src={image.minioUrl}
+                  src={image.url}
                   alt={product.name}
                   height={100}
                   width={100}

@@ -5,7 +5,7 @@ import Link from 'next/link'
 type Data = {
   id: number
   name: string
-  imageUrl: string
+  imageUrl: string | undefined
   link: string
 }
 

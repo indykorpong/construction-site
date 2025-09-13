@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { deleteProductImage, uploadProductImage } from '../../../../lib/db/product'
+import { getImageUrl } from '@/utils/image'
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -15,7 +16,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const productName = formData.get('productName') as string
 
     const images = await uploadProductImage(productId, productName, files)
-    return NextResponse.json({ message: 'Image uploaded successfully', images }, { status: 200 })
+    const imagesWithUrl = await Promise.all(images.map(getImageUrl))
+    return NextResponse.json({ message: 'Image uploaded successfully', images: imagesWithUrl }, { status: 200 })
   } catch (error) {
     console.error('Failed to upload image', error)
     return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 })

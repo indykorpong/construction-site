@@ -1,14 +1,16 @@
 'use server'
-import { Image, Product, Project } from '@prisma/client'
+import { Product, Project } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
 import { randomUUID } from 'crypto'
+import { ImageData } from './product'
+import { getImageUrl } from '@/utils/image'
 
 export type ProjectData = Project & {
-  images: Image[]
+  images: ImageData[]
   projectProducts: {
     product: Product & {
-      images: Image[]
+      images: ImageData[]
     }
   }[]
 }
@@ -50,23 +52,13 @@ export async function getProjects(
   const projectsData = await Promise.all(
     projects.map(async (project) => ({
       ...project,
-      images: await Promise.all(
-        project.images.map(async (image) => {
-          image.url = await minioClient.getFileUrl(image.url)
-          return image
-        }),
-      ),
+      images: await Promise.all(project.images.map(getImageUrl)),
       projectProducts: await Promise.all(
         project.projectProducts.map(async (projectProduct) => ({
           ...projectProduct,
           product: {
             ...projectProduct.product,
-            images: await Promise.all(
-              projectProduct.product.images.map(async (image) => {
-                image.url = await minioClient.getFileUrl(image.url)
-                return image
-              }),
-            ),
+            images: await Promise.all(projectProduct.product.images.map(getImageUrl)),
           },
         })),
       ),
@@ -99,23 +91,13 @@ export async function getProject(id: number, siteId: number): Promise<ProjectDat
 
   const projectData = {
     ...project,
-    images: await Promise.all(
-      project.images.map(async (image) => {
-        image.url = await minioClient.getFileUrl(image.url)
-        return image
-      }),
-    ),
+    images: await Promise.all(project.images.map(getImageUrl)),
     projectProducts: await Promise.all(
       project.projectProducts.map(async (projectProduct) => ({
         ...projectProduct,
         product: {
           ...projectProduct.product,
-          images: await Promise.all(
-            projectProduct.product.images.map(async (image) => {
-              image.url = await minioClient.getFileUrl(image.url)
-              return image
-            }),
-          ),
+          images: await Promise.all(projectProduct.product.images.map(getImageUrl)),
         },
       })),
     ),
@@ -139,12 +121,7 @@ export async function getFourProjects(siteId: number) {
   const projectsData = await Promise.all(
     projects.map(async (project) => ({
       ...project,
-      images: await Promise.all(
-        project.images.map(async (image) => {
-          image.url = await minioClient.getFileUrl(image.url)
-          return image
-        }),
-      ),
+      images: await Promise.all(project.images.map(getImageUrl)),
     })),
   )
 
@@ -208,7 +185,7 @@ export async function deleteProject(id: number) {
       throw new Error('Project not found')
     }
 
-    await Promise.all(project.images.map((image) => minioClient.deleteFile(image.url)))
+    await Promise.all(project.images.map((image) => minioClient.deleteFile(image.filePath)))
     await prisma.image.deleteMany({
       where: { projectId: id },
     })
@@ -241,7 +218,7 @@ export async function uploadProjectImage(id: number, projectName: string, files:
             data: {
               images: {
                 create: {
-                  url: fileObject,
+                  filePath: fileObject,
                 },
               },
             },
@@ -268,7 +245,7 @@ export async function deleteProjectImage(id: number) {
       throw new Error('Image not found')
     }
 
-    await minioClient.deleteFile(image.url)
+    await minioClient.deleteFile(image.filePath)
     await prisma.image.delete({
       where: { id },
     })
