@@ -135,7 +135,17 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         throw new Error('Failed to upload images')
       }
 
-      refreshProduct(prodData.id)
+      const data = await response.json()
+      const images = data.images
+
+      setProdData((prev) => ({
+        ...prev,
+        images: [...prev.images, ...images],
+      }))
+
+      if (prodData.id !== -1) {
+        refreshProduct(prodData.id)
+      }
 
       toast.success('Image upload successful')
     } catch (err) {
@@ -237,50 +247,46 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
           </FormControl>
         </Box>
 
-        {product.id !== -1 && (
-          <>
-            <Box>
-              <b>Images</b>
+        <Box>
+          <b>Images</b>
+          <Box
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'flex-start'}
+            alignItems={'center'}
+            border={'1px solid #ccc'}
+            overflow={'auto'}
+            padding={1}
+            flexWrap={'wrap'}
+            maxWidth={'590px'}
+          >
+            {prodData.images.map((image, index) => (
               <Box
-                display={'flex'}
-                flexDirection={'row'}
-                justifyContent={'flex-start'}
-                alignItems={'center'}
+                key={index}
                 border={'1px solid #ccc'}
-                overflow={'auto'}
-                padding={1}
-                flexWrap={'wrap'}
-                maxWidth={'590px'}
+                margin={0.5}
+                padding={0.5}
+                display={'flex'}
+                alignItems={'center'}
+                borderRadius={2}
+                onClick={() => handleDeleteImage(image.id)}
               >
-                {prodData.images.map((image, index) => (
-                  <Box
-                    key={index}
-                    border={'1px solid #ccc'}
-                    margin={0.5}
-                    padding={0.5}
-                    display={'flex'}
-                    alignItems={'center'}
-                    borderRadius={2}
-                    onClick={() => handleDeleteImage(image.id)}
-                  >
-                    <Box
-                      component={'img'}
-                      src={image.url}
-                      alt={product.name}
-                      height={100}
-                      width={100}
-                      sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-                    />
-                  </Box>
-                ))}
+                <Box
+                  component={'img'}
+                  src={image.minioUrl}
+                  alt={product.name}
+                  height={100}
+                  width={100}
+                  sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+                />
               </Box>
-            </Box>
+            ))}
+          </Box>
+        </Box>
 
-            <Box marginTop={2}>
-              <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
-            </Box>
-          </>
-        )}
+        <Box marginTop={2}>
+          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+        </Box>
       </Box>
 
       <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>

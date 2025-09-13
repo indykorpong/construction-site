@@ -5,10 +5,14 @@ import { getImageUrl } from '@/utils/image'
 import { minioClient } from '../minio'
 import { randomUUID } from 'crypto'
 
+export type ImageData = Image & {
+  minioUrl?: string
+}
+
 export type ProductData = Product & {
-  images: Image[]
+  images: ImageData[]
   childrenProducts: (Product & {
-    images: Image[]
+    images: ImageData[]
   })[]
 }
 
@@ -83,7 +87,7 @@ export async function getProduct(id: number, siteId: number): Promise<ProductDat
   return productData
 }
 
-export async function createProduct(data: Product) {
+export async function createProduct(data: ProductData) {
   try {
     return await prisma.product.create({
       data: {
@@ -91,6 +95,11 @@ export async function createProduct(data: Product) {
         description: data.description,
         parentProductId: data.parentProductId,
         siteId: data.siteId,
+        images: {
+          connect: data.images.map((image) => ({
+            id: image.id,
+          })),
+        },
       },
     })
   } catch (err) {
@@ -99,7 +108,7 @@ export async function createProduct(data: Product) {
   }
 }
 
-export async function updateProduct(id: number, data: Product) {
+export async function updateProduct(id: number, data: ProductData) {
   try {
     const res = await prisma.product.update({
       where: { id },
@@ -108,6 +117,16 @@ export async function updateProduct(id: number, data: Product) {
         description: data.description,
         parentProductId: data.parentProductId,
         siteId: data.siteId,
+        images: {
+          connectOrCreate: data.images.map((image) => ({
+            where: {
+              id: image.id,
+            },
+            create: {
+              url: image.url,
+            },
+          })),
+        },
       },
     })
 
@@ -145,9 +164,9 @@ export async function deleteProduct(id: number) {
   }
 }
 
-export async function uploadProductImage(id: number, productName: string, files: File[]) {
+export async function uploadProductImage(id: number, productName: string, files: File[]): Promise<Image[]> {
   try {
-    await Promise.all(
+    return await Promise.all(
       files.map(async (file) => {
         try {
           if (!file) {
@@ -158,16 +177,24 @@ export async function uploadProductImage(id: number, productName: string, files:
           const fileObject = `products/${productName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
 
           await minioClient.uploadFile('construction', fileObject, file)
-          await prisma.product.update({
-            where: { id },
+          const image = await prisma.image.create({
             data: {
-              images: {
-                create: {
-                  url: fileObject,
-                },
-              },
+              url: fileObject,
             },
           })
+          if (id && id !== -1) {
+            await prisma.product.update({
+              where: { id },
+              data: {
+                images: {
+                  connect: {
+                    id: image.id,
+                  },
+                },
+              },
+            })
+          }
+          return image
         } catch (err) {
           console.error(file.name, err)
           throw err

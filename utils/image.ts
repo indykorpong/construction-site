@@ -1,7 +1,7 @@
 import { minioClient } from '@/lib/minio'
-import { Image } from '@prisma/client'
+import { ImageData } from '@/lib/db/product'
 
-export const getImageUrl = async (image: Image) => {
-  image.url = await minioClient.getFileUrl(image.url)
+export const getImageUrl = async (image: ImageData) => {
+  image.minioUrl = await minioClient.getFileUrl(image.url)
   return image
 }
