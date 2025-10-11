@@ -22,11 +22,16 @@ export default function ProductCategoryId() {
     )
   }
 
+  const link =
+    product?.childrenProducts && product?.childrenProducts.length > 0
+      ? '/aasp/product-categories/' + product?.id
+      : '/aasp/products/' + product?.id
+
   const productsData = product?.childrenProducts.map((product) => ({
     id: product.id,
     name: product.name,
     imageUrl: product.images?.[0]?.url,
-    link: '/aasp/products/' + product.id,
+    link,
   }))
 
   return (

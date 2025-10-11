@@ -16,7 +16,7 @@ export default function ProjectsPage() {
 
   const { data: products, isLoading: isLoadingProducts } = useQuery({
     queryKey: ['products'],
-    queryFn: () => getProducts(),
+    queryFn: () => getProducts(true),
   })
 
   return (

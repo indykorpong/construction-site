@@ -9,11 +9,16 @@ export type ImageData = Image & {
   url?: string
 }
 
-export type ProductData = Product & {
+export type ChildProductData = Product & {
   images: ImageData[]
-  childrenProducts: (Product & {
+  childrenProducts?: (Product & {
     images: ImageData[]
   })[]
+}
+
+export type ProductData = Product & {
+  images: ImageData[]
+  childrenProducts: ChildProductData[]
 }
 
 export async function getProducts(
@@ -24,10 +29,30 @@ export async function getProducts(
 ): Promise<ProductData[]> {
   const products = await prisma.product.findMany({
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: 'asc',
+        },
+      },
       childrenProducts: {
         include: {
-          images: true,
+          images: {
+            orderBy: {
+              id: 'asc',
+            },
+          },
+          childrenProducts: {
+            include: {
+              images: {
+                orderBy: {
+                  id: 'asc',
+                },
+              },
+            },
+          },
+        },
+        orderBy: {
+          id: 'asc',
         },
       },
     },
@@ -48,6 +73,12 @@ export async function getProducts(
         product.childrenProducts.map(async (childProduct) => ({
           ...childProduct,
           images: await Promise.all(childProduct.images.map(getImageUrl)),
+          childrenProducts: await Promise.all(
+            childProduct.childrenProducts.map(async (childProduct) => ({
+              ...childProduct,
+              images: await Promise.all(childProduct.images.map(getImageUrl)),
+            })),
+          ),
         })),
       ),
     })),
@@ -60,10 +91,30 @@ export async function getProduct(id: number, siteId: number): Promise<ProductDat
   const product = await prisma.product.findUnique({
     where: { id, siteId },
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: 'asc',
+        },
+      },
       childrenProducts: {
         include: {
-          images: true,
+          images: {
+            orderBy: {
+              id: 'asc',
+            },
+          },
+          childrenProducts: {
+            include: {
+              images: {
+                orderBy: {
+                  id: 'asc',
+                },
+              },
+            },
+          },
+        },
+        orderBy: {
+          id: 'asc',
         },
       },
     },
@@ -80,6 +131,12 @@ export async function getProduct(id: number, siteId: number): Promise<ProductDat
       product.childrenProducts.map(async (childProduct) => ({
         ...childProduct,
         images: await Promise.all(childProduct.images.map(getImageUrl)),
+        childrenProducts: await Promise.all(
+          childProduct.childrenProducts.map(async (childProduct) => ({
+            ...childProduct,
+            images: await Promise.all(childProduct.images.map(getImageUrl)),
+          })),
+        ),
       })),
     ),
   }
@@ -88,22 +145,27 @@ export async function getProduct(id: number, siteId: number): Promise<ProductDat
 }
 
 export async function createProduct(data: ProductData) {
+  const { id, ...productData } = data
   try {
     return await prisma.product.create({
       data: {
-        name: data.name,
-        description: data.description,
-        parentProductId: data.parentProductId,
-        siteId: data.siteId,
+        name: productData.name,
+        description: productData.description,
+        parentProductId: productData.parentProductId,
+        siteId: productData.siteId,
         images: {
-          connect: data.images.map((image) => ({
-            id: image.id,
+          connect: productData.images.map((image) => ({
+            filePath: image.filePath,
           })),
         },
       },
     })
   } catch (err) {
-    console.error('Error creating product:', err)
+    if (err instanceof Error) {
+      console.error('Error creating product:', err.stack)
+    } else {
+      console.error('Error creating product:', err)
+    }
     throw err
   }
 }
@@ -165,41 +227,41 @@ export async function deleteProduct(id: number) {
 
 export async function uploadProductImage(id: number, productName: string, files: File[]): Promise<Image[]> {
   try {
-    return await Promise.all(
-      files.map(async (file) => {
-        try {
-          if (!file) {
-            throw new Error('file not found')
-          }
+    const images: Image[] = []
+    for (const file of files) {
+      try {
+        if (!file) {
+          throw new Error('file not found')
+        }
 
-          const fileName = randomUUID()
-          const fileObject = `products/${productName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
+        const fileName = randomUUID()
+        const fileObject = `products/${productName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
 
-          await minioClient.uploadFile('construction', fileObject, file)
-          const image = await prisma.image.create({
+        await minioClient.uploadFile('construction', fileObject, file)
+        const image = await prisma.image.create({
+          data: {
+            filePath: fileObject,
+          },
+        })
+        if (id && id !== -1) {
+          await prisma.product.update({
+            where: { id },
             data: {
-              filePath: fileObject,
-            },
-          })
-          if (id && id !== -1) {
-            await prisma.product.update({
-              where: { id },
-              data: {
-                images: {
-                  connect: {
-                    id: image.id,
-                  },
+              images: {
+                connect: {
+                  id: image.id,
                 },
               },
-            })
-          }
-          return image
-        } catch (err) {
-          console.error(file.name, err)
-          throw err
+            },
+          })
         }
-      }),
-    )
+        images.push(image)
+      } catch (err) {
+        console.error(file.name, err)
+        throw err
+      }
+    }
+    return images
   } catch (err) {
     console.error('Error uploading: ', err)
     throw err

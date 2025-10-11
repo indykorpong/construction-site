@@ -22,12 +22,18 @@ export default function ProductCategoryId() {
     )
   }
 
-  const productsData = product?.childrenProducts.map((product) => ({
-    id: product.id,
-    name: product.name,
-    imageUrl: product.images?.[0]?.url,
-    link: '/epands/products/' + product.id,
-  }))
+  const productsData = product?.childrenProducts.map((product) => {
+    const link =
+      product?.childrenProducts && product?.childrenProducts.length > 0
+        ? '/epands/product-categories/' + product?.id
+        : '/epands/products/' + product?.id
+    return {
+      id: product.id,
+      name: product.name,
+      imageUrl: product.images?.[0]?.url,
+      link,
+    }
+  })
 
   return (
     <ContentBox>

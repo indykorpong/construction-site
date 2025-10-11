@@ -1,5 +1,5 @@
 'use server'
-import { Product, Project } from '@prisma/client'
+import { Product, Project, Image, Prisma } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
 import { randomUUID } from 'crypto'
@@ -29,14 +29,25 @@ export async function getProjects(
 ): Promise<ProjectData[]> {
   const projects = await prisma.project.findMany({
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: 'asc',
+        },
+      },
       projectProducts: {
         include: {
           product: {
             include: {
-              images: true,
+              images: {
+                orderBy: {
+                  id: 'asc',
+                },
+              },
             },
           },
+        },
+        orderBy: {
+          id: 'asc',
         },
       },
     },
@@ -72,14 +83,25 @@ export async function getProject(id: number, siteId: number): Promise<ProjectDat
   const project = await prisma.project.findUnique({
     where: { id, siteId },
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: 'asc',
+        },
+      },
       projectProducts: {
         include: {
           product: {
             include: {
-              images: true,
+              images: {
+                orderBy: {
+                  id: 'asc',
+                },
+              },
             },
           },
+        },
+        orderBy: {
+          id: 'asc',
         },
       },
     },
@@ -114,7 +136,11 @@ export async function getFourProjects(siteId: number) {
     take: 4,
     orderBy: { id: 'asc' },
     include: {
-      images: true,
+      images: {
+        orderBy: {
+          id: 'asc',
+        },
+      },
     },
   })
 
@@ -128,19 +154,31 @@ export async function getFourProjects(siteId: number) {
   return projectsData
 }
 
-export async function createProject(data: Project) {
+export async function createProject(data: ProjectData) {
   try {
-    const res = await prisma.project.create({
+    return await prisma.project.create({
       data: {
         name: data.name,
         description: data.description,
         siteId: data.siteId,
+        images: {
+          connect: data.images.map((image) => ({
+            filePath: image.filePath,
+          })),
+        },
+        projectProducts: {
+          create: data.projectProducts.map((projectProduct) => ({
+            productId: projectProduct.product.id,
+          })),
+        },
       },
     })
-
-    return res
   } catch (err) {
-    console.error('Error creating project:', err)
+    if (err instanceof Error) {
+      console.error('Error creating project:', err.stack)
+    } else {
+      console.error('Error creating project:', err)
+    }
     throw err
   }
 }
@@ -200,35 +238,48 @@ export async function deleteProject(id: number) {
   }
 }
 
-export async function uploadProjectImage(id: number, projectName: string, files: File[]) {
+export async function uploadProjectImage(id: number, projectName: string, files: File[]): Promise<Image[]> {
   try {
-    await Promise.all(
-      files.map(async (file) => {
-        try {
-          if (!file) {
-            throw new Error('file not found')
-          }
+    const images: Image[] = []
+    for (const file of files) {
+      try {
+        if (!file) {
+          throw new Error('file not found')
+        }
 
-          const fileName = randomUUID()
-          const fileObject = `projects/${projectName.replaceAll(' ', '')}/${fileName}.${file.name.split('.').pop()}`
+        const projectPath = projectName.replaceAll(' ', '')
+        if (projectPath === '') {
+          throw new Error('project name is required')
+        }
 
-          await minioClient.uploadFile('construction', fileObject, file)
+        const fileName = randomUUID()
+        const fileObject = `projects/${projectPath}/${fileName}.${file.name.split('.').pop()}`
+
+        await minioClient.uploadFile('construction', fileObject, file)
+        const image = await prisma.image.create({
+          data: {
+            filePath: fileObject,
+          },
+        })
+        if (id && id !== -1) {
           await prisma.project.update({
             where: { id },
             data: {
               images: {
-                create: {
-                  filePath: fileObject,
+                connect: {
+                  id: image.id,
                 },
               },
             },
           })
-        } catch (err) {
-          console.error(file.name, err)
-          throw err
         }
-      }),
-    )
+        images.push(image)
+      } catch (err) {
+        console.error(file.name, err)
+        throw err
+      }
+    }
+    return images
   } catch (err) {
     console.error('Error uploading: ', err)
     throw err

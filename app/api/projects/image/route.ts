@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { deleteProjectImage, uploadProjectImage } from '@/lib/db/project'
+import { getImageUrl } from '@/utils/image'
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -14,12 +15,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const projectId = parseInt(formData.get('projectId') as string)
     const projectName = formData.get('projectName') as string
 
-    await uploadProjectImage(projectId, projectName, files)
-
-    return NextResponse.json({ message: 'Image uploaded successfully' }, { status: 200 })
+    const images = await uploadProjectImage(projectId, projectName, files)
+    const imagesWithUrl = await Promise.all(images.map(getImageUrl))
+    return NextResponse.json({ message: 'Image uploaded successfully', images: imagesWithUrl }, { status: 200 })
   } catch (error) {
     console.error('Failed to upload image', error)
-    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to upload image.' }, { status: 500 })
   }
 }
 

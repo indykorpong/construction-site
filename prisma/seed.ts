@@ -17,8 +17,8 @@ const siteData: Prisma.SiteCreateInput[] = [
 
 const userData: Prisma.UserCreateInput[] = [
   {
-    name: 'Lam',
-    email: 'lam@lam.com',
+    name: 'AASP',
+    email: 'aasp@epandsgroup.com',
     password: bcrypt.hashSync('P@ssw0rd-1', 10),
     site: {
       connect: {
@@ -27,8 +27,8 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: 'Lam2',
-    email: 'lam2@lam.com',
+    name: 'YDPI',
+    email: 'ydpi@epandsgroup.com',
     password: bcrypt.hashSync('P@ssw0rd-2', 10),
     site: {
       connect: {
@@ -37,8 +37,8 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: 'Lam3',
-    email: 'lam3@lam.com',
+    name: 'EPS',
+    email: 'eps@epandsgroup.com',
     password: bcrypt.hashSync('P@ssw0rd-3', 10),
     site: {
       connect: {
@@ -63,6 +63,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Auto Climbing Protection',
@@ -75,6 +80,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Dust Detector',
@@ -86,6 +96,11 @@ const productData: Prisma.ProductCreateInput[] = [
           filePath: 'products/DustDetector/1.png',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -114,6 +129,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Industrial Sweeper',
@@ -125,6 +145,11 @@ const productData: Prisma.ProductCreateInput[] = [
           filePath: 'products/IndustrialSweeper/1.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -141,6 +166,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Passenger Hoist Protective Door',
@@ -153,6 +183,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Prop Panel',
@@ -162,6 +197,11 @@ const productData: Prisma.ProductCreateInput[] = [
           filePath: 'products/PropPanel/0.png',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
     childrenProducts: {
       create: [
@@ -197,6 +237,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'Quick Form',
@@ -230,6 +275,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
       ],
     },
@@ -242,6 +292,11 @@ const productData: Prisma.ProductCreateInput[] = [
           filePath: 'products/Ringlock/0.png',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
     childrenProducts: {
       create: [
@@ -256,6 +311,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'Basejack',
@@ -267,6 +327,11 @@ const productData: Prisma.ProductCreateInput[] = [
                 filePath: 'products/Ringlock/2.png',
               },
             ],
+          },
+          site: {
+            connect: {
+              id: 1,
+            },
           },
         },
         {
@@ -283,6 +348,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'Ledger (Horizontal)',
@@ -298,6 +368,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'Staircase',
@@ -308,6 +383,11 @@ const productData: Prisma.ProductCreateInput[] = [
                 filePath: 'products/Ringlock/5.png',
               },
             ],
+          },
+          site: {
+            connect: {
+              id: 1,
+            },
           },
         },
         {
@@ -324,6 +404,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'U-Head',
@@ -336,6 +421,11 @@ const productData: Prisma.ProductCreateInput[] = [
               },
             ],
           },
+          site: {
+            connect: {
+              id: 1,
+            },
+          },
         },
         {
           name: 'Walking Platform',
@@ -347,6 +437,11 @@ const productData: Prisma.ProductCreateInput[] = [
                 filePath: 'products/Ringlock/8.png',
               },
             ],
+          },
+          site: {
+            connect: {
+              id: 1,
+            },
           },
         },
       ],
@@ -366,6 +461,11 @@ const productData: Prisma.ProductCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Wheel Washing Machine',
@@ -377,6 +477,11 @@ const productData: Prisma.ProductCreateInput[] = [
           filePath: 'products/WheelWashingMachine/1.png',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
 ]
@@ -414,6 +519,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Avary Factory Project',
@@ -434,6 +544,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/Avary/2.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -471,6 +586,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Grand Center Point',
@@ -495,6 +615,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Grand Center Point Pattaya 3',
@@ -515,6 +640,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/GrandCenterPointPattaya3/2.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -564,6 +694,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Muniq Langsuan Project',
@@ -585,6 +720,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'One Bangkok O1AH1 Building Project',
@@ -602,6 +742,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/OneBangkokO1AH1Building/1.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -626,6 +771,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/OneBangkokO2Building/2.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -666,6 +816,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Park Origin Thonglor Project',
@@ -687,6 +842,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Park Silom Project',
@@ -704,6 +864,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/ParkSilom/1.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -725,6 +890,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/QueenSirikit/2.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
   {
@@ -750,6 +920,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
         },
       ],
     },
+    site: {
+      connect: {
+        id: 1,
+      },
+    },
   },
   {
     name: 'Thai Group Project',
@@ -770,6 +945,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/ThaiGroup/1.png',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
 
@@ -795,6 +975,11 @@ const projectData: Prisma.ProjectCreateInput[] = [
           filePath: 'projects/YPM9/2.jpg',
         },
       ],
+    },
+    site: {
+      connect: {
+        id: 1,
+      },
     },
   },
 ]

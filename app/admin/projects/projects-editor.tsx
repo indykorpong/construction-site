@@ -16,7 +16,7 @@ import toast from 'react-hot-toast'
 import dynamic from 'next/dynamic'
 
 import { ProjectData } from '@/lib/db/project'
-import { ProductData } from '@/lib/db/product'
+import { ProductData, ImageData } from '@/lib/db/product'
 import { createProject, updateProject } from '@/lib/api/project'
 import { ImageUploadComponent } from '../../_components/file-upload-component'
 
@@ -131,6 +131,11 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
       return
     }
 
+    if (!projData.name) {
+      toast.error('Project name is required')
+      return
+    }
+
     try {
       const formDataObj = new FormData()
       formDataObj.append('projectId', `${project.id}`)
@@ -148,7 +153,14 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
         throw new Error('Failed to upload images')
       }
 
-      refreshProject()
+      const data = (await response.json()) as { images: ImageData[] }
+      const images = data.images
+
+      setProjData((prev) => ({
+        ...prev,
+        images: [...prev.images, ...images],
+      }))
+
       toast.success('Image upload successful')
     } catch (err) {
       console.error('Error uploading: ', err)
@@ -174,7 +186,12 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
       if (!response.ok) {
         throw new Error('Failed to delete image')
       }
-      refreshProject()
+
+      setProjData((prev) => ({
+        ...prev,
+        images: prev.images.filter((image) => image.id !== imageId),
+      }))
+
       toast.success('Image deleted successfully')
     } catch (err) {
       console.error('Error deleting image: ', err)
@@ -204,107 +221,108 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
       mx={3}
       fontSize={'0.75rem'}
       display={'flex'}
-      justifyContent={'space-between'}
+      justifyContent={'start'}
       flexDirection={'column'}
       gap={'1rem'}
       component="form"
       height={'100vh'}
     >
-      <Box overflow={'auto'} marginTop={2}>
-        <Box display={'flex'} justifyContent={'flex-start'} gap={'3rem'} paddingTop={2} mb={4}>
-          <FormControl sx={{ width: '100%' }}>
-            <TextField
-              error={!projData.name || typeof projData.name !== 'string'}
-              defaultValue={projData.name}
-              id="name"
-              label="Name"
-              variant="outlined"
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-        </Box>
-
-        <Box mb={2}>
-          <FormControl sx={{ width: '100%' }}>
-            <InputLabel>Products in this Project</InputLabel>
-            <Select
-              multiple
-              label="Products in this Project"
-              value={projData.projectProducts.map((p) => p.product.id)}
-              onChange={handleProjectProductsChange}
-              renderValue={(selected) => {
-                const selectedProducts = products.filter((p) => selected.includes(p.id))
-                return selectedProducts.map((p) => p.name).join(', ')
-              }}
-              sx={{ width: '100%' }}
-            >
-              {products.map((product) => (
-                <MenuItem key={product.id} value={product.id}>
-                  <Checkbox checked={projData.projectProducts.some((p) => p.product.id === product.id)} />
-                  <ListItemText primary={product.name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        <Box mb={2}>
-          <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '1rem' }}>
-            <b>Description</b>
-          </InputLabel>
-          <TextEditor value={projData.description} onChange={handleEditorChange} />
-        </Box>
-
-        {project.id !== -1 && (
-          <>
-            <Box>
-              <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '0.5rem' }}>
-                <b>Images</b>
-              </InputLabel>
-              <Box
-                display={'flex'}
-                flexDirection={'row'}
-                justifyContent={'flex-start'}
-                alignItems={'center'}
-                border={'1px solid #ccc'}
-                overflow={'auto'}
-                padding={1}
-                flexWrap={'wrap'}
-                maxWidth={'590px'}
-              >
-                {projData.images.map((image, index) => (
-                  <Box
-                    key={index}
-                    border={'1px solid #ccc'}
-                    margin={0.5}
-                    padding={0.5}
-                    display={'flex'}
-                    alignItems={'center'}
-                    borderRadius={2}
-                    onClick={() => handleDeleteImage(image.id)}
-                  >
-                    <Box
-                      component={'img'}
-                      src={image.url}
-                      alt={project.name}
-                      height={100}
-                      width={100}
-                      sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-                    />
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-
-            <Box marginTop={2}>
-              <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
-            </Box>
-          </>
-        )}
+      <Box
+        overflow={'auto'}
+        marginTop={2}
+        display={'flex'}
+        justifyContent={'flex-start'}
+        gap={'3rem'}
+        paddingTop={2}
+        mb={4}
+      >
+        <FormControl sx={{ width: '100%' }}>
+          <TextField
+            error={!projData.name || typeof projData.name !== 'string'}
+            defaultValue={projData.name}
+            id="name"
+            label="Name"
+            variant="outlined"
+            onChange={handleChange}
+            required
+          />
+        </FormControl>
       </Box>
 
-      <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>
+      <Box mb={2}>
+        <FormControl sx={{ width: '100%' }}>
+          <InputLabel>Products in this Project</InputLabel>
+          <Select
+            multiple
+            label="Products in this Project"
+            value={projData.projectProducts.map((p) => p.product.id)}
+            onChange={handleProjectProductsChange}
+            renderValue={(selected) => {
+              const selectedProducts = products.filter((p) => selected.includes(p.id))
+              return selectedProducts.map((p) => p.name).join(', ')
+            }}
+            sx={{ width: '100%' }}
+          >
+            {products.map((product) => (
+              <MenuItem key={product.id} value={product.id}>
+                <Checkbox checked={projData.projectProducts.some((p) => p.product.id === product.id)} />
+                <ListItemText primary={product.name} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box mb={2}>
+        <InputLabel sx={{ marginBottom: '0.5rem' }}>
+          <b>Description</b>
+        </InputLabel>
+        <TextEditor value={projData.description} onChange={handleEditorChange} />
+      </Box>
+
+      <Box>
+        <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '0.5rem' }}>
+          <b>Images</b>
+        </InputLabel>
+        <Box
+          display={'flex'}
+          flexDirection={'row'}
+          justifyContent={'flex-start'}
+          alignItems={'center'}
+          border={'1px solid #ccc'}
+          overflow={'auto'}
+          padding={1}
+          flexWrap={'wrap'}
+          maxWidth={'590px'}
+        >
+          {projData.images.map((image, index) => (
+            <Box
+              key={index}
+              border={'1px solid #ccc'}
+              margin={0.5}
+              padding={0.5}
+              display={'flex'}
+              alignItems={'center'}
+              borderRadius={2}
+              onClick={() => handleDeleteImage(image.id)}
+            >
+              <Box
+                component={'img'}
+                src={image.url}
+                alt={project.name}
+                height={100}
+                width={100}
+                sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+              />
+            </Box>
+          ))}
+        </Box>
+        <Box marginTop={2} marginBottom={2}>
+          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+        </Box>
+      </Box>
+
+      <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Button variant="contained" sx={{ width: '40%' }} type="submit" onClick={(e) => handleSubmit(e)}>
           Submit
         </Button>

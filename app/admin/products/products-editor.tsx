@@ -73,7 +73,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         toast.success('Product updated')
       }
 
-      console.log('======prodData========', prodData)
       setOpenDrawer(false)
       refetchProducts()
     } catch (error) {
@@ -103,7 +102,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         throw new Error('Failed to delete product')
       }
 
-      console.log('Product deleted successfully', res)
       setOpenDrawer(false)
       refetchProducts()
       toast.success('Product deleted successfully')
@@ -116,6 +114,11 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
   const handleUploadImage = async (files: FileList | null) => {
     if (!files || files.length === 0) {
       toast.error('No files selected')
+      return
+    }
+
+    if (!prodData.name) {
+      toast.error('Product name is required')
       return
     }
 
@@ -144,10 +147,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
         images: [...prev.images, ...images],
       }))
 
-      if (prodData.id !== -1) {
-        refreshProduct(prodData.id)
-      }
-
       toast.success('Image upload successful')
     } catch (err) {
       console.error('Error uploading: ', err)
@@ -173,7 +172,12 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
       if (!response.ok) {
         throw new Error('Failed to delete image')
       }
-      refreshProduct(prodData.id)
+
+      setProdData((prev) => ({
+        ...prev,
+        images: prev.images.filter((image) => image.id !== imageId),
+      }))
+
       toast.success('Image deleted successfully')
     } catch (err) {
       console.error('Error deleting image: ', err)
@@ -194,103 +198,98 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
       mx={3}
       fontSize={'0.75rem'}
       display={'flex'}
-      justifyContent={'space-between'}
+      justifyContent={'flex-start'}
       flexDirection={'column'}
       gap={'1rem'}
       component="form"
       height={'100vh'}
     >
-      <Box overflow={'auto'} marginTop={2}>
-        <Box display={'flex'} justifyContent={'flex-start'} gap={'2rem'} paddingTop={2}>
-          <FormControl sx={{ width: '100%' }}>
-            <TextField
-              error={!prodData.name || typeof prodData.name !== 'string'}
-              defaultValue={prodData.name}
-              id="name"
-              label="Name"
-              variant="outlined"
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-        </Box>
+      <Box overflow={'auto'} marginTop={2} display={'flex'} justifyContent={'flex-start'} gap={'2rem'} paddingTop={2}>
+        <FormControl sx={{ width: '100%' }}>
+          <TextField
+            error={!prodData.name || typeof prodData.name !== 'string'}
+            defaultValue={prodData.name}
+            id="name"
+            label="Name"
+            variant="outlined"
+            onChange={handleChange}
+            required
+          />
+        </FormControl>
+      </Box>
 
-        <Box mb={2}>
+      <Box display={'flex'} flexDirection={'row'} gap={1} alignItems={'center'} justifyContent={'space-between'}>
+        <FormControl sx={{ width: '100%' }}>
+          <InputLabel>Parent Product</InputLabel>
+          <Select
+            value={prodData.parentProductId ?? ''}
+            onChange={handleParentProductChange}
+            label="Parent Product"
+            sx={{ width: '100%' }}
+          >
+            <MenuItem value={undefined}>None</MenuItem>
+            {products
+              .filter((p) => p.id !== prodData.id)
+              .map((product) => (
+                <MenuItem key={product.id} value={product.id}>
+                  {product.name}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box mb={2}>
+        <InputLabel sx={{ marginBottom: '0.5rem' }}>
           <b>Description</b>
-          <TextEditor id="description" value={prodData.description ?? ''} onChange={handleEditorChange} />
-        </Box>
+        </InputLabel>
+        <TextEditor id="description" value={prodData.description ?? ''} onChange={handleEditorChange} />
+      </Box>
 
+      <Box>
+        <InputLabel sx={{ marginBottom: '0.5rem', marginTop: '0.5rem' }}>
+          <b>Images</b>
+        </InputLabel>
         <Box
-          mb={2}
           display={'flex'}
           flexDirection={'row'}
-          gap={1}
+          justifyContent={'flex-start'}
           alignItems={'center'}
-          justifyContent={'space-between'}
+          border={'1px solid #ccc'}
+          overflow={'auto'}
+          padding={1}
+          flexWrap={'wrap'}
+          maxWidth={'590px'}
         >
-          <FormControl sx={{ width: '100%' }}>
-            <InputLabel>Parent Product</InputLabel>
-            <Select
-              value={prodData.parentProductId ?? ''}
-              onChange={handleParentProductChange}
-              label="Parent Product"
-              sx={{ width: '100%' }}
+          {prodData.images?.map((image, index) => (
+            <Box
+              key={index}
+              border={'1px solid #ccc'}
+              margin={0.5}
+              padding={0.5}
+              display={'flex'}
+              alignItems={'center'}
+              borderRadius={2}
+              onClick={() => handleDeleteImage(image.id)}
             >
-              <MenuItem value={undefined}>None</MenuItem>
-              {products
-                .filter((p) => p.id !== prodData.id)
-                .map((product) => (
-                  <MenuItem key={product.id} value={product.id}>
-                    {product.name}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-        </Box>
-
-        <Box>
-          <b>Images</b>
-          <Box
-            display={'flex'}
-            flexDirection={'row'}
-            justifyContent={'flex-start'}
-            alignItems={'center'}
-            border={'1px solid #ccc'}
-            overflow={'auto'}
-            padding={1}
-            flexWrap={'wrap'}
-            maxWidth={'590px'}
-          >
-            {prodData.images?.map((image, index) => (
               <Box
-                key={index}
-                border={'1px solid #ccc'}
-                margin={0.5}
-                padding={0.5}
-                display={'flex'}
-                alignItems={'center'}
-                borderRadius={2}
-                onClick={() => handleDeleteImage(image.id)}
-              >
-                <Box
-                  component={'img'}
-                  src={image.url}
-                  alt={product.name}
-                  height={100}
-                  width={100}
-                  sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
-                />
-              </Box>
-            ))}
-          </Box>
-        </Box>
-
-        <Box marginTop={2}>
-          <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+                component={'img'}
+                src={image.url}
+                alt={product.name}
+                height={100}
+                width={100}
+                sx={{ objectFit: 'cover', aspectRatio: '1/1', marginre: '0.5rem' }}
+              />
+            </Box>
+          ))}
         </Box>
       </Box>
 
-      <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-around' }}>
+      <Box marginTop={2} marginBottom={2}>
+        <ImageUploadComponent onChange={(f) => handleUploadImage(f)} />
+      </Box>
+
+      <Box mb={2} sx={{ display: 'flex', gap: '1rem', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Button variant="contained" sx={{ width: '40%' }} type="submit" onClick={(e) => handleSubmit(e)}>
           Submit
         </Button>
