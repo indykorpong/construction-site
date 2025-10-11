@@ -6,8 +6,8 @@ export class MinioClient {
   constructor() {
     this.client = new Minio.Client({
       endPoint: process.env.MINIO_ENDPOINT_URL || 'minio-cons.korpong.com',
-      port: 9000,
-      useSSL: false,
+      port: parseInt(process.env.MINIO_PORT || '443', 10),
+      useSSL: process.env.MINIO_USE_SSL === 'true',
       accessKey: process.env.MINIO_ACCESS_KEY,
       secretKey: process.env.MINIO_SECRET_KEY,
     })
