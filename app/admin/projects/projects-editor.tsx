@@ -38,17 +38,6 @@ export const ProjectEditor: React.FC<ProjectEditorProps> = ({ project, products,
     return <Box>Project not found</Box>
   }
 
-  const refreshProject = async () => {
-    const res = await fetch(`/api/projects/${project.id}`, { method: 'GET' })
-    if (!res.ok) {
-      console.error('Failed to fetch product data:', res.statusText)
-      toast.error('Something went wrong')
-      return
-    }
-    const newData = await res.json()
-    setProjData(newData)
-  }
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target
     setProjData((prev) => ({ ...prev, [id]: value }))

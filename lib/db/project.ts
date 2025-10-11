@@ -1,5 +1,5 @@
 'use server'
-import { Product, Project, Image, Prisma } from '@prisma/client'
+import { Product, Project, Image } from '@prisma/client'
 import { minioClient } from '../minio'
 import prisma from '../prisma'
 import { randomUUID } from 'crypto'

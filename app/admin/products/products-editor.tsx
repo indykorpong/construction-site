@@ -26,18 +26,6 @@ export const ProductEditor: React.FC<ProductEditorProps> = ({ products, product,
     return <Box>Product not found</Box>
   }
 
-  const refreshProduct = async (productId: number) => {
-    const res = await fetch(`/api/products/${productId}`, { method: 'GET' })
-    if (!res.ok) {
-      console.error('Failed to fetch product data:', res.statusText)
-      toast.error('Something went wrong')
-      return
-    }
-    const newData = await res.json()
-    setProdData(newData)
-    refetchProducts()
-  }
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target
     setProdData((prev) => ({ ...prev, [id]: value }))

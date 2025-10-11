@@ -145,16 +145,15 @@ export async function getProduct(id: number, siteId: number): Promise<ProductDat
 }
 
 export async function createProduct(data: ProductData) {
-  const { id, ...productData } = data
   try {
     return await prisma.product.create({
       data: {
-        name: productData.name,
-        description: productData.description,
-        parentProductId: productData.parentProductId,
-        siteId: productData.siteId,
+        name: data.name,
+        description: data.description,
+        parentProductId: data.parentProductId,
+        siteId: data.siteId,
         images: {
-          connect: productData.images.map((image) => ({
+          connect: data.images.map((image) => ({
             filePath: image.filePath,
           })),
         },
