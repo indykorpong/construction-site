@@ -1,0 +1,17 @@
+diff --git a/useMediaQuery/index.js b/useMediaQuery/index.js
+index cc5bc47b11e677519703604a75830aea93305644..d3045c84344a2993d42229b702b8ecb60957a583 100644
+--- a/useMediaQuery/index.js
++++ b/useMediaQuery/index.js
+@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", {
+ });
+ exports.default = void 0;
+ var _useMediaQuery = require("@mui/system/useMediaQuery");
++let useMediaQuery = null;
++if (_useMediaQuery && _useMediaQuery.unstable_createUseMediaQuery) {
+ var _identifier = _interopRequireDefault(require("../styles/identifier"));
+-const useMediaQuery = (0, _useMediaQuery.unstable_createUseMediaQuery)({
++ useMediaQuery = (0, _useMediaQuery.unstable_createUseMediaQuery)({
+   themeId: _identifier.default
+ });
++}
+ var _default = exports.default = useMediaQuery;
