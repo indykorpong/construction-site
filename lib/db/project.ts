@@ -227,6 +227,9 @@ export async function deleteProject(id: number) {
     await prisma.image.deleteMany({
       where: { projectId: id },
     })
+    await prisma.projectProduct.deleteMany({
+      where: { projectId: id },
+    })
     await prisma.project.delete({
       where: { id },
     })

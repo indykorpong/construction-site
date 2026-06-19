@@ -210,6 +210,9 @@ export async function deleteProduct(id: number) {
     }
 
     await Promise.all(product.images.map((image) => minioClient.deleteFile(image.filePath)))
+    await prisma.projectProduct.deleteMany({
+      where: { productId: id },
+    })
     await prisma.product.delete({
       where: { id },
       include: {
